@@ -15,7 +15,7 @@ public class NhaTro extends ChuNhaTro{
     private String DiaChi;
     private String Mota;
     private String Hinh;
-
+    private String Minh;
     public NhaTro() {
     }
 
