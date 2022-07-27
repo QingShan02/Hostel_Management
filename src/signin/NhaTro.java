@@ -9,44 +9,49 @@ package signin;
  * @author Daokh
  */
 public class NhaTro extends ChuNhaTro{
-    private String Ma_NT;
+    private int Ma_NT;
+    private String TenPhong;
     private long GiaPhong;
     private int DienTich;
     private String DiaChi;
     private String Mota;
     private String Hinh;
-    private String Minh;
+    private int SoLuong;
+    private String NgayHH;
     public NhaTro() {
     }
 
-    public NhaTro(String Ma_NT, long GiaPhong, int DienTich, String DiaChi, String Mota, String Hinh, String maChu) {
+    public NhaTro(int Ma_NT, String TenPhong, long GiaPhong, int DienTich, String DiaChi, String Mota, String Hinh, int SoLuong, String NgayHH, String maChu) {
         super(maChu);
         this.Ma_NT = Ma_NT;
+        this.TenPhong = TenPhong;
         this.GiaPhong = GiaPhong;
         this.DienTich = DienTich;
         this.DiaChi = DiaChi;
         this.Mota = Mota;
         this.Hinh = Hinh;
+        this.SoLuong = SoLuong;
+        this.NgayHH = NgayHH;
     }
 
-    public NhaTro(String Ma_NT, long GiaPhong, int DienTich, String DiaChi, String Mota, String Hinh, String maChu, String tenChu, String DT) {
-        super(maChu, tenChu, DT);
+    public NhaTro(int Ma_NT) {
         this.Ma_NT = Ma_NT;
-        this.GiaPhong = GiaPhong;
-        this.DienTich = DienTich;
-        this.DiaChi = DiaChi;
-        this.Mota = Mota;
-        this.Hinh = Hinh;
     }
-    
-    
 
-    public String getMa_NT() {
+    public int getMa_NT() {
         return Ma_NT;
     }
 
-    public void setMa_NT(String Ma_NT) {
+    public void setMa_NT(int Ma_NT) {
         this.Ma_NT = Ma_NT;
+    }
+
+    public String getTenPhong() {
+        return TenPhong;
+    }
+
+    public void setTenPhong(String TenPhong) {
+        this.TenPhong = TenPhong;
     }
 
     public long getGiaPhong() {
@@ -88,6 +93,24 @@ public class NhaTro extends ChuNhaTro{
     public void setHinh(String Hinh) {
         this.Hinh = Hinh;
     }
+
+    public int getSoLuong() {
+        return SoLuong;
+    }
+
+    public void setSoLuong(int SoLuong) {
+        this.SoLuong = SoLuong;
+    }
+
+    public String getNgayHH() {
+        return NgayHH;
+    }
+
+    public void setNgayHH(String NgayHH) {
+        this.NgayHH = NgayHH;
+    }
+
+    
     
     
 }

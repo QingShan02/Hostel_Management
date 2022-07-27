@@ -8,27 +8,23 @@ package signin;
  *
  * @author Daokh
  */
-public class Customer extends User{
+public class Customer extends NhaTro{
 
     private String Ma_KH;
     private String HoTen;
     private String SDT;
     private String mail;
-    private int TrangThai;
 
     public Customer() {
     }
 
-    public Customer(String Ma_KH, String HoTen, String SDT, String mail, int TrangThai, String User) {
-        super(User);
+    public Customer(String Ma_KH, String HoTen, String SDT, String mail, int Ma_NT) {
+        super(Ma_NT);
         this.Ma_KH = Ma_KH;
         this.HoTen = HoTen;
         this.SDT = SDT;
         this.mail = mail;
-        this.TrangThai = TrangThai;
     }
-
-
 
     public String getMa_KH() {
         return Ma_KH;
@@ -61,13 +57,6 @@ public class Customer extends User{
     public void setMail(String mail) {
         this.mail = mail;
     }
-
-    public int getTrangThai() {
-        return TrangThai;
-    }
-
-    public void setTrangThai(int TrangThai) {
-        this.TrangThai = TrangThai;
-    }
+    
     
 }

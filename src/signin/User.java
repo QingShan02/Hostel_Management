@@ -13,7 +13,6 @@ package signin;
 public class User {
    String User;
    String Pass;
-   String Role;
    int Remember;
 
     public User(String User) {
@@ -30,10 +29,9 @@ public class User {
     public User() {
     }
 
-    public User(String User, String Pass, String Role, int Remember) {
+    public User(String User, String Pass, int Remember) {
         this.User = User;
         this.Pass = Pass;
-        this.Role = Role;
         this.Remember = Remember;
     }
 
@@ -47,9 +45,6 @@ public class User {
         return Pass;
     }
 
-    public String getRole() {
-        return Role;
-    }
 
     public void setUser(String User) {
         this.User = User;
@@ -59,9 +54,6 @@ public class User {
         this.Pass = Pass;
     }
 
-    public void setRole(String Role) {
-        this.Role = Role;
-    }
    
    
 }

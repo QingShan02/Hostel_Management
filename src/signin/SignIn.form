@@ -69,7 +69,7 @@
     <Component class="javax.swing.JLabel" name="lblIconUser">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/user.png"/>
+          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\icon\user.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -147,10 +147,7 @@
     <Component class="javax.swing.JLabel" name="closeEye">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/c.eye.png"/>
-        </Property>
-        <Property name="disabledIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="0" name="null"/>
+          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\icon\c.eye.png"/>
         </Property>
       </Properties>
       <Events>
@@ -243,7 +240,7 @@
     <Component class="javax.swing.JLabel" name="openEye">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/o.eye.png"/>
+          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\icon\o.eye.png"/>
         </Property>
       </Properties>
       <Events>
@@ -258,7 +255,7 @@
     <Component class="javax.swing.JLabel" name="background">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/bg.jpg"/>
+          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\icon\bg.jpg"/>
         </Property>
       </Properties>
       <Constraints>

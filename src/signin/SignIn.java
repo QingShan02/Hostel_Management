@@ -75,7 +75,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         lblUsername.setText("Username");
         getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 133, 290, -1));
 
-        lblIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        lblIconUser.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\user.png")); // NOI18N
         getContentPane().add(lblIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 161, -1, 26));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -115,8 +115,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 259, 286, 10));
 
-        closeEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/c.eye.png"))); // NOI18N
-        closeEye.setDisabledIcon(null);
+        closeEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\c.eye.png")); // NOI18N
         closeEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeEyeMouseClicked(evt);
@@ -170,7 +169,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         });
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 235, 286, -1));
 
-        openEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/o.eye.png"))); // NOI18N
+        openEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\o.eye.png")); // NOI18N
         openEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openEyeMouseClicked(evt);
@@ -178,31 +177,11 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         });
         getContentPane().add(openEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, 26));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bg.jpg"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\bg.jpg")); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void closeEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeEyeMouseClicked
-        // TODO add your handling code here:
-//        txtPassword.setEchoChar((char) 0);
-
-        txtPassword.setEchoChar((char) 0);
-        closeEye.setVisible(false);
-        closeEye.setEnabled(false);
-        openEye.setVisible(true);
-        openEye.setEnabled(true);
-    }//GEN-LAST:event_closeEyeMouseClicked
-
-    private void openEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openEyeMouseClicked
-        // TODO add your handling code here:
-        txtPassword.setEchoChar((char) 8226);
-        closeEye.setVisible(true);
-        closeEye.setEnabled(true);
-        openEye.setVisible(false);
-        openEye.setEnabled(false);
-    }//GEN-LAST:event_openEyeMouseClicked
 
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
         // TODO add your handling code here:
@@ -257,6 +236,26 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 //        Thread t = new Thread(this);
 //        t.start();
     }//GEN-LAST:event_txtUsernameHierarchyChanged
+
+    private void openEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openEyeMouseClicked
+        // TODO add your handling code here:
+        txtPassword.setEchoChar((char) 8226);
+        closeEye.setVisible(true);
+        closeEye.setEnabled(true);
+        openEye.setVisible(false);
+        openEye.setEnabled(false);
+    }//GEN-LAST:event_openEyeMouseClicked
+
+    private void closeEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeEyeMouseClicked
+        // TODO add your handling code here:
+        //        txtPassword.setEchoChar((char) 0);
+
+        txtPassword.setEchoChar((char) 0);
+        closeEye.setVisible(false);
+        closeEye.setEnabled(false);
+        openEye.setVisible(true);
+        openEye.setEnabled(true);
+    }//GEN-LAST:event_closeEyeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -320,7 +319,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         list.forEach(s -> {
             if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
 //                try {
-//                    Customer cus = (Customer) ChucNangSignIn.SelectObject(s.getUser());
+//                    Customer cus = (Customer) ChucNang.SelectObject(s.getUser());
                 int temp;
                 if(chkRemember.isSelected()){
                     temp = 1;
@@ -330,14 +329,14 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
                 System.out.println(temp);
                 if(s.getRemember() != temp){
                     try {
-                        ChucNangSignIn.UpdateUser(s.getUser(),temp);
+                        ChucNang.UpdateUser(s.getUser(),temp);
                     } catch (SQLException ex) {
                         Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                    ChucNangSignIn.setUser(s.getUser());
-                    JframeCustomer cust = new JframeCustomer();
-                    cust.setVisible(true);
+                    ChucNang.setUser(s.getUser());
+                    QuanLyNhaTro nt = new QuanLyNhaTro();
+                    nt.setVisible(true);
                     this.setVisible(false);
 //                } catch (SQLException ex) {
 //                    Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
@@ -379,7 +378,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
     @Override
     public void connect() {
         try {
-            ChucNangSignIn.getDBConnection();
+            ChucNang.getDBConnection();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -395,7 +394,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
     @Override
     public void FilltoList() {
         try {
-            list = (List<User>) ChucNangSignIn.Select("ql_user");
+            list = (List<User>) ChucNang.SelectUser();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
