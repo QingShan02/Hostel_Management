@@ -36,7 +36,7 @@ public class ChucNang {
         String DB_URL = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=QLNT;";
         String USER_NAME = "sa";
-        String PASSWORD = "";
+        String PASSWORD = "123";
         con = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
     }
     static Statement st = null;
@@ -55,18 +55,26 @@ public class ChucNang {
     }
 
     public static ChuNhaTro selectCNT() {
-        ChuNhaTro cnt=null;
+        ChuNhaTro cnt = null;
 
         try {
             st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from QL_CHUNHATRO where username = '"+user+"'");
+            ResultSet rs = st.executeQuery("select * from QL_CHUNHATRO where username = '" + user + "'");
             while (rs.next()) {
-                cnt =new ChuNhaTro(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                cnt = new ChuNhaTro(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChucNang.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
+    }
+
+    public static void UpdateChuNT(String tenCNT, String soDT, String email) throws SQLException {
+        PreparedStatement st = con.prepareStatement("update QL_CHUNHATRO set Ten_ChuNT = ?, DienThoai = ?, Email = ? where Ma_ChuNT = ?");
+        st.setString(2, tenCNT);
+        st.setString(3, soDT);
+        st.setString(4, email);
+        st.executeUpdate();
     }
 
     public static Customer SelectCus() throws SQLException {
