@@ -244,6 +244,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         jPanel5.add(btnXoa);
 
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnSua);
 
         txtSoNguoiO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -392,6 +397,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         System.exit(0);
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     /**
      * @param args the command line arguments
