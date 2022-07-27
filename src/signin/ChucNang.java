@@ -69,6 +69,7 @@ public class ChucNang {
         st.setString(2, user);
         st.executeUpdate();
     }
+    
     public static List<?> SelectNT() throws SQLException{
         List<NhaTro> list = new ArrayList<>();
         st = con.createStatement();
