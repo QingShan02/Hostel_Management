@@ -5,7 +5,11 @@
 package signin;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import jdk.nashorn.internal.runtime.regexp.joni.encoding.CharacterType;
 
 /**
  *
@@ -17,7 +21,9 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
      * Creates new form QuanLyNhaTro
      */
     public QuanLyNhaTro() {
-        initComponents();
+            initComponents();
+            fillToCNT();
+
     }
 
     /**
@@ -374,6 +380,21 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void fillToCNT(){
+                try {
+            ChuNhaTro cnt = ChucNang.selectCNT();
+            ChucNang.getDBConnection();
+                txtChuNT.setText(cnt.getMaChu());
+                txtTenCNT.setText(cnt.getTenChu());
+                txtDienThoai.setText(cnt.getDT());
+                txtEmail.setText(cnt.getEmail());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtChuNTActionPerformed
