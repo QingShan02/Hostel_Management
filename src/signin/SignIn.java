@@ -74,8 +74,6 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
         lblUsername.setText("Username");
         getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 133, 290, -1));
-
-        lblIconUser.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\user.png")); // NOI18N
         getContentPane().add(lblIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 161, -1, 26));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -115,7 +113,6 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 259, 286, 10));
 
-        closeEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\c.eye.png")); // NOI18N
         closeEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeEyeMouseClicked(evt);
@@ -169,15 +166,13 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         });
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 235, 286, -1));
 
-        openEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\o.eye.png")); // NOI18N
+        openEye.setIcon(new javax.swing.ImageIcon("C:\\Users\\Trung Kien\\OneDrive\\Máy tính\\Agile\\src\\icon\\o.eye.png")); // NOI18N
         openEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openEyeMouseClicked(evt);
             }
         });
         getContentPane().add(openEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, 26));
-
-        background.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\icon\\bg.jpg")); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 470));
 
         pack();
