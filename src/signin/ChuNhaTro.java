@@ -36,6 +36,13 @@ public class ChuNhaTro {
         this.usernameChu = usernameChu;
     }
 
+    public ChuNhaTro(String maChu, String tenChu, String DT, String email) {
+        this.maChu = maChu;
+        this.tenChu = tenChu;
+        this.DT = DT;
+        this.email = email;
+    }
+
     public String getMaChu() {
         return maChu;
     }

@@ -5,7 +5,11 @@
 package signin;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -17,9 +21,18 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
      * Creates new form QuanLyNhaTro
      */
     public QuanLyNhaTro() {
-        initComponents();
-    }
+        try {
+            initComponents();
+            ChucNang.getDBConnection();
+            fillToCNT();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+    }
+    String maChu = "";
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -379,6 +392,15 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void fillToCNT(){
+        ChuNhaTro cnt = ChucNang.selectCNT();
+        maChu = cnt.getMaChu();
+        txtChuNT.setText(cnt.getMaChu());
+        txtTenCNT.setText(cnt.getTenChu());
+        txtDienThoai.setText(cnt.getDT());
+        txtEmail.setText(cnt.getEmail());
+    }
     private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtChuNTActionPerformed
@@ -389,7 +411,12 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showConfirmDialog(this,"Chỉnh sửa thành  công");
+//        JOptionPane.showConfirmDialog(this,"Chỉnh sửa thành  công");
+        try {
+            ChucNang.UpdateChuNT(txtTenCNT.getText(), txtDienThoai.getText(), txtEmail.getText(),maChu);
+        } catch (SQLException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
