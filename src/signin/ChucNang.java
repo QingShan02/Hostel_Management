@@ -26,9 +26,14 @@ public class ChucNang {
 
     static Connection con;
     static String user;
+    static String Ma_ChuNT;
 
     public static void setUser(String user) {
         ChucNang.user = user;
+    }
+
+    public static void setNT(String Ma_ChuNT) {
+        ChucNang.Ma_ChuNT = Ma_ChuNT;
     }
 
     public static void getDBConnection() throws ClassNotFoundException, SQLException {
@@ -36,7 +41,7 @@ public class ChucNang {
         String DB_URL = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=QLNT;";
         String USER_NAME = "sa";
-        String PASSWORD = "123456";
+        String PASSWORD = "";
         con = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
     }
     static Statement st = null;
@@ -69,12 +74,26 @@ public class ChucNang {
         return cnt;
     }
 
-    public static void UpdateChuNT(String tenCNT, String soDT, String email,String maChu) throws SQLException {
+    public static void UpdateChuNT(String tenCNT, String soDT, String email, String maChu) throws SQLException {
         PreparedStatement st = con.prepareStatement("update QL_CHUNHATRO set Ten_ChuNT = ?, DienThoai = ?, Email = ? where Ma_ChuNT = ?");
         st.setString(1, tenCNT);
         st.setString(2, soDT);
         st.setString(3, email);
         st.setString(4, maChu);
+        st.executeUpdate();
+    }
+
+    public static void UpdateNT(String tenPhong, String gia, String dienTich, String diaChi, String moTa, String hinh, String soLuong, String ngayHH, String Ma_NT) throws SQLException {
+        PreparedStatement st = con.prepareStatement("update QL_NHATRO set TenPhong=?,GiaPhong=?,DienTich=?,DiaChi=?,MoTa=?,Hinh=?,SL_ToiDa=?,NgayHH=? where Ma_NT = ?");
+        st.setString(1, tenPhong);
+        st.setString(2, gia);
+        st.setString(3, dienTich);
+        st.setString(4, diaChi);
+        st.setString(5, moTa);
+        st.setString(6, hinh);
+        st.setString(7, soLuong);
+        st.setString(8, ngayHH);
+        st.setString(9, Ma_NT);
         st.executeUpdate();
     }
 
@@ -100,7 +119,7 @@ public class ChucNang {
     public static List<?> SelectNT() throws SQLException {
         List<NhaTro> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select * from QL_NHATRO ");
+        ResultSet rs = st.executeQuery("select * from QL_NHATRO where Ma_ChuNT = '" + Ma_ChuNT + "'");
         while (rs.next()) {
             list.add(new NhaTro(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9), rs.getString(10)));
         }

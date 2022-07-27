@@ -316,23 +316,23 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 //                try {
 //                    Customer cus = (Customer) ChucNang.SelectObject(s.getUser());
                 int temp;
-                if(chkRemember.isSelected()){
+                if (chkRemember.isSelected()) {
                     temp = 1;
-                } else{
+                } else {
                     temp = 0;
                 }
                 System.out.println(temp);
-                if(s.getRemember() != temp){
+                if (s.getRemember() != temp) {
                     try {
-                        ChucNang.UpdateUser(s.getUser(),temp);
+                        ChucNang.UpdateUser(s.getUser(), temp);
                     } catch (SQLException ex) {
                         Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                    ChucNang.setUser(s.getUser());
-                    QuanLyNhaTro nt = new QuanLyNhaTro();
-                    nt.setVisible(true);
-                    this.setVisible(false);
+                ChucNang.setUser(s.getUser());
+                QuanLyNhaTro nt = new QuanLyNhaTro();
+                nt.setVisible(true);
+                this.setVisible(false);
 //                } catch (SQLException ex) {
 //                    Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
 //                }

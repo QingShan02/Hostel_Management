@@ -4,12 +4,15 @@
  */
 package signin;
 
+import com.sun.security.auth.NTSid;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +20,9 @@ import javax.swing.JOptionPane;
  */
 public class QuanLyNhaTro extends javax.swing.JFrame {
 
+    DefaultTableModel tblModel;
+    List<NhaTro> list = new ArrayList<>();
+    private int index = -1;
     /**
      * Creates new form QuanLyNhaTro
      */
@@ -25,6 +31,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
             initComponents();
             ChucNang.getDBConnection();
             fillToCNT();
+            fillToTable();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -33,6 +40,8 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     }
     String maChu = "";
+    int MaNT=0;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -233,15 +242,20 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         tblNT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã NT", "Mã Chủ NT", "Tên Phòng"
             }
         ));
+        tblNT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNTMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblNT);
 
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -385,21 +399,47 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public void fillToCNT(){
+    public void fillToCNT() {
         ChuNhaTro cnt = ChucNang.selectCNT();
         maChu = cnt.getMaChu();
         txtChuNT.setText(cnt.getMaChu());
         txtTenCNT.setText(cnt.getTenChu());
         txtDienThoai.setText(cnt.getDT());
         txtEmail.setText(cnt.getEmail());
+        ChucNang.setNT(cnt.getMaChu());
+    }
+
+    public void mouseClick(int index) {
+        txtTenPhong.setText(list.get(index).getTenPhong());
+        txtGiaPhong.setText(String.valueOf(list.get(index).getGiaPhong()));
+        txtDienTich.setText(String.valueOf(list.get(index).getDienTich()));
+        txtDiaChi.setText(list.get(index).getDiaChi());
+        txtMoTa.setText(list.get(index).getMota());
+        lblImage.setText(list.get(index).getHinh());
+        txtSoNguoiO.setText(String.valueOf(list.get(index).getSoLuong()));
+        txtNgayHH.setText(list.get(index).getNgayHH());
+        MaNT=list.get(index).getMa_NT();
+        
+    }
+
+    public void fillToTable() {
+        try {
+            list = (List<NhaTro>) ChucNang.SelectNT();
+            tblModel = (DefaultTableModel) tblNT.getModel();
+            tblModel.setRowCount(0);
+            for (NhaTro nt : list) {
+                tblModel.addRow(new Object[]{nt.getMa_NT(), nt.getMaChu(), nt.getTenPhong()});
+            }
+        } catch (Exception e) {
+            System.out.println("" + e);
+        }
     }
     private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
         // TODO add your handling code here:
@@ -413,7 +453,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        JOptionPane.showConfirmDialog(this,"Chỉnh sửa thành  công");
         try {
-            ChucNang.UpdateChuNT(txtTenCNT.getText(), txtDienThoai.getText(), txtEmail.getText(),maChu);
+            ChucNang.UpdateChuNT(txtTenCNT.getText(), txtDienThoai.getText(), txtEmail.getText(), maChu);
         } catch (SQLException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -426,8 +466,24 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
+        try {
+       
+            int chon = JOptionPane.showConfirmDialog(this, "Bạn có muốn Update hay không ? ", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (chon == JOptionPane.YES_OPTION) {
+                ChucNang.UpdateNT(txtTenPhong.getText(), txtGiaPhong.getText(), txtDienTich.getText(), txtDiaChi.getText(), txtMoTa.getText(), lblImage.getText(), txtSoNguoiO.getText(), txtNgayHH.getText(),String.valueOf(MaNT));
+                JOptionPane.showMessageDialog(this, "Update thành công");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void tblNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNTMouseClicked
+        
+        index = tblNT.getSelectedRow();
+        mouseClick(index);
+
+    }//GEN-LAST:event_tblNTMouseClicked
 
     /**
      * @param args the command line arguments
