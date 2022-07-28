@@ -41,7 +41,15 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     }
     String maChu = "";
     int MaNT=0;
-
+    public void ThemNT(){
+        if(index==-1){
+            try {
+                ChucNang.InsertNT(txtTenPhong.getText(),Integer.parseInt(txtGiaPhong.getText()), Integer.parseInt(txtDienTich.getText()), txtDiaChi.getText(),txtMoTa.getText(), "", Integer.parseInt(txtSoNguoiO.getText()), txtNgayHH.getText(), maChu);
+            } catch (SQLException ex) {
+                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,7 +77,6 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         lblName = new javax.swing.JLabel();
         txtTenPhong = new javax.swing.JTextField();
-        txtGiaPhong = new javax.swing.JTextField();
         lblAddress = new javax.swing.JLabel();
         txtDienTich = new javax.swing.JTextField();
         lblTotalPerson = new javax.swing.JLabel();
@@ -82,13 +89,14 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         btnSua = new javax.swing.JButton();
         txtSoNguoiO = new javax.swing.JTextField();
         lblAddress1 = new javax.swing.JLabel();
-        txtNgayHH = new javax.swing.JTextField();
         lblTotalPerson1 = new javax.swing.JLabel();
         lblName1 = new javax.swing.JLabel();
         txtDiaChi = new javax.swing.JTextField();
         lblTotalPerson2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtMoTa = new javax.swing.JTextArea();
+        txtNgayHH = new javax.swing.JFormattedTextField();
+        txtGiaPhong = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -232,8 +240,6 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         txtTenPhong.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        txtGiaPhong.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
         lblAddress.setText("Giá phòng");
 
         txtDienTich.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -265,6 +271,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnThem);
 
         btnXoa.setText("Xóa");
@@ -282,8 +293,6 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         lblAddress1.setText("Số người ở");
 
-        txtNgayHH.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
         lblTotalPerson1.setText("Ngày HH");
 
         lblName1.setText("Địa chỉ");
@@ -295,6 +304,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         txtMoTa.setColumns(20);
         txtMoTa.setRows(5);
         jScrollPane2.setViewportView(txtMoTa);
+
+        txtNgayHH.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+
+        txtGiaPhong.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,### VNĐ"))));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -316,23 +329,22 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDiaChi)
-                                    .addComponent(txtNgayHH)
-                                    .addComponent(txtSoNguoiO)))
+                                    .addComponent(txtSoNguoiO)
+                                    .addComponent(txtNgayHH)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblTotalPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtDienTich, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                                        .addComponent(txtTenPhong, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addComponent(txtGiaPhong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDienTich, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                    .addComponent(txtTenPhong, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtGiaPhong)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(lblTotalPerson2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2)))))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
@@ -373,7 +385,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(lblTotalPerson2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblTotalPerson2, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                                 .addGap(81, 81, 81))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -485,6 +497,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tblNTMouseClicked
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        ThemNT();
+    }//GEN-LAST:event_btnThemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -553,9 +570,9 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     private javax.swing.JTextField txtDienThoai;
     private javax.swing.JTextField txtDienTich;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtGiaPhong;
+    private javax.swing.JFormattedTextField txtGiaPhong;
     private javax.swing.JTextArea txtMoTa;
-    private javax.swing.JTextField txtNgayHH;
+    private javax.swing.JFormattedTextField txtNgayHH;
     private javax.swing.JTextField txtSoNguoiO;
     private javax.swing.JTextField txtTenCNT;
     private javax.swing.JTextField txtTenPhong;

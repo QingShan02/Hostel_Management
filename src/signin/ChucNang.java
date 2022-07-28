@@ -41,7 +41,7 @@ public class ChucNang {
         String DB_URL = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=QLNT;";
         String USER_NAME = "sa";
-        String PASSWORD = "";
+        String PASSWORD = "123456";
         con = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
     }
     static Statement st = null;
@@ -125,7 +125,19 @@ public class ChucNang {
         }
         return list;
     }
-
+    public static void InsertNT(String tenPhong, int gia, int dienTich, String diaChi, String moTa, String hinh, int soLuong, String ngayHH,String maChu) throws SQLException{
+        pst = con.prepareStatement("insert into QL_NHATRO values (?,?,?,?,?,?,?,?,?,?)");
+        pst.setString(1, tenPhong);
+        pst.setInt(2, gia);
+        pst.setInt(3, dienTich);
+        pst.setString(4, diaChi);
+        pst.setString(5, moTa);
+        pst.setString(6, hinh);
+        pst.setInt(7, soLuong);
+        pst.setString(8, ngayHH);
+        pst.setString(9, maChu);
+        pst.executeUpdate();
+    }
     public ChucNang() {
     }
 }
