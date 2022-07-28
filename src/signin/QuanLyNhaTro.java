@@ -279,6 +279,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         jPanel5.add(btnThem);
 
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnXoa);
 
         btnSua.setText("Sửa");
@@ -501,6 +506,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         // TODO add your handling code here:
         ThemNT();
     }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments

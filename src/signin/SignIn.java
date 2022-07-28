@@ -5,6 +5,11 @@
 package signin;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Writer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +35,28 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         setLocationRelativeTo(null);
         connect();
         FilltoList();
+       
+    }
+
+    public void ghi() {
+        try {
+            GhiFile.writeObj("a.dat", list);
+            JOptionPane.showMessageDialog(this, "luu thanh cong");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void doc(){
+        try {
+            list = (List<User>) GhiFile.readObj("a.dat");
+            for(User s:list){
+                System.out.println(""+s.getUser());
+                System.out.println(""+s.getPass());
+            }
+            JOptionPane.showMessageDialog(this, "Doc thanh cong");
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
     }
 
     /**
@@ -318,6 +345,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
                 int temp;
                 if (chkRemember.isSelected()) {
                     temp = 1;
+                    
                 } else {
                     temp = 0;
                 }
@@ -333,6 +361,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
                 QuanLyNhaTro nt = new QuanLyNhaTro();
                 nt.setVisible(true);
                 this.setVisible(false);
+                
 //                } catch (SQLException ex) {
 //                    Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
 //                }
