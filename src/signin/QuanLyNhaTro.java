@@ -6,6 +6,7 @@ package signin;
 
 import com.sun.security.auth.NTSid;
 import java.awt.Color;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,9 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     DefaultTableModel tblModel;
     List<NhaTro> list = new ArrayList<>();
+    List<User> list2 = new ArrayList<>();
     private int index = -1;
+
     /**
      * Creates new form QuanLyNhaTro
      */
@@ -41,16 +44,18 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     }
     String maChu = "";
-    int MaNT=0;
-    public void ThemNT(){
-        if(index==-1){
+    int MaNT = 0;
+
+    public void ThemNT() {
+        if (index == -1) {
             try {
-                ChucNang.InsertNT(txtTenPhong.getText(),Integer.parseInt(txtGiaPhong.getText()), Integer.parseInt(txtDienTich.getText()), txtDiaChi.getText(),txtMoTa.getText(), "", Integer.parseInt(txtSoNguoiO.getText()), txtNgayHH.getText(), maChu);
+                ChucNang.InsertNT(txtTenPhong.getText(), Integer.parseInt(txtGiaPhong.getText()), Integer.parseInt(txtDienTich.getText()), txtDiaChi.getText(), txtMoTa.getText(), "", Integer.parseInt(txtSoNguoiO.getText()), txtNgayHH.getText(), maChu);
             } catch (SQLException ex) {
                 Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,6 +81,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         btnEdit = new javax.swing.JToggleButton();
         btnDong = new javax.swing.JToggleButton();
         btnCapNhat = new javax.swing.JToggleButton();
+        btnDangxuat = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         lblName = new javax.swing.JLabel();
         txtTenPhong = new javax.swing.JTextField();
@@ -102,6 +108,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -206,6 +217,14 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
             }
         });
         jPanel6.add(btnCapNhat);
+
+        btnDangxuat.setText("Đăng xuất");
+        btnDangxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangxuatActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnDangxuat);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -446,8 +465,8 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         lblImage.setText(list.get(index).getHinh());
         txtSoNguoiO.setText(String.valueOf(list.get(index).getSoLuong()));
         txtNgayHH.setText(list.get(index).getNgayHH());
-        MaNT=list.get(index).getMa_NT();
-        
+        MaNT = list.get(index).getMa_NT();
+
     }
 
     public void fillToTable() {
@@ -488,10 +507,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         try {
-       
+
             int chon = JOptionPane.showConfirmDialog(this, "Bạn có muốn Update hay không ? ", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (chon == JOptionPane.YES_OPTION) {
-                ChucNang.UpdateNT(txtTenPhong.getText(), txtGiaPhong.getText(), txtDienTich.getText(), txtDiaChi.getText(), txtMoTa.getText(), lblImage.getText(), txtSoNguoiO.getText(), txtNgayHH.getText(),String.valueOf(MaNT));
+                ChucNang.UpdateNT(txtTenPhong.getText(), txtGiaPhong.getText(), txtDienTich.getText(), txtDiaChi.getText(), txtMoTa.getText(), lblImage.getText(), txtSoNguoiO.getText(), txtNgayHH.getText(), String.valueOf(MaNT));
                 JOptionPane.showMessageDialog(this, "Update thành công");
             }
         } catch (Exception e) {
@@ -500,9 +519,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void tblNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNTMouseClicked
-        
+
         index = tblNT.getSelectedRow();
         mouseClick(index);
+        
 
     }//GEN-LAST:event_tblNTMouseClicked
 
@@ -520,6 +540,25 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
+    private void btnDangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangxuatActionPerformed
+        try {
+            list2 = (List<User>) GhiFile.readObj("x.txt");
+            list2.removeAll(list2);
+            GhiFile.writeObj("x.txt", list2);
+            for(User s:list2){
+            System.out.println(""+s.getUser());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
+    }//GEN-LAST:event_btnDangxuatActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -558,6 +597,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCapNhat;
+    private javax.swing.JButton btnDangxuat;
     private javax.swing.JToggleButton btnDong;
     private javax.swing.JToggleButton btnEdit;
     private javax.swing.JButton btnSua;

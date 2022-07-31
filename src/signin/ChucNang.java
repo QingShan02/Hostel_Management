@@ -53,7 +53,7 @@ public class ChucNang {
         String query = "select * from ql_user";
         ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
-            list.add(new User(rs.getString(1), rs.getString(2), rs.getInt(3)));
+            list.add(new User(rs.getString(1), rs.getString(2)));
 //               System.out.println(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3)+","+rs.getString(4));
         }
         return list;
