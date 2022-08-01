@@ -387,8 +387,8 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
                 lblPass.setText("Chưa nhập Password");
                 txtPassword.setBackground(Color.yellow);
                 return;
-            } else if (user1.length() < 3) {
-                lblPass.setText("Password lớn hơn 3 kí tự");
+            } else if (user1.length() < 8) {
+                lblPass.setText("Password lớn hơn 7 kí tự");
                 txtPassword.setBackground(Color.yellow);
                 return;
             } else {
