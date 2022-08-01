@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package signin;
+package Controller;
 
+import Controller.QuanLyNhaTro;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,13 +22,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import signin.GhiFile;
+import Service.ChucNang;
+import Service.ChucNang;
+import Service.ChucNang;
+import Models.User;
+import Service.userService;
 
 /**
  *
  * @author hohoa
  */
-public class SignIn extends javax.swing.JFrame implements SignInImpl {
+public class SignIn extends javax.swing.JFrame implements userService {
 
     List<User> list = new ArrayList<>();
     List<User> list2 = new ArrayList<>();
@@ -37,13 +42,9 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
      */
     public SignIn() {
         try {
-            list2 = (List<User>) GhiFile.readObj("x.txt");
+            list2 = (List<User>) ChucNang.readObj("x.txt");
             for (User s : list2) {
-//                txtUsername.setText(s.getUser());
-//                txtPassword.setText(s.getPass());
-                System.out.println("aa");
-//                if (s.getUser().equals(txtUsername.getText()) && s.getPass().equals(new String(txtPassword.getPassword()))) {
-                if (list2.size() != 0) {
+                if (s.isIsLogin()) {
                     ChucNang.setUser(s.getUser());
                     QuanLyNhaTro nt = new QuanLyNhaTro();
                     nt.setVisible(true);
@@ -57,28 +58,14 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         txtUsername.setBackground(new Color(0, 0, 0, 1));
         txtPassword.setBackground(new Color(0, 0, 0, 1));
         setLocationRelativeTo(null);
-        connect();
-        FilltoList();
-    }
-
-    public void ghi() {
         try {
-            GhiFile.writeObj("x.txt", list2);
-        } catch (Exception e) {
-            System.out.println(e);
+            ChucNang.getDBConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void doc() {
-        try {
-            list2 = (List<User>) GhiFile.readObj("x.txt");
-            for (User s : list2) {
-                System.out.println("" + s.getUser());
-                System.out.println("" + s.getPass());
-            }
-        } catch (Exception e) {
-            System.out.println("" + e.getMessage());
-        }
+        FillToList();
     }
 
     /**
@@ -102,15 +89,13 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         jSeparator2 = new javax.swing.JSeparator();
         closeEye = new javax.swing.JLabel();
         btnSignIn = new javax.swing.JButton();
-        lblDHAA = new javax.swing.JLabel();
-        lblSignUp = new javax.swing.JLabel();
         chkRemember = new javax.swing.JCheckBox();
-        lblForget = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         openEye = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sign In");
         setBackground(new java.awt.Color(255, 255, 255));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -121,7 +106,13 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPass.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(lblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 220, 20));
+
+        lblUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(255, 51, 51));
         getContentPane().add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 150, 20));
 
         lblSignIn.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -131,6 +122,8 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
         lblUsername.setText("Username");
         getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 133, 290, -1));
+
+        lblIconUser.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\user.png")); // NOI18N
         getContentPane().add(lblIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 161, -1, 26));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -170,6 +163,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 259, 286, 10));
 
+        closeEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\c.eye.png")); // NOI18N
         closeEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeEyeMouseClicked(evt);
@@ -187,18 +181,8 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         });
         getContentPane().add(btnSignIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 327, 240, 31));
 
-        lblDHAA.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblDHAA.setText("Don't have a account?");
-        getContentPane().add(lblDHAA, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 370, 211, -1));
-
-        lblSignUp.setText("Sign Up");
-        getContentPane().add(lblSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 370, 133, -1));
-
         chkRemember.setText("Remember password?");
         getContentPane().add(chkRemember, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 287, 160, -1));
-
-        lblForget.setText("Forget password?");
-        getContentPane().add(lblForget, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 289, 122, -1));
 
         txtPassword.setBorder(null);
         txtPassword.addHierarchyListener(new java.awt.event.HierarchyListener() {
@@ -223,12 +207,15 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         });
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 235, 286, -1));
 
+        openEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\o.eye.png")); // NOI18N
         openEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openEyeMouseClicked(evt);
             }
         });
         getContentPane().add(openEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, 26));
+
+        background.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\bg.jpg")); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 470));
 
         pack();
@@ -236,7 +223,7 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
         // TODO add your handling code here:
-        dangnhap();
+        this.dangnhap();
     }//GEN-LAST:event_btnSignInActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
@@ -257,22 +244,24 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         // TODO add your handling code here:
         checkValidate(txtUsername.getText(), 1);
     }//GEN-LAST:event_txtUsernameMousePressed
-
+    int DaTT = -1;
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
         // TODO add your handling code here:
         try {
             checkValidate(txtUsername.getText(), 1);
             String name = txtUsername.getText();
             boolean temp = chkRemember.isSelected();
-//        for (User iname : list) {
-//            txtPassword.setText("");
-//            if (iname.getUser().equalsIgnoreCase(name) && temp == true) {
-//                txtPassword.setText(iname.getPass());
-////                chkRemember.setSelected(true);
-//                break;
-//            }
-//        }
-//            list = (List<User>) GhiFile.readObj("b.txt");
+            for (int i = 0; i < list2.size(); i++) {
+                txtPassword.setText("");
+                if (list2.get(i).getUser().equalsIgnoreCase(name) && list2.get(i).isRemember()) {
+                    txtPassword.setText(list2.get(i).getPass());
+                    chkRemember.setSelected(list2.get(i).isRemember());
+                    DaTT = i;
+                    break;
+                }
+
+            }
+//            list = (List<User>) ChucNang.readObj("b.txt");
 //            for (User s : list) {
 //                if (txtUsername.getText().equals(s.getUser())) {
 //                    txtPassword.setText(s.getPass());
@@ -370,51 +359,17 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lblDHAA;
-    private javax.swing.JLabel lblForget;
     private javax.swing.JLabel lblIconUser;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblSignIn;
-    private javax.swing.JLabel lblSignUp;
     private javax.swing.JLabel lblUser;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel openEye;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
     @Override
-//    public void dangnhap() {
-//        list.forEach(s -> {
-//            if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
-////                try {
-////                    Customer cus = (Customer) ChucNang.SelectObject(s.getUser());
-//                int temp;
-//                if (chkRemember.isSelected()) {
-//                    temp = 1;
-//                } else {
-//                    temp = 0;
-//                }
-//                System.out.println(temp);
-////                if (s.getRemember() != temp) {
-////                    try {
-////                        ChucNang.UpdateUser(s.getUser(), temp);
-////                    } catch (SQLException ex) {
-////                        Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-////                    }
-////                }
-//                ChucNang.setUser(s.getUser());
-//                QuanLyNhaTro nt = new QuanLyNhaTro();
-//                nt.setVisible(true);
-//                this.setVisible(false);
-//                
-////                } catch (SQLException ex) {
-////                    Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-////                }
-//            }
-//        });
-//    }
     public void dangnhap() {
         try {
             if (checkValidate(txtUsername.getText(), 1) == false) {
@@ -428,38 +383,41 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
             for (User s : list) {
                 if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
-                    boolean temp = chkRemember.isSelected();
-                    if (temp == true) {
-                        list2.clear();
-                        list2.add(new User(txtUsername.getText(), String.valueOf(txtPassword.getPassword())));
-                        ghi();
-                        doc();
-                        ChucNang.setUser(s.getUser());
-                        QuanLyNhaTro nt = new QuanLyNhaTro();
-                        nt.setVisible(true);
-                        this.setVisible(false);
-                        return;
-                    } else if (temp == false) {
-                        ChucNang.setUser(s.getUser());
-                        QuanLyNhaTro nt = new QuanLyNhaTro();
-                        nt.setVisible(true);
-                        this.setVisible(false);
-                        return;
+                    if (DaTT == -1) {
+                        list2.add(new User(txtUsername.getText(), String.valueOf(txtPassword.getPassword()), chkRemember.isSelected(), true));
+                    } else if (DaTT != -1) {
+                        list2.set(DaTT, new User(txtUsername.getText(), String.valueOf(txtPassword.getPassword()), chkRemember.isSelected(), true));
                     }
-                    System.out.println(temp);
+                    ChucNang.writeObj("x.txt", list2);
+                    ChucNang.setUser(s.getUser());
+                    QuanLyNhaTro nt = new QuanLyNhaTro();
+                    nt.setVisible(true);
+                    this.setVisible(false);
+                    return;
                 }
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
-        JOptionPane.showMessageDialog(this, "Bạn đã nhập sai User hoặc Password");
+        String tb ="";
+        boolean chk = false;
+        for(User x: list){
+            if(x.getUser().equalsIgnoreCase(txtUsername.getText())){
+                tb = "Bạn đã nhập sai mật khẩu";
+                chk = true;
+            }
+        }
+        if(!chk){
+            tb = "Username của bạn không tồn tại";
+        }
+        JOptionPane.showMessageDialog(this, tb,"Thông báo lỗi",JOptionPane.ERROR_MESSAGE);
 //                    return;
 
-}
+    }
 
-@Override
-        public boolean checkValidate(String user1, int a) {
+    @Override
+    public boolean checkValidate(String user1, int a) {
         if (a == 1) {
             if (user1.trim().equals("")) {
                 lblUser.setText("Chưa nhập username");
@@ -490,45 +448,12 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
     }
 
     @Override
-        public void connect() {
-        try {
-            ChucNang.getDBConnection();
-        
-
-
-
-} catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignIn.class
-
-.getName()).log(Level.SEVERE, null, ex);
-        
-
-
-
-} catch (SQLException ex) {
-            Logger.getLogger(SignIn.class
-
-.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-        public void Remember() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-        public void FilltoList() {
+    public void FillToList() {
         try {
             list = (List<User>) ChucNang.SelectUser();
-            for (User u : list) {
-                System.out.println("" + u.getUser());
-                System.out.println("" + u.getPass());
-
-            }
-
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

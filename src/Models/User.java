@@ -1,4 +1,4 @@
-package signin;
+package Models;
 
 import java.io.Serializable;
 
@@ -7,31 +7,40 @@ import java.io.Serializable;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author TRA
  */
-public class User implements Serializable{
-   String User;
-   String Pass;
-//   int Remember;
+public class User implements Serializable {
 
-//    public User(String User) {
-//        this.User = User;
-//    }
+    String User;
+    String Pass;
+    boolean Remember;
+    boolean isLogin;
 
-//    User(String text, char[] password) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
+    public boolean isRemember() {
+        return Remember;
+    }
 
-//    public int getRemember() {
-//        return Remember;
-//    }
-//
-//    public void setRemember(int Remember) {
-//        this.Remember = Remember;
-//    }
+    public void setRemember(boolean Remember) {
+        this.Remember = Remember;
+    }
+
+    public boolean isIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
+
+    public User(String User, String Pass, boolean Remember, boolean isLogin) {
+        this.User = User;
+        this.Pass = Pass;
+        this.Remember = Remember;
+        this.isLogin = isLogin;
+    }
+
     public User() {
     }
 
@@ -41,8 +50,6 @@ public class User implements Serializable{
 //        this.Remember = Remember;
     }
 
-
-
     public String getUser() {
         return User;
     }
@@ -50,7 +57,6 @@ public class User implements Serializable{
     public String getPass() {
         return Pass;
     }
-
 
     public void setUser(String User) {
         this.User = User;
@@ -60,6 +66,4 @@ public class User implements Serializable{
         this.Pass = Pass;
     }
 
-   
-   
 }

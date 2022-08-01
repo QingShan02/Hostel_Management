@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package signin;
+package Controller;
 
 import com.sun.security.auth.NTSid;
 import java.awt.Color;
@@ -14,6 +14,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Models.ChuNhaTro;
+import Service.ChucNang;
+import Service.ChucNang;
+import Models.NhaTro;
+import Models.User;
 
 /**
  *
@@ -445,9 +450,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+ChuNhaTro cnt;
 
     public void fillToCNT() {
-        ChuNhaTro cnt = ChucNang.selectCNT();
+        cnt = ChucNang.selectCNT();
         maChu = cnt.getMaChu();
         txtChuNT.setText(cnt.getMaChu());
         txtTenCNT.setText(cnt.getTenChu());
@@ -522,7 +528,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         index = tblNT.getSelectedRow();
         mouseClick(index);
-        
+
 
     }//GEN-LAST:event_tblNTMouseClicked
 
@@ -542,18 +548,26 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
     private void btnDangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangxuatActionPerformed
         try {
-            list2 = (List<User>) GhiFile.readObj("x.txt");
-            list2.removeAll(list2);
-            GhiFile.writeObj("x.txt", list2);
-            for(User s:list2){
-            System.out.println(""+s.getUser());
+            list2 = (List<User>) ChucNang.readObj("x.txt");
+            for (User x : list2) {
+                if (x.getUser().equalsIgnoreCase(cnt.getUsernameChu())) {
+                    if (!x.isRemember()) {
+                        list2.remove(x);
+                        break;
+                    } else{
+                        x.setIsLogin(false);
+                    }
+                }
             }
+            ChucNang.writeObj("x.txt", list2);
         } catch (IOException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.exit(0);
+        SignIn a = new SignIn();
+        a.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnDangxuatActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
