@@ -5,17 +5,23 @@
 package signin;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Writer;
+import java.nio.Buffer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import signin.GhiFile;
 
 /**
  *
@@ -24,36 +30,52 @@ import javax.swing.JOptionPane;
 public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
     List<User> list = new ArrayList<>();
+    List<User> list2 = new ArrayList<>();
 
     /**
      * Creates new form SignIn
      */
     public SignIn() {
+        try {
+            list2 = (List<User>) GhiFile.readObj("x.txt");
+            for (User s : list2) {
+//                txtUsername.setText(s.getUser());
+//                txtPassword.setText(s.getPass());
+                System.out.println("aa");
+//                if (s.getUser().equals(txtUsername.getText()) && s.getPass().equals(new String(txtPassword.getPassword()))) {
+                if (list2.size() != 0) {
+                    ChucNang.setUser(s.getUser());
+                    QuanLyNhaTro nt = new QuanLyNhaTro();
+                    nt.setVisible(true);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
         initComponents();
         txtUsername.setBackground(new Color(0, 0, 0, 1));
         txtPassword.setBackground(new Color(0, 0, 0, 1));
         setLocationRelativeTo(null);
         connect();
         FilltoList();
-       
     }
 
     public void ghi() {
         try {
-            GhiFile.writeObj("a.dat", list);
-            JOptionPane.showMessageDialog(this, "luu thanh cong");
+            GhiFile.writeObj("x.txt", list2);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void doc(){
+
+    public void doc() {
         try {
-            list = (List<User>) GhiFile.readObj("a.dat");
-            for(User s:list){
-                System.out.println(""+s.getUser());
-                System.out.println(""+s.getPass());
+            list2 = (List<User>) GhiFile.readObj("x.txt");
+            for (User s : list2) {
+                System.out.println("" + s.getUser());
+                System.out.println("" + s.getPass());
             }
-            JOptionPane.showMessageDialog(this, "Doc thanh cong");
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
         }
@@ -90,6 +112,14 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(lblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 220, 20));
         getContentPane().add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 150, 20));
@@ -193,7 +223,6 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         });
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 235, 286, -1));
 
-        openEye.setIcon(new javax.swing.ImageIcon("C:\\Users\\Trung Kien\\OneDrive\\Máy tính\\Agile\\src\\icon\\o.eye.png")); // NOI18N
         openEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openEyeMouseClicked(evt);
@@ -231,15 +260,25 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
 
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
         // TODO add your handling code here:
-        checkValidate(txtUsername.getText(), 1);
-        String name = txtUsername.getText();
-        for (User iname : list) {
-            txtPassword.setText("");
-            if (iname.getUser().equalsIgnoreCase(name) && iname.getRemember() == 1) {
-                txtPassword.setText(iname.getPass());
-                chkRemember.setSelected(true);
-                break;
-            }
+        try {
+            checkValidate(txtUsername.getText(), 1);
+            String name = txtUsername.getText();
+            boolean temp = chkRemember.isSelected();
+//        for (User iname : list) {
+//            txtPassword.setText("");
+//            if (iname.getUser().equalsIgnoreCase(name) && temp == true) {
+//                txtPassword.setText(iname.getPass());
+////                chkRemember.setSelected(true);
+//                break;
+//            }
+//        }
+//            list = (List<User>) GhiFile.readObj("b.txt");
+//            for (User s : list) {
+//                if (txtUsername.getText().equals(s.getUser())) {
+//                    txtPassword.setText(s.getPass());
+//                }
+//            }
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_txtUsernameKeyReleased
 
@@ -278,6 +317,15 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
         openEye.setVisible(true);
         openEye.setEnabled(true);
     }//GEN-LAST:event_closeEyeMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+//        this.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -337,88 +385,148 @@ public class SignIn extends javax.swing.JFrame implements SignInImpl {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void dangnhap() {
-        list.forEach(s -> {
-            if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
-//                try {
-//                    Customer cus = (Customer) ChucNang.SelectObject(s.getUser());
-                int temp;
-                if (chkRemember.isSelected()) {
-                    temp = 1;
-                    
-                } else {
-                    temp = 0;
-                }
-                System.out.println(temp);
-                if (s.getRemember() != temp) {
-                    try {
-                        ChucNang.UpdateUser(s.getUser(), temp);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                ChucNang.setUser(s.getUser());
-                QuanLyNhaTro nt = new QuanLyNhaTro();
-                nt.setVisible(true);
-                this.setVisible(false);
-                
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+//    public void dangnhap() {
+//        list.forEach(s -> {
+//            if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
+////                try {
+////                    Customer cus = (Customer) ChucNang.SelectObject(s.getUser());
+//                int temp;
+//                if (chkRemember.isSelected()) {
+//                    temp = 1;
+//                } else {
+//                    temp = 0;
 //                }
+//                System.out.println(temp);
+////                if (s.getRemember() != temp) {
+////                    try {
+////                        ChucNang.UpdateUser(s.getUser(), temp);
+////                    } catch (SQLException ex) {
+////                        Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+////                    }
+////                }
+//                ChucNang.setUser(s.getUser());
+//                QuanLyNhaTro nt = new QuanLyNhaTro();
+//                nt.setVisible(true);
+//                this.setVisible(false);
+//                
+////                } catch (SQLException ex) {
+////                    Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+////                }
+//            }
+//        });
+//    }
+    public void dangnhap() {
+        try {
+            if (checkValidate(txtUsername.getText(), 1) == false) {
+                txtUsername.requestFocus();
+                return;
             }
-        });
-    }
+            if (checkValidate(new String(txtPassword.getPassword()), 2) == false) {
+                txtPassword.requestFocus();
+                return;
+            }
 
-    @Override
-    public void checkValidate(String user1, int a) {
+            for (User s : list) {
+                if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
+                    boolean temp = chkRemember.isSelected();
+                    if (temp == true) {
+                        list2.clear();
+                        list2.add(new User(txtUsername.getText(), String.valueOf(txtPassword.getPassword())));
+                        ghi();
+                        doc();
+                        ChucNang.setUser(s.getUser());
+                        QuanLyNhaTro nt = new QuanLyNhaTro();
+                        nt.setVisible(true);
+                        this.setVisible(false);
+                        return;
+                    } else if (temp == false) {
+                        ChucNang.setUser(s.getUser());
+                        QuanLyNhaTro nt = new QuanLyNhaTro();
+                        nt.setVisible(true);
+                        this.setVisible(false);
+                        return;
+                    }
+                    System.out.println(temp);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        JOptionPane.showMessageDialog(this, "Bạn đã nhập sai User hoặc Password");
+//                    return;
+
+}
+
+@Override
+        public boolean checkValidate(String user1, int a) {
         if (a == 1) {
             if (user1.trim().equals("")) {
                 lblUser.setText("Chưa nhập username");
-                System.out.println(lblUser.getText());
                 txtUsername.setBackground(Color.yellow);
-                return;
+                return false;
             } else {
                 lblUser.setText("");
                 txtUsername.setBackground(Color.white);
+                return true;
             }
         }
         if (a == 2) {
             if (user1.trim().equals("")) {
                 lblPass.setText("Chưa nhập Password");
                 txtPassword.setBackground(Color.yellow);
-                return;
+                return false;
             } else if (user1.length() < 8) {
                 lblPass.setText("Password lớn hơn 7 kí tự");
                 txtPassword.setBackground(Color.yellow);
-                return;
+                return false;
             } else {
                 lblPass.setText("");
                 txtPassword.setBackground(Color.white);
+                return true;
             }
         }
-
+        return true;
     }
 
     @Override
-    public void connect() {
+        public void connect() {
         try {
             ChucNang.getDBConnection();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+        
+
+
+
+} catch (ClassNotFoundException ex) {
+            Logger.getLogger(SignIn.class
+
+.getName()).log(Level.SEVERE, null, ex);
+        
+
+
+
+} catch (SQLException ex) {
+            Logger.getLogger(SignIn.class
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void Remember() {
+        public void Remember() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void FilltoList() {
+        public void FilltoList() {
         try {
             list = (List<User>) ChucNang.SelectUser();
+            for (User u : list) {
+                System.out.println("" + u.getUser());
+                System.out.println("" + u.getPass());
+
+            }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

@@ -41,7 +41,7 @@ public class ChucNang {
         String DB_URL = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=QLNT;";
         String USER_NAME = "sa";
-        String PASSWORD = "";
+        String PASSWORD = "123456";
         con = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
     }
     static Statement st = null;
@@ -53,7 +53,7 @@ public class ChucNang {
         String query = "select * from ql_user";
         ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
-            list.add(new User(rs.getString(1), rs.getString(2), rs.getInt(3)));
+            list.add(new User(rs.getString(1), rs.getString(2)));
 //               System.out.println(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3)+","+rs.getString(4));
         }
         return list;
