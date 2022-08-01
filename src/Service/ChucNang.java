@@ -62,7 +62,7 @@ public class ChucNang {
         String DB_URL = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=QLNT;";
         String USER_NAME = "sa";
-        String PASSWORD = "123456";
+        String PASSWORD = "";
         con = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
     }
     static Statement st = null;
@@ -159,8 +159,17 @@ public class ChucNang {
         pst.setString(8, ngayHH);
         pst.setString(9, maChu);
         pst.executeUpdate();
+        pst.close();
     }
-
+public static void deleteNT(int maNT) {
+        try (
+            PreparedStatement pt = con.prepareStatement("DELETE FROM QL_NHATRO WHERE Ma_NT = ?");) {
+            pst.setInt(0, maNT);
+//            System.out.println("Thành công!!! " + add + " Dòng");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public ChucNang() {
     }
 }

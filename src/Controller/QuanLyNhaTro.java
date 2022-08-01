@@ -19,6 +19,14 @@ import Service.ChucNang;
 import Service.ChucNang;
 import Models.NhaTro;
 import Models.User;
+import java.awt.Dimension;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 
 /**
  *
@@ -54,7 +62,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     public void ThemNT() {
         if (index == -1) {
             try {
-                ChucNang.InsertNT(txtTenPhong.getText(), Integer.parseInt(txtGiaPhong.getText()), Integer.parseInt(txtDienTich.getText()), txtDiaChi.getText(), txtMoTa.getText(), "", Integer.parseInt(txtSoNguoiO.getText()), txtNgayHH.getText(), maChu);
+                ChucNang.InsertNT(txtTenPhong.getText(), Integer.parseInt(txtGiaPhong.getText()), Integer.parseInt(txtDienTich.getText()), txtDiaChi.getText(), txtMoTa.getText(), "", Integer.parseInt(txtSoNguoiO.getText()), txtNgayHH.getDateFormatString(), maChu);
             } catch (SQLException ex) {
                 Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -70,6 +78,8 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
+        dateComponentFormatter1 = new org.jdatepicker.impl.DateComponentFormatter();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -108,8 +118,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         lblTotalPerson2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtMoTa = new javax.swing.JTextArea();
-        txtNgayHH = new javax.swing.JFormattedTextField();
         txtGiaPhong = new javax.swing.JFormattedTextField();
+        txtNgayHH = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -250,7 +262,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,7 +271,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(549, Short.MAX_VALUE)))
+                    .addContainerGap(580, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("THÔNG TIN CÁ NHÂN CHỦ SỞ HỮU", jPanel3);
@@ -276,15 +288,23 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         tblNT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Mã NT", "Mã Chủ NT", "Tên Phòng"
+                "Tên Phòng", "Giá phòng", "Địa chỉ", "Có người ở"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblNT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblNTMouseClicked(evt);
@@ -295,6 +315,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblImage.setText("(Ảnh)");
         lblImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblImage.setMaximumSize(new java.awt.Dimension(330, 200));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -338,9 +359,13 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         txtMoTa.setRows(5);
         jScrollPane2.setViewportView(txtMoTa);
 
-        txtNgayHH.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        txtGiaPhong.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0"))));
 
-        txtGiaPhong.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,### VNĐ"))));
+        txtNgayHH.setDateFormatString("yyyy-MM-dd");
+
+        jLabel1.setText("m2");
+
+        jLabel2.setText("VNĐ");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -350,7 +375,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,21 +388,28 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDiaChi)
                                     .addComponent(txtSoNguoiO)
-                                    .addComponent(txtNgayHH)))
+                                    .addComponent(txtNgayHH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblTotalPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDienTich, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                                    .addComponent(txtTenPhong, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtGiaPhong)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTenPhong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(txtDienTich, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(lblTotalPerson2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))))
+                                .addComponent(jScrollPane2)))))
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
@@ -398,11 +430,13 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                            .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTotalPerson, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(txtDienTich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDienTich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblName1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -412,17 +446,20 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                             .addComponent(lblAddress1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                             .addComponent(txtSoNguoiO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTotalPerson1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                            .addComponent(txtNgayHH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtNgayHH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(lblTotalPerson2, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                                .addComponent(lblTotalPerson2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
                                 .addGap(81, 81, 81))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -463,30 +500,42 @@ ChuNhaTro cnt;
     }
 
     public void mouseClick(int index) {
-        txtTenPhong.setText(list.get(index).getTenPhong());
-        txtGiaPhong.setText(String.valueOf(list.get(index).getGiaPhong()));
-        txtDienTich.setText(String.valueOf(list.get(index).getDienTich()));
-        txtDiaChi.setText(list.get(index).getDiaChi());
-        txtMoTa.setText(list.get(index).getMota());
-        lblImage.setText(list.get(index).getHinh());
-        txtSoNguoiO.setText(String.valueOf(list.get(index).getSoLuong()));
-        txtNgayHH.setText(list.get(index).getNgayHH());
-        MaNT = list.get(index).getMa_NT();
+        try {
+            txtTenPhong.setText(list.get(index).getTenPhong());
+            txtGiaPhong.setText(String.valueOf(list.get(index).getGiaPhong()));
+            txtDienTich.setText(String.valueOf(list.get(index).getDienTich()));
+            txtDiaChi.setText(list.get(index).getDiaChi());
+            txtMoTa.setText(list.get(index).getMota());
+            lblImage.setText(list.get(index).getHinh());
+            txtSoNguoiO.setText(String.valueOf(list.get(index).getSoLuong()));
+            MaNT = list.get(index).getMa_NT();
+            String sDate1 = list.get(index).getNgayHH();
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+            txtNgayHH.setDate(date1);
 
+            ImageIcon ii = new ImageIcon("src/image/NhaTro/" + list.get(index).getHinh());
+            ImageIcon imageIcon = new ImageIcon(ii.getImage().getScaledInstance(330, 200, java.awt.Image.SCALE_SMOOTH));
+            lblImage.setIcon(imageIcon);
+            lblImage.setText("");
+        } catch (ParseException ex) {
+            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void fillToTable() {
         try {
+            list.clear();
             list = (List<NhaTro>) ChucNang.SelectNT();
             tblModel = (DefaultTableModel) tblNT.getModel();
             tblModel.setRowCount(0);
             for (NhaTro nt : list) {
-                tblModel.addRow(new Object[]{nt.getMa_NT(), nt.getMaChu(), nt.getTenPhong()});
+                tblModel.addRow(new Object[]{nt.getTenPhong(), nt.getGiaPhong(), nt.getDiaChi(),false});
             }
         } catch (Exception e) {
             System.out.println("" + e);
         }
     }
+
     private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtChuNTActionPerformed
@@ -516,7 +565,7 @@ ChuNhaTro cnt;
 
             int chon = JOptionPane.showConfirmDialog(this, "Bạn có muốn Update hay không ? ", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (chon == JOptionPane.YES_OPTION) {
-                ChucNang.UpdateNT(txtTenPhong.getText(), txtGiaPhong.getText(), txtDienTich.getText(), txtDiaChi.getText(), txtMoTa.getText(), lblImage.getText(), txtSoNguoiO.getText(), txtNgayHH.getText(), String.valueOf(MaNT));
+                ChucNang.UpdateNT(txtTenPhong.getText(), txtGiaPhong.getText(), txtDienTich.getText(), txtDiaChi.getText(), txtMoTa.getText(), lblImage.getText(), txtSoNguoiO.getText(), txtNgayHH.getDateFormatString(), String.valueOf(MaNT));
                 JOptionPane.showMessageDialog(this, "Update thành công");
             }
         } catch (Exception e) {
@@ -539,7 +588,16 @@ ChuNhaTro cnt;
 
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:\
+        ChucNang.deleteNT(10);
+//        int [] a = tblNT.getSelectedRows();
+//       List<Integer> temp = new ArrayList<>();
+//        for(int i=0;i<a.length;i++){
+//            temp.add(list.get(a[i]).getMa_NT());
+//        }
+//        for(Integer i : temp){
+//            ChucNang.deleteNT(i);
+//        }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
@@ -554,7 +612,7 @@ ChuNhaTro cnt;
                     if (!x.isRemember()) {
                         list2.remove(x);
                         break;
-                    } else{
+                    } else {
                         x.setIsLogin(false);
                     }
                 }
@@ -617,6 +675,10 @@ ChuNhaTro cnt;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
+    private org.jdatepicker.impl.DateComponentFormatter dateComponentFormatter1;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -646,7 +708,7 @@ ChuNhaTro cnt;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JFormattedTextField txtGiaPhong;
     private javax.swing.JTextArea txtMoTa;
-    private javax.swing.JFormattedTextField txtNgayHH;
+    private com.toedter.calendar.JDateChooser txtNgayHH;
     private javax.swing.JTextField txtSoNguoiO;
     private javax.swing.JTextField txtTenCNT;
     private javax.swing.JTextField txtTenPhong;
