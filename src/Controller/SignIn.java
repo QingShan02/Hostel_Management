@@ -41,8 +41,9 @@ public class SignIn extends javax.swing.JFrame implements userService {
      * Creates new form SignIn
      */
     QuanLyNhaTro nt;
+
     public SignIn() {
-                try {
+        try {
             list2 = (List<User>) ChucNang.readObj("x.txt");
             for (User s : list2) {
                 if (s.isIsLogin()) {
@@ -403,18 +404,18 @@ public class SignIn extends javax.swing.JFrame implements userService {
         } catch (Exception e) {
             System.out.println(e);
         }
-        String tb ="";
+        String tb = "";
         boolean chk = false;
-        for(User x: list){
-            if(x.getUser().equalsIgnoreCase(txtUsername.getText())){
+        for (User x : list) {
+            if (x.getUser().equalsIgnoreCase(txtUsername.getText())) {
                 tb = "Bạn đã nhập sai mật khẩu";
                 chk = true;
             }
         }
-        if(!chk){
+        if (!chk) {
             tb = "Username của bạn không tồn tại";
         }
-        JOptionPane.showMessageDialog(this, tb,"Thông báo lỗi",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, tb, "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 //                    return;
 
     }

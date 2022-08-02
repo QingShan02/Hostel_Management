@@ -17,11 +17,12 @@ public class NhaTro extends ChuNhaTro{
     private String Mota;
     private String Hinh;
     private int SoLuong;
+    private int sl_dangCo;
     private String NgayHH;
     public NhaTro() {
     }
 
-    public NhaTro(int Ma_NT, String TenPhong, long GiaPhong, int DienTich, String DiaChi, String Mota, String Hinh, int SoLuong, String NgayHH, String maChu) {
+    public NhaTro(int Ma_NT, String TenPhong, long GiaPhong, int DienTich, String DiaChi, String Mota, String Hinh, int SoLuong, int sl_dangCo, String NgayHH, String maChu) {
         super(maChu);
         this.Ma_NT = Ma_NT;
         this.TenPhong = TenPhong;
@@ -31,9 +32,11 @@ public class NhaTro extends ChuNhaTro{
         this.Mota = Mota;
         this.Hinh = Hinh;
         this.SoLuong = SoLuong;
+        this.sl_dangCo = sl_dangCo;
         this.NgayHH = NgayHH;
     }
 
+    
     public NhaTro(int Ma_NT) {
         this.Ma_NT = Ma_NT;
     }
