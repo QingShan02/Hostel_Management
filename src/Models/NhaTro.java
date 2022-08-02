@@ -10,35 +10,14 @@ package Models;
  */
 public class NhaTro extends ChuNhaTro{
     private int Ma_NT;
-    private String TenPhong;
-    private long GiaPhong;
-    private int DienTich;
-    private String DiaChi;
-    private String Mota;
-    private String Hinh;
-    private int SoLuong;
-    private int sl_dangCo;
-    private String NgayHH;
-    public NhaTro() {
-    }
+    private int Ten_NT;
+    private String diaDiemNT;
 
-    public NhaTro(int Ma_NT, String TenPhong, long GiaPhong, int DienTich, String DiaChi, String Mota, String Hinh, int SoLuong, int sl_dangCo, String NgayHH, String maChu) {
+    public NhaTro(int Ma_NT, int Ten_NT, String diaDiemNT, String maChu) {
         super(maChu);
         this.Ma_NT = Ma_NT;
-        this.TenPhong = TenPhong;
-        this.GiaPhong = GiaPhong;
-        this.DienTich = DienTich;
-        this.DiaChi = DiaChi;
-        this.Mota = Mota;
-        this.Hinh = Hinh;
-        this.SoLuong = SoLuong;
-        this.sl_dangCo = sl_dangCo;
-        this.NgayHH = NgayHH;
-    }
-
-    
-    public NhaTro(int Ma_NT) {
-        this.Ma_NT = Ma_NT;
+        this.Ten_NT = Ten_NT;
+        this.diaDiemNT = diaDiemNT;
     }
 
     public int getMa_NT() {
@@ -49,71 +28,20 @@ public class NhaTro extends ChuNhaTro{
         this.Ma_NT = Ma_NT;
     }
 
-    public String getTenPhong() {
-        return TenPhong;
+    public int getTen_NT() {
+        return Ten_NT;
     }
 
-    public void setTenPhong(String TenPhong) {
-        this.TenPhong = TenPhong;
+    public void setTen_NT(int Ten_NT) {
+        this.Ten_NT = Ten_NT;
     }
 
-    public long getGiaPhong() {
-        return GiaPhong;
+    public String getDiaDiemNT() {
+        return diaDiemNT;
     }
 
-    public void setGiaPhong(long GiaPhong) {
-        this.GiaPhong = GiaPhong;
+    public void setDiaDiemNT(String diaDiemNT) {
+        this.diaDiemNT = diaDiemNT;
     }
-
-    public int getDienTich() {
-        return DienTich;
-    }
-
-    public void setDienTich(int DienTich) {
-        this.DienTich = DienTich;
-    }
-
-    public String getDiaChi() {
-        return DiaChi;
-    }
-
-    public void setDiaChi(String DiaChi) {
-        this.DiaChi = DiaChi;
-    }
-
-    public String getMota() {
-        return Mota;
-    }
-
-    public void setMota(String Mota) {
-        this.Mota = Mota;
-    }
-
-    public String getHinh() {
-        return Hinh;
-    }
-
-    public void setHinh(String Hinh) {
-        this.Hinh = Hinh;
-    }
-
-    public int getSoLuong() {
-        return SoLuong;
-    }
-
-    public void setSoLuong(int SoLuong) {
-        this.SoLuong = SoLuong;
-    }
-
-    public String getNgayHH() {
-        return NgayHH;
-    }
-
-    public void setNgayHH(String NgayHH) {
-        this.NgayHH = NgayHH;
-    }
-
-    
-    
     
 }

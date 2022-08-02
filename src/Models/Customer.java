@@ -10,18 +10,16 @@ import Models.NhaTro;
  *
  * @author Daokh
  */
-public class Customer extends NhaTro{
+public class Customer {
 
     private String Ma_KH;
     private String HoTen;
     private String SDT;
     private String mail;
-
     public Customer() {
     }
 
-    public Customer(String Ma_KH, String HoTen, String SDT, String mail, int Ma_NT) {
-        super(Ma_NT);
+    public Customer(String Ma_KH, String HoTen, String SDT, String mail) {
         this.Ma_KH = Ma_KH;
         this.HoTen = HoTen;
         this.SDT = SDT;
