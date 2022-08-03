@@ -210,6 +210,13 @@ static int Ma_PHG;
             e.printStackTrace();
         }
     }
+    public static void UpdateUser(String PASS) throws SQLException{
+        
+        PreparedStatement pt = con.prepareStatement("UPDATE QL_USER SET PASS = ? WHERE USERNAME = '" + user +"'");
+        pt.setString(1,PASS);
+        pt.executeUpdate();
+        System.out.println(user);
+    }
 
     public ChucNang() {
     }

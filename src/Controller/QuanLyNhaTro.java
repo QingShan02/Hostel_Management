@@ -218,6 +218,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         btnEdit = new javax.swing.JToggleButton();
         btnDong = new javax.swing.JToggleButton();
         btnCapNhat = new javax.swing.JToggleButton();
+        btnDoiMK = new javax.swing.JButton();
         btnDangxuat = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         lblName = new javax.swing.JLabel();
@@ -372,6 +373,19 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
             }
         });
         jPanel6.add(btnCapNhat);
+
+        btnDoiMK.setText("Đổi mật khẩu");
+        btnDoiMK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDoiMKMouseClicked(evt);
+            }
+        });
+        btnDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMKActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnDoiMK);
 
         btnDangxuat.setText("Đăng xuất");
         btnDangxuat.addActionListener(new java.awt.event.ActionListener() {
@@ -775,6 +789,8 @@ ChuNhaTro cnt;
         ImageIcon imageIcon = new ImageIcon(ii.getImage().getScaledInstance(330, 200, java.awt.Image.SCALE_SMOOTH));
         lblImage.setIcon(imageIcon);
         lblImage.setText("");
+//        tblNT.getValueAt(ERROR, NORMAL)
+        System.out.println(list.get(index).getName_Tang());
         cboTang.setSelectedItem(list.get(index).getName_Tang());
     }
 
@@ -782,6 +798,9 @@ ChuNhaTro cnt;
         try {
             list.clear();
             list = (List<Phong>) ChucNang.SelectPHG();
+            for(Phong x : list){
+                System.out.println(x.getTen_PHG()+","+x.getName_Tang());
+            }
         } catch (SQLException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1091,6 +1110,16 @@ ChuNhaTro cnt;
         fillToTable((String) cboChonTang.getSelectedItem());
 
     }//GEN-LAST:event_cboChonTangItemStateChanged
+
+    private void btnDoiMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMKMouseClicked
+        XacNhanEmail xacNhanEmail = new XacNhanEmail();
+        xacNhanEmail.setVisible(true);
+       
+    }//GEN-LAST:event_btnDoiMKMouseClicked
+
+    private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoiMKActionPerformed
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
@@ -1179,6 +1208,7 @@ ChuNhaTro cnt;
     private javax.swing.JToggleButton btnCapNhat;
     private javax.swing.JButton btnChonANh;
     private javax.swing.JButton btnDangxuat;
+    private javax.swing.JButton btnDoiMK;
     private javax.swing.JToggleButton btnDong;
     private javax.swing.JToggleButton btnEdit;
     private javax.swing.JButton btnSua;
