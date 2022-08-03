@@ -50,19 +50,27 @@ public class SignIn extends javax.swing.JFrame implements userService {
      * Creates new form SignIn
      */
     ChiNhanh cv;
-     QuanLyNhaTro nt;
+    QuanLyNhaTro nt;
+    static boolean a = true;
     public SignIn() {
+        try {
+            ChucNang.getDBConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             list2 = (List<User>) ChucNang.readObj("x.txt");
             for (User s : list2) {
                 if (s.isIsLogin()) {
                     ChucNang.setUser(s.getUser());
-                    nt = new QuanLyNhaTro();
-                    nt.setVisible(false);
-                    cv=new ChiNhanh();
+//                    nt = new QuanLyNhaTro();
+//                    nt.setVisible(false);
+                    a= false;
+                    cv = new ChiNhanh();
                     cv.setVisible(true);
-                    this.dispose();
-                    return;
+                    break;
                 }
             }
         } catch (Exception e) {
@@ -73,22 +81,18 @@ public class SignIn extends javax.swing.JFrame implements userService {
         txtUsername.setBackground(new Color(0, 0, 0, 1));
         txtPassword.setBackground(new Color(0, 0, 0, 1));
         setLocationRelativeTo(null);
-        try {
-            ChucNang.getDBConnection();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         FillToList();
 
     }
-public void setIconForm(){
-    background.setIcon(new ImageIcon("src/image/bg.jpg"));
-    lblIconUser.setIcon(new ImageIcon("src/image/user.png"));
-    closeEye.setIcon(new ImageIcon("src/image/c.eye.png"));
-    openEye.setIcon(new ImageIcon("src/image/o.eye.png"));
-}
+
+    public void setIconForm() {
+        background.setIcon(new ImageIcon("src/image/bg.jpg"));
+        lblIconUser.setIcon(new ImageIcon("src/image/user.png"));
+        closeEye.setIcon(new ImageIcon("src/image/c.eye.png"));
+        openEye.setIcon(new ImageIcon("src/image/o.eye.png"));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -361,7 +365,7 @@ public void setIconForm(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignIn().setVisible(true);
+                new SignIn().setVisible(a);
             }
         });
     }
@@ -472,6 +476,3 @@ public void setIconForm(){
     }
 
 }
-
-  
-

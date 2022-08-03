@@ -38,7 +38,15 @@ public class ChucNang {
     static String user;
     static int Ma_NT;
 static String tenNT;
+static int Ma_PHG;
 
+    public static int getMa_PHG() {
+        return Ma_PHG;
+    }
+
+    public static void setMa_PHG(int Ma_PHG) {
+        ChucNang.Ma_PHG = Ma_PHG;
+    }
     public static String getTenNT() {
         return tenNT;
     }
@@ -145,22 +153,23 @@ static String tenNT;
         }
         return list;
     }
-    public static Customer SelectCus() throws SQLException {
-        Customer object = null;
-        System.out.println(user);
-        PreparedStatement st = con.prepareStatement("select * from QL_KHACHHANG where username = ?");
-        st.setString(1, user);
+    public static List<Customer> SelectCus() throws SQLException {
+        List<Customer> object = new ArrayList<>();
+        PreparedStatement st = con.prepareStatement("select kh.* from QL_KHACHHANG kh join QL_PHONGTHUE pt on kh.Ma_KH = pt.Ma_KH where Ma_PHG = ?");
+        st.setInt(1, Ma_PHG);
+        
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
-            object = new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+             object.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
         }
         return object;
     }
 
-    public static List<?> SelectPHG() throws SQLException {
+    public static List<Phong> SelectPHG() throws SQLException {
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = " + Ma_NT + "");
+        ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = " + ChucNang.getMa_NT() + "");
+        System.out.println(">>"+ChucNang.getMa_NT());
         while (rs.next()) {
             list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10)));
         }

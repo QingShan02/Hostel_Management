@@ -41,6 +41,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -79,7 +80,6 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
             FillToList();
             FillTang();
             setIconForm();
-            setTitle("Quản lý phòng trọ ");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -89,26 +89,28 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
     }
     List<Tang> listT;
     String maChu = "";
-public void setIconForm(){
-    String path = "src/image/";
-    lblChuNT.setIcon(new ImageIcon(path+"MaCNT.png"));
-    lblTenCNT.setIcon(new ImageIcon("src/image/TenCNT.png"));
-    lblDienThoai.setIcon(new ImageIcon("src/image/DienThoai.png"));
-    lblEmail.setIcon(new ImageIcon("src/image/Email.png"));
-    btnEdit.setIcon(new ImageIcon("src/image/Edit.png"));
+
+    public void setIconForm() {
+        String path = "src/image/";
+        lblChuNT.setIcon(new ImageIcon(path + "MaCNT.png"));
+        lblTenCNT.setIcon(new ImageIcon("src/image/TenCNT.png"));
+        lblDienThoai.setIcon(new ImageIcon("src/image/DienThoai.png"));
+        lblEmail.setIcon(new ImageIcon("src/image/Email.png"));
+        btnEdit.setIcon(new ImageIcon("src/image/Edit.png"));
         btnDong.setIcon(new ImageIcon("src/image/Cancel.png"));
         btnCapNhat.setIcon(new ImageIcon("src/image/Update.png"));
-        btnDangxuat.setIcon(new ImageIcon(path+"LogOut.png"));
-        lblName.setIcon(new ImageIcon(path+"TenPhong.png"));
-        lblAddress.setIcon(new ImageIcon(path+"GiaPhong.png"));
-        lblTotalPerson.setIcon(new ImageIcon(path+"DienTich.png"));
+        btnDangxuat.setIcon(new ImageIcon(path + "LogOut.png"));
+        lblName.setIcon(new ImageIcon(path + "TenPhong.png"));
+        lblAddress.setIcon(new ImageIcon(path + "GiaPhong.png"));
+        lblTotalPerson.setIcon(new ImageIcon(path + "DienTich.png"));
         lblTang.setIcon(new ImageIcon(""));
-        lblAddress1.setIcon(new ImageIcon(path+"SoNguoiO.png"));
-        lblTotalPerson2.setIcon(new ImageIcon(path+"MoTa.png"));
-        btnThem.setIcon(new ImageIcon(path+"ADD.png"));
-        btnXoa.setIcon(new ImageIcon(path+"Delete.png"));
-        btnSua.setIcon(new ImageIcon(path+"Update.png"));
-}
+        lblAddress1.setIcon(new ImageIcon(path + "SoNguoiO.png"));
+        lblTotalPerson2.setIcon(new ImageIcon(path + "MoTa.png"));
+        btnThem.setIcon(new ImageIcon(path + "ADD.png"));
+        btnXoa.setIcon(new ImageIcon(path + "Delete.png"));
+        btnSua.setIcon(new ImageIcon(path + "Update.png"));
+    }
+
     public void FillTang() {
         try {
             listT = ChucNang.SelectTang();
@@ -477,6 +479,7 @@ public void setIconForm(){
                 return canEdit [columnIndex];
             }
         });
+        tblNT.setRowHeight(30);
         tblNT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblNTMouseClicked(evt);
@@ -786,20 +789,28 @@ ChuNhaTro cnt;
     int i = 0;
 
     public void fillToTable(String name) {
-        tblModel = (DefaultTableModel) tblNT.getModel();
+        tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
-        for (Phong nt : list) {
+
+        tblModel.setColumnIdentifiers(new Object[]{"STT","Ten Phòng","Giá Phòng","Số lượng","Khách hàng"});
+                        for (Phong nt : list) {
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
                 i++;
                 tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng"});
             }
         }
-        tblNT.getColumn("Khách hàng").setCellRenderer(new ButtonRenderer());
-        tblNT.getColumn("Khách hàng").setCellEditor(new ButtonEditor(new JCheckBox()));
+        tblNT.setModel(tblModel);
+
+        tblNT.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+        tblNT.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
         btn.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
+                index = tblNT.getSelectedRow();
+                ChucNang.setMa_PHG(list.get(index).getMa_PHG());
+                ShowKH show = new ShowKH();
+                show.setTitle("Khách hàng - "+list.get(index).getTen_PHG());
+                show.setVisible(true);
             }
         }
         );
@@ -878,10 +889,8 @@ ChuNhaTro cnt;
                     if (!x.isRemember()) {
                         list2.remove(x);
                         break;
-                    } else {
+                    } else{
                         x.setIsLogin(false);
-                        SignIn a = new SignIn();
-                        a.setVisible(true);
                     }
                 }
             }
@@ -891,9 +900,8 @@ ChuNhaTro cnt;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        SignIn a = new SignIn();
-        a.setVisible(true);
         this.setVisible(false);
+        new SignIn().setVisible(true);
     }//GEN-LAST:event_btnDangxuatActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -1091,7 +1099,7 @@ ChuNhaTro cnt;
 
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "Modify" : value.toString());
+            setText((value == null) ? "Xem chi tiết" : value.toString());
             return this;
         }
     }
@@ -1099,21 +1107,36 @@ ChuNhaTro cnt;
     class ButtonEditor extends DefaultCellEditor {
 
         private String label;
-
+        private boolean click;
         public ButtonEditor(JCheckBox checkBox) {
             super(checkBox);
+//                    btn.addActionListener(
+//                new ActionListener() {
+//            public void actionPerformed(ActionEvent event) {
+//                fireEditingStoped();
+//            }
+//        }
+//        );
         }
 
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
-            label = (value == null) ? "Modify" : value.toString();
+            label = (value == null) ? "Xem chi tiet" : value.toString();
             btn.setText(label);
+            click = true;
             return btn;
         }
 
-        public Object getCellEditorValue() {
-            return new String(label);
-        }
+//        public Object getCellEditorValue() {
+//            if(click){
+//                System.out.println("hello"+label);
+//            }
+//            click = false;
+//            return new String(label);
+//        }
+//        protected void fireEditingStoped(){
+//            super.fireEditingStopped();
+//        }
     }
 
     /**

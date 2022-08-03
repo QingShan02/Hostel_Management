@@ -34,6 +34,7 @@ public class ChiNhanh extends javax.swing.JFrame {
             list = ChucNang.SelectNT();
             for(NhaTro x : list){
                 cboCN.addItem(x.getTen_NT());
+                System.out.println(x.getMa_NT()+","+x.getTen_NT());
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
@@ -231,8 +232,12 @@ public class ChiNhanh extends javax.swing.JFrame {
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
         list.forEach(s->{if(s.getTen_NT().equalsIgnoreCase((String) cboCN.getSelectedItem())){
-            ChucNang.setNT(s.getMa_NT());
+            
+//            System.out.println(list.get(0).getMa_NT());
+            System.out.println(">"+list.get(cboCN.getSelectedIndex()).getMa_NT());
+            ChucNang.setMa_NT(list.get(cboCN.getSelectedIndex()).getMa_NT());
             QuanLyNhaTro ql = new QuanLyNhaTro();
+            ql.setTitle("Quản lý phòng trọ - "+(String) cboCN.getSelectedItem());
             ql.setVisible(true);
             this.setVisible(false);
         }});

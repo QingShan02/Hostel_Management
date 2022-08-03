@@ -49,7 +49,7 @@ class demo extends JFrame {
         button.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                
+
                 JOptionPane.showMessageDialog(null, button.getText());
             }
         }
