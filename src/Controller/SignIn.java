@@ -27,6 +27,15 @@ import Service.ChucNang;
 import Service.ChucNang;
 import Models.User;
 import Service.userService;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -40,24 +49,27 @@ public class SignIn extends javax.swing.JFrame implements userService {
     /**
      * Creates new form SignIn
      */
-    ChucVu cv;
+    ChiNhanh cv;
      QuanLyNhaTro nt;
     public SignIn() {
-//        try {
-//            list2 = (List<User>) ChucNang.readObj("x.txt");
-//            for (User s : list2) {
-//                if (s.isIsLogin()) {
-//                    ChucNang.setUser(s.getUser());
-//                    nt = new QuanLyNhaTro();
-//                    nt.setVisible(true);
-//                    this.dispose();
-//                    return;
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            list2 = (List<User>) ChucNang.readObj("x.txt");
+            for (User s : list2) {
+                if (s.isIsLogin()) {
+                    ChucNang.setUser(s.getUser());
+                    nt = new QuanLyNhaTro();
+                    nt.setVisible(false);
+                    cv=new ChiNhanh();
+                    cv.setVisible(true);
+                    this.dispose();
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initComponents();
+        setIconForm();
         txtUsername.setBackground(new Color(0, 0, 0, 1));
         txtPassword.setBackground(new Color(0, 0, 0, 1));
         setLocationRelativeTo(null);
@@ -71,7 +83,12 @@ public class SignIn extends javax.swing.JFrame implements userService {
         FillToList();
 
     }
-
+public void setIconForm(){
+    background.setIcon(new ImageIcon("src/image/bg.jpg"));
+    lblIconUser.setIcon(new ImageIcon("src/image/user.png"));
+    closeEye.setIcon(new ImageIcon("src/image/c.eye.png"));
+    openEye.setIcon(new ImageIcon("src/image/o.eye.png"));
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,8 +143,6 @@ public class SignIn extends javax.swing.JFrame implements userService {
 
         lblUsername.setText("Username");
         getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 133, 290, -1));
-
-        lblIconUser.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\user.png")); // NOI18N
         getContentPane().add(lblIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 161, -1, 26));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -167,7 +182,6 @@ public class SignIn extends javax.swing.JFrame implements userService {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 259, 286, 10));
 
-        closeEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\c.eye.png")); // NOI18N
         closeEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeEyeMouseClicked(evt);
@@ -211,15 +225,12 @@ public class SignIn extends javax.swing.JFrame implements userService {
         });
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 235, 286, -1));
 
-        openEye.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\o.eye.png")); // NOI18N
         openEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openEyeMouseClicked(evt);
             }
         });
         getContentPane().add(openEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, 26));
-
-        background.setIcon(new javax.swing.ImageIcon("E:\\AgileScrum\\AgileScrum\\src\\image\\bg.jpg")); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 470));
 
         pack();
@@ -394,7 +405,7 @@ public class SignIn extends javax.swing.JFrame implements userService {
                     }
                     ChucNang.writeObj("x.txt", list2);
                     ChucNang.setUser(s.getUser());
-                    cv = new ChucVu();
+                    cv = new ChiNhanh();
                     cv.setVisible(true);
                     this.setVisible(false);
                     return;
@@ -461,3 +472,6 @@ public class SignIn extends javax.swing.JFrame implements userService {
     }
 
 }
+
+  
+

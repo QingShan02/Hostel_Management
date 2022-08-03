@@ -88,11 +88,6 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblIconUser">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\image\user.png"/>
-        </Property>
-      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="320" y="161" width="-1" height="26"/>
@@ -166,11 +161,6 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="closeEye">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\image\c.eye.png"/>
-        </Property>
-      </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="closeEyeMouseClicked"/>
       </Events>
@@ -228,11 +218,6 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="openEye">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\image\o.eye.png"/>
-        </Property>
-      </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="openEyeMouseClicked"/>
       </Events>
@@ -243,11 +228,6 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="background">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="E:\AgileScrum\AgileScrum\src\image\bg.jpg"/>
-        </Property>
-      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="0" y="0" width="360" height="470"/>
