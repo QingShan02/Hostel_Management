@@ -10,15 +10,25 @@ package Models;
  */
 public class NhaTro extends ChuNhaTro{
     private int Ma_NT;
-    private int Ten_NT;
+    private String Ten_NT;
     private String diaDiemNT;
 
-    public NhaTro(int Ma_NT, int Ten_NT, String diaDiemNT, String maChu) {
+    public NhaTro(int Ma_NT, String Ten_NT, String diaDiemNT, String maChu) {
         super(maChu);
         this.Ma_NT = Ma_NT;
         this.Ten_NT = Ten_NT;
         this.diaDiemNT = diaDiemNT;
     }
+
+    public String getTen_NT() {
+        return Ten_NT;
+    }
+
+    public void setTen_NT(String Ten_NT) {
+        this.Ten_NT = Ten_NT;
+    }
+
+
 
     public int getMa_NT() {
         return Ma_NT;
@@ -28,13 +38,7 @@ public class NhaTro extends ChuNhaTro{
         this.Ma_NT = Ma_NT;
     }
 
-    public int getTen_NT() {
-        return Ten_NT;
-    }
 
-    public void setTen_NT(int Ten_NT) {
-        this.Ten_NT = Ten_NT;
-    }
 
     public String getDiaDiemNT() {
         return diaDiemNT;

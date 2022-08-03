@@ -40,23 +40,23 @@ public class SignIn extends javax.swing.JFrame implements userService {
     /**
      * Creates new form SignIn
      */
-    QuanLyNhaTro nt;
-
+    ChucVu cv;
+     QuanLyNhaTro nt;
     public SignIn() {
-        try {
-            list2 = (List<User>) ChucNang.readObj("x.txt");
-            for (User s : list2) {
-                if (s.isIsLogin()) {
-                    ChucNang.setUser(s.getUser());
-                    nt = new QuanLyNhaTro();
-                    nt.setVisible(true);
-                    this.dispose();
-                    return;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            list2 = (List<User>) ChucNang.readObj("x.txt");
+//            for (User s : list2) {
+//                if (s.isIsLogin()) {
+//                    ChucNang.setUser(s.getUser());
+//                    nt = new QuanLyNhaTro();
+//                    nt.setVisible(true);
+//                    this.dispose();
+//                    return;
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         initComponents();
         txtUsername.setBackground(new Color(0, 0, 0, 1));
         txtPassword.setBackground(new Color(0, 0, 0, 1));
@@ -394,8 +394,8 @@ public class SignIn extends javax.swing.JFrame implements userService {
                     }
                     ChucNang.writeObj("x.txt", list2);
                     ChucNang.setUser(s.getUser());
-                    nt = new QuanLyNhaTro();
-                    nt.setVisible(true);
+                    cv = new ChucVu();
+                    cv.setVisible(true);
                     this.setVisible(false);
                     return;
                 }

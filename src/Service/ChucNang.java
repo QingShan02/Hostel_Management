@@ -6,6 +6,7 @@ package Service;
 
 import Models.ChuNhaTro;
 import Models.Customer;
+import Models.NhaTro;
 import Models.Phong;
 import Models.User;
 import java.io.FileInputStream;
@@ -33,7 +34,7 @@ public class ChucNang {
 
     static Connection con;
     static String user;
-    static String Ma_ChuNT;
+    static int Ma_NT;
 
     public static Object readObj(String path) throws FileNotFoundException, IOException, ClassNotFoundException {
         try (
@@ -53,8 +54,8 @@ public class ChucNang {
         ChucNang.user = user;
     }
 
-    public static void setNT(String Ma_ChuNT) {
-        ChucNang.Ma_ChuNT = Ma_ChuNT;
+    public static void setNT(int Ma_ChuNT) {
+        ChucNang.Ma_NT = Ma_ChuNT;
     }
 
     public static void getDBConnection() throws ClassNotFoundException, SQLException {
@@ -129,16 +130,24 @@ public class ChucNang {
     }
 
 
-    public static List<?> SelectNT() throws SQLException {
+    public static List<?> SelectPHG() throws SQLException {
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select phg.* from QL_Phong phg join QL_Tang tang on phg.ID_Tang = tang.ID_Tang join QL_NhaTro nt on tang.MaNT = nt.Ma_NT where nt.Ma_ChuNT = '" + Ma_ChuNT + "'");
+        ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = "+Ma_NT+"");
         while (rs.next()) {
-            list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
+            list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8),rs.getInt(9),rs.getString(10)));
         }
         return list;
     }
-
+    public static List<NhaTro> SelectNT () throws SQLException{
+        List<NhaTro> list = new ArrayList<>();
+        st = con.createStatement();
+        ResultSet rs = st.executeQuery("select nt.* from QL_NhaTro nt join QL_CHUNHATRO cnt on cnt.Ma_ChuNT = nt.Ma_ChuNT where cnt.username = '"+user+"'");
+        while (rs.next()) {
+            list.add(new NhaTro(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+        }
+        return list;
+    }
     public static void InsertNT(String tenPhong, int gia, int dienTich, String moTa, String hinh, int soLuong, String maChu) throws SQLException {
         pst = con.prepareStatement("insert into QL_Phong values (?,?,?,?,?,?,?)");
         pst.setString(1, tenPhong);

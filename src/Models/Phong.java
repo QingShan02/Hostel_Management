@@ -16,9 +16,11 @@ public class Phong {
     private String mota;
     private String hinh;
     private int soluong;
-    private int id;
-    public Phong(int Ma_PHG, String ten_PHG, long GiaPhong, int Dientich, String mota, String hinh, int soluong, int id) {
-        this.id = id;
+    private String id;
+    private int Ma_NT;
+    private String name_Tang;
+
+    public Phong(int Ma_PHG, String ten_PHG, long GiaPhong, int Dientich, String mota, String hinh, int soluong, String id, int Ma_NT, String name_Tang) {
         this.Ma_PHG = Ma_PHG;
         this.ten_PHG = ten_PHG;
         this.GiaPhong = GiaPhong;
@@ -26,7 +28,38 @@ public class Phong {
         this.mota = mota;
         this.hinh = hinh;
         this.soluong = soluong;
+        this.id = id;
+        this.Ma_NT = Ma_NT;
+        this.name_Tang = name_Tang;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getMa_NT() {
+        return Ma_NT;
+    }
+
+    public void setMa_NT(int Ma_NT) {
+        this.Ma_NT = Ma_NT;
+    }
+
+    public String getName_Tang() {
+        return name_Tang;
+    }
+
+    public void setName_Tang(String name_Tang) {
+        this.name_Tang = name_Tang;
+    }
+
+
+
+
 
     public Phong() {
     }
