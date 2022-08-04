@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,6 +34,7 @@ public class ShowKH extends javax.swing.JFrame {
        } catch (ClassNotFoundException ex) {
            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
        }
+//        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
     public void FilltoTable() throws SQLException{
                    list = ChucNang.SelectCus();
@@ -55,8 +57,11 @@ public class ShowKH extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCus = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -100,13 +105,18 @@ public class ShowKH extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-       
+//       this.setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        this.setVisible(false);
+//        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+//        this.setVisible(false);
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

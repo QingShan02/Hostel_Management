@@ -37,8 +37,8 @@ public class ChucNang {
     static Connection con;
     static String user;
     static int Ma_NT;
-static String tenNT;
-static int Ma_PHG;
+    static String tenNT;
+    static int Ma_PHG;
 
     public static int getMa_PHG() {
         return Ma_PHG;
@@ -47,6 +47,7 @@ static int Ma_PHG;
     public static void setMa_PHG(int Ma_PHG) {
         ChucNang.Ma_PHG = Ma_PHG;
     }
+
     public static String getTenNT() {
         return tenNT;
     }
@@ -54,6 +55,7 @@ static int Ma_PHG;
     public static void setTenNT(String tenNT) {
         ChucNang.tenNT = tenNT;
     }
+
     public static Object readObj(String path) throws FileNotFoundException, IOException, ClassNotFoundException {
         try (
                  FileInputStream fis = new FileInputStream(path);  ObjectInputStream ois = new ObjectInputStream(fis);) {
@@ -131,7 +133,7 @@ static int Ma_PHG;
         st.executeUpdate();
     }
 
-    public static void UpdatePHG(String tenPhong, int gia, int dienTich, String moTa, String hinh, int soLuong,String id_tang, int Ma_NT,int Ma_PHG) throws SQLException {
+    public static void UpdatePHG(String tenPhong, int gia, int dienTich, String moTa, String hinh, int soLuong, String id_tang, int Ma_NT, int Ma_PHG) throws SQLException {
         PreparedStatement st = con.prepareStatement("update QL_Phong set TenPhong=?,GiaPhong=?,DienTich=?,MoTa=?,Hinh=?,SL_ToiDa=?,ID_Tang =?,Ma_NT=? where Ma_PHG = ?");
         st.setString(1, tenPhong);
         st.setInt(2, gia);
@@ -144,31 +146,33 @@ static int Ma_PHG;
         st.setInt(9, Ma_PHG);
         st.executeUpdate();
     }
-    public static List<Tang> SelectTang() throws SQLException{
+
+    public static List<Tang> SelectTang() throws SQLException {
         List<Tang> list = new ArrayList<>();
         st = con.createStatement();
         ResultSet rs = st.executeQuery("select * from QL_Tang");
-        while(rs.next()){
-            list.add(new Tang(rs.getString(1),rs.getString(2)));
+        while (rs.next()) {
+            list.add(new Tang(rs.getString(1), rs.getString(2)));
         }
         return list;
     }
+
     public static List<Customer> SelectCus() throws SQLException {
         List<Customer> object = new ArrayList<>();
         PreparedStatement st = con.prepareStatement("select kh.* from QL_KHACHHANG kh join QL_PHONGTHUE pt on kh.Ma_KH = pt.Ma_KH where Ma_PHG = ?");
         st.setInt(1, Ma_PHG);
-        
+
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
-             object.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+            object.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
         }
         return object;
     }
 
-    public static List<Phong> SelectPHG() throws SQLException {
+    public static List<Phong> SelectPHG(String ID_Tang) throws SQLException {
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = " + ChucNang.getMa_NT() + "");
+        ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = " + ChucNang.getMa_NT() + "and phg.ID_Tang = '"+ID_Tang+"'");
         while (rs.next()) {
             list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10)));
         }
@@ -184,25 +188,26 @@ static int Ma_PHG;
         }
         return list;
     }
-    public static String getMaChu() throws SQLException{
+
+    public static String getMaChu() throws SQLException {
         String maChu = "";
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select Ma_ChuNT from QL_CHUNHATRO where username = '"+user+"'");
-        while (rs.next()) {            
+        ResultSet rs = st.executeQuery("select Ma_ChuNT from QL_CHUNHATRO where username = '" + user + "'");
+        while (rs.next()) {
             maChu = rs.getString(1);
         }
         return maChu;
     }
-    public static List<NhaTro> SelectCN() throws SQLException{
+
+    public static List<NhaTro> SelectCN() throws SQLException {
         List<NhaTro> list = new ArrayList<>();
         st = con.createStatement();
         ResultSet rs = st.executeQuery("select * from  QL_NhaTro");
-        while (rs.next()) {            
-             list.add(new NhaTro(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+        while (rs.next()) {
+            list.add(new NhaTro(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
         }
         return list;
     }
-    
 
     public static void InsertPHG(String tenPhong, int gia, int dienTich, String moTa, String hinh, int soLuongTD, String ID_Tang, int Ma_NT) throws SQLException {
         pst = con.prepareStatement("insert into QL_Phong values (?,?,?,?,?,?,?,?)");
@@ -217,19 +222,22 @@ static int Ma_PHG;
         pst.executeUpdate();
         pst.close();
     }
-    public static void InsertNT(String ten , String diachi, String machu) throws SQLException{
+
+    public static void InsertNT(String ten, String diachi, String machu) throws SQLException {
         pst = con.prepareStatement("insert into QL_NhaTro values(?,?,?)");
         pst.setString(1, ten);
         pst.setString(2, diachi);
         pst.setString(3, machu);
         pst.executeUpdate();
     }
-    public static void deleteNT(int MaNT) throws SQLException{
+
+    public static void deleteNT(int MaNT) throws SQLException {
         pst = con.prepareStatement("delete from QL_NhaTro where Ma_NT =?");
         pst.setInt(1, MaNT);
         pst.executeUpdate();
     }
-    public static void UpdateNT(int Ma_NT, String ten, String diadiem, String Ma_ChuNT) throws SQLException{
+
+    public static void UpdateNT(int Ma_NT, String ten, String diadiem, String Ma_ChuNT) throws SQLException {
         pst = con.prepareStatement("update QL_NhaTro set TenNT = ? , DiaDiem = ?, Ma_ChuNT = ? where Ma_NT=?");
         pst.setString(1, ten);
         pst.setString(2, diadiem);
@@ -237,6 +245,7 @@ static int Ma_PHG;
         pst.setInt(4, Ma_NT);
         pst.executeUpdate();
     }
+
     public static void deletePHG(int Ma_PHG) {
         try (
                  PreparedStatement pt = con.prepareStatement("DELETE FROM QL_Phong WHERE Ma_PHG = ?");) {
@@ -247,10 +256,11 @@ static int Ma_PHG;
             e.printStackTrace();
         }
     }
-    public static void UpdateUser(String PASS) throws SQLException{
-        
-        PreparedStatement pt = con.prepareStatement("UPDATE QL_USER SET PASS = ? WHERE USERNAME = '" + user +"'");
-        pt.setString(1,PASS);
+
+    public static void UpdateUser(String PASS) throws SQLException {
+
+        PreparedStatement pt = con.prepareStatement("UPDATE QL_USER SET PASS = ? WHERE USERNAME = '" + user + "'");
+        pt.setString(1, PASS);
         pt.executeUpdate();
         System.out.println(user);
     }

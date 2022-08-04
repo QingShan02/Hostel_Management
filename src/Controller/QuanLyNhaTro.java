@@ -77,7 +77,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
             setLocationRelativeTo(null);
             ChucNang.getDBConnection();
             fillToCNT();
-            FillToList();
+//            FillToList();
             FillTang();
             setIconForm();
         } catch (ClassNotFoundException ex) {
@@ -794,13 +794,14 @@ ChuNhaTro cnt;
         cboTang.setSelectedItem(list.get(index).getName_Tang());
     }
 
-    public void FillToList() {
+    public void FillToList(String maTang) {
         try {
             list.clear();
-            list = (List<Phong>) ChucNang.SelectPHG();
-            for(Phong x : list){
-                System.out.println(x.getTen_PHG()+","+x.getName_Tang());
-            }
+            System.out.println(">> Mã tầng : "+maTang);
+            list = (List<Phong>) ChucNang.SelectPHG(maTang);
+//            for(Phong x : list){
+//                System.out.println(x.getTen_PHG()+","+x.getName_Tang());
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -810,7 +811,7 @@ ChuNhaTro cnt;
     public void fillToTable(String name) {
         tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
-
+        System.out.println(">> item:" +name);
         tblModel.setColumnIdentifiers(new Object[]{"STT","Ten Phòng","Giá Phòng","Số lượng","Khách hàng"});
                         for (Phong nt : list) {
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
@@ -954,7 +955,7 @@ ChuNhaTro cnt;
             if (chon == JOptionPane.YES_OPTION) {
                 ChucNang.UpdatePHG(txtTenPhong.getText(), Integer.parseInt(txtGiaPhong.getText().replace(",", "")), Integer.parseInt(txtDienTich.getText()), txtMoTa.getText(), name, Integer.parseInt(txtSoNguoiO.getText()), listT.get(cboTang.getSelectedIndex()).getID_tang(), ChucNang.getMa_NT(), list.get(index).getMa_PHG());
                 JOptionPane.showMessageDialog(this, "Update thành công");
-                FillToList();
+//                FillToList();
             }
         } catch (Exception e) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, e);
@@ -971,7 +972,7 @@ ChuNhaTro cnt;
         for (Integer i : temp) {
             ChucNang.deletePHG(i);
         }
-        FillToList();
+//        FillToList();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -1001,7 +1002,7 @@ ChuNhaTro cnt;
         }
 //        System.out.println(new ImageIcon(lblImage.getIcon()).toString());
         ThemNT();
-        FillToList();
+//        FillToList();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void tblNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNTMouseClicked
@@ -1107,6 +1108,8 @@ ChuNhaTro cnt;
 
     private void cboChonTangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChonTangItemStateChanged
         // TODO add your handling code here:
+                FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
+
         fillToTable((String) cboChonTang.getSelectedItem());
 
     }//GEN-LAST:event_cboChonTangItemStateChanged
