@@ -159,7 +159,7 @@ public class ChucNang {
 
     public static List<Customer> SelectCus() throws SQLException {
         List<Customer> object = new ArrayList<>();
-        PreparedStatement st = con.prepareStatement("select kh.* from QL_KHACHHANG kh join QL_PHONGTHUE pt on kh.Ma_KH = pt.Ma_KH where Ma_PHG = ?");
+        PreparedStatement st = con.prepareStatement("select kh.* from QL_KHACHHANG kh where Ma_PHG = ?");
         st.setInt(1, Ma_PHG);
 
         ResultSet rs = st.executeQuery();
@@ -172,9 +172,9 @@ public class ChucNang {
     public static List<Phong> SelectPHG(String ID_Tang) throws SQLException {
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = " + ChucNang.getMa_NT() + "and phg.ID_Tang = '"+ID_Tang+"'");
+        ResultSet rs = st.executeQuery("select phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,dd.TenKH,count(kh.Ma_KH) from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT left join QL_KHACHHANG kh on phg.Ma_PHG = kh.Ma_PHG left join QL_KHACHHANG dd on dd.Ma_KH = kh.NguoiDaiDien where nt.Ma_NT = "+ChucNang.getMa_NT()+" and phg.ID_Tang = '"+ID_Tang+"' group by phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,dd.TenKH order by phg.Ma_PHG");
         while (rs.next()) {
-            list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10)));
+            list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),rs.getString(11),rs.getInt(12)));
         }
         return list;
     }

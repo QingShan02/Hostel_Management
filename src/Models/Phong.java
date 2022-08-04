@@ -19,8 +19,10 @@ public class Phong {
     private String id;
     private int Ma_NT;
     private String name_Tang;
+    private String TenNguoiDaiDien;
+    private int SoLuongDangCo;
 
-    public Phong(int Ma_PHG, String ten_PHG, long GiaPhong, int Dientich, String mota, String hinh, int soluong, String id, int Ma_NT, String name_Tang) {
+    public Phong(int Ma_PHG, String ten_PHG, long GiaPhong, int Dientich, String mota, String hinh, int soluong, String id, int Ma_NT, String name_Tang, String TenNguoiDaiDien, int SoLuongDangCo) {
         this.Ma_PHG = Ma_PHG;
         this.ten_PHG = ten_PHG;
         this.GiaPhong = GiaPhong;
@@ -31,7 +33,27 @@ public class Phong {
         this.id = id;
         this.Ma_NT = Ma_NT;
         this.name_Tang = name_Tang;
+        this.TenNguoiDaiDien = TenNguoiDaiDien;
+        this.SoLuongDangCo = SoLuongDangCo;
     }
+
+    public String getTenNguoiDaiDien() {
+        return TenNguoiDaiDien;
+    }
+
+    public void setTenNguoiDaiDien(String TenNguoiDaiDien) {
+        this.TenNguoiDaiDien = TenNguoiDaiDien;
+    }
+
+    public int getSoLuongDangCo() {
+        return SoLuongDangCo;
+    }
+
+    public void setSoLuongDangCo(int SoLuongDangCo) {
+        this.SoLuongDangCo = SoLuongDangCo;
+    }
+
+    
 
     public String getId() {
         return id;
