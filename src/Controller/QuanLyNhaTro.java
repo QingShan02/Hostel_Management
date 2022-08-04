@@ -1114,7 +1114,6 @@ ChuNhaTro cnt;
     private void btnDoiMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMKMouseClicked
         XacNhanEmail xacNhanEmail = new XacNhanEmail();
         xacNhanEmail.setVisible(true);
-       
     }//GEN-LAST:event_btnDoiMKMouseClicked
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed

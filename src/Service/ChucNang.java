@@ -169,7 +169,6 @@ static int Ma_PHG;
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
         ResultSet rs = st.executeQuery("select phg.*,tang.TenTang from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT where nt.Ma_NT = " + ChucNang.getMa_NT() + "");
-        System.out.println(">>"+ChucNang.getMa_NT());
         while (rs.next()) {
             list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10)));
         }
