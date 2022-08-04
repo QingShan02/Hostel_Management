@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -24,23 +25,72 @@ public class ChiNhanh extends javax.swing.JFrame {
      * Creates new form ChiNhanh
      */
     List<NhaTro> list = new ArrayList<>();
+    DefaultListModel tb;
+    private int index = -1;
+
     public ChiNhanh() {
         initComponents();
         setLocationRelativeTo(null);
         FillButton();
+
     }
-    public void FillButton (){
-//        try {
-//            list = ChucNang.SelectNT();
-//            for(NhaTro x : list){
-//                cboCN.addItem(x.getTen_NT());
-//                System.out.println(x.getMa_NT()+","+x.getTen_NT());
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+
+    public void FillButton() {
+        try {
+            list = ChucNang.SelectNT();
+            for (NhaTro x : list) {
+                cboCN.addItem(x.getTen_NT());
+                System.out.println(x.getMa_NT() + "," + x.getTen_NT());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    List<NhaTro> listNT;
+
+    public void them() {
+        try {
+            String ten = JOptionPane.showInputDialog(this, "Vui lòng nhập tên");
+            String diachi = JOptionPane.showInputDialog(this, "Vui lòng nhập dia chi");
+            ChucNang.InsertNT(ten, diachi, ChucNang.getMaChu());
+            cboCN.removeAllItems();
+            FillButton();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void Xoa() {
+        try {
+            ChucNang.deleteNT(list.get(cboCN.getSelectedIndex()).getMa_NT());
+            cboCN.removeAllItems();
+            FillButton();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void Sua() {
+        try {
+            String ten = JOptionPane.showInputDialog(this, "Vui lòng nhập tên");
+            String diachi = JOptionPane.showInputDialog(this, "Vui lòng nhập dia chi");
+            ChucNang.UpdateNT(list.get(cboCN.getSelectedIndex()).getMa_NT(), ten, diachi, ChucNang.getMaChu());
+            cboCN.removeAllItems();
+            FillButton();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+//  public void update() throws SQLException {
+//        String ten = JOptionPane.showInputDialog("Nhập tên nhà trọ cần thêm");
+//        if(ten == null || ten.equals("")){
+//            return;
 //        }
-    }
-  
+//        NhaTro nt = new NhaTro();
+//        nt.setTen_NT(ten);
+//  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,10 +108,12 @@ public class ChiNhanh extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        cboCN = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
         btnChon = new javax.swing.JButton();
-        txtFill = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblList = new javax.swing.JList<>();
+        btnThem = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
 
         jTextField4.setText("jTextField1");
 
@@ -88,47 +140,60 @@ public class ChiNhanh extends javax.swing.JFrame {
                 btnChonActionPerformed(evt);
             }
         });
+        jPanel2.add(btnChon);
 
-        txtFill.setText("jTextField1");
-
-        tblList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
         });
-        tblList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(tblList);
+        jPanel2.add(btnThem);
+
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnXoa);
+
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSua);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jLabel1)
-                .addContainerGap(143, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFill, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(108, 108, 108))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(cboCN, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(110, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(53, 53, 53)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtFill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnChon, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(cboCN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Chon chi nhánh", jPanel1);
@@ -155,17 +220,35 @@ public class ChiNhanh extends javax.swing.JFrame {
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
-//        list.forEach(s->{if(s.getTen_NT().equalsIgnoreCase((String) cboCN.getSelectedItem())){
-//            
-////            System.out.println(list.get(0).getMa_NT());
-//            System.out.println(">"+list.get(cboCN.getSelectedIndex()).getMa_NT());
-//            ChucNang.setMa_NT(list.get(cboCN.getSelectedIndex()).getMa_NT());
-//            QuanLyNhaTro ql = new QuanLyNhaTro();
-//            ql.setTitle("Quản lý phòng trọ - "+(String) cboCN.getSelectedItem());
-//            ql.setVisible(true);
-//            this.setVisible(false);
-//        }});
+        list.forEach(s -> {
+            if (s.getTen_NT().equalsIgnoreCase((String) cboCN.getSelectedItem())) {
+
+//            System.out.println(list.get(0).getMa_NT());
+                System.out.println(">" + list.get(cboCN.getSelectedIndex()).getMa_NT());
+                ChucNang.setMa_NT(list.get(cboCN.getSelectedIndex()).getMa_NT());
+                QuanLyNhaTro ql = new QuanLyNhaTro();
+                ql.setTitle("Quản lý phòng trọ - " + (String) cboCN.getSelectedItem());
+                ql.setVisible(true);
+                this.setVisible(false);
+            }
+        });
+
     }//GEN-LAST:event_btnChonActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        this.them();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        Xoa();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        Sua();
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,15 +290,17 @@ public class ChiNhanh extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChon;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnXoa;
+    private javax.swing.JComboBox<String> cboCN;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JList<String> tblList;
-    private javax.swing.JTextField txtFill;
     // End of variables declaration//GEN-END:variables
 }
