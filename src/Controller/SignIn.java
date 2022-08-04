@@ -52,6 +52,7 @@ public class SignIn extends javax.swing.JFrame implements userService {
     ChiNhanh cv;
     QuanLyNhaTro nt;
     static boolean a = true;
+
     public SignIn() {
         try {
             ChucNang.getDBConnection();
@@ -67,7 +68,7 @@ public class SignIn extends javax.swing.JFrame implements userService {
                     ChucNang.setUser(s.getUser());
 //                    nt = new QuanLyNhaTro();
 //                    nt.setVisible(false);
-                    a= false;
+                    a = false;
                     cv = new ChiNhanh();
                     cv.setVisible(true);
                     break;
@@ -409,8 +410,10 @@ public class SignIn extends javax.swing.JFrame implements userService {
                     }
                     ChucNang.writeObj("x.txt", list2);
                     ChucNang.setUser(s.getUser());
-                    QuanLyNhaTro ql = new QuanLyNhaTro();
-                    ql.setVisible(true);
+                    cv = new ChiNhanh();
+                    cv.setVisible(true);
+//                    QuanLyNhaTro ql = new QuanLyNhaTro();
+//                    ql.setVisible(true);
 //                    LoadingForm lf = new LoadingForm();
 //                    lf.setVisible(true);
                     this.setVisible(false);
