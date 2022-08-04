@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package SendEmail;
-import Controller.XacNhanEmail;
 import javax.mail.*;
 import javax.activation.*;
 import javax.mail.internet.InternetAddress;
@@ -24,10 +23,10 @@ public class email {
       return random_int;
     }
     
-    public static void GuiEmail(){
+    public static void GuiEmail(String toEmail){
         final String username = "thanhson9112@gmail.com";
         final String password = "oqboegyladaeyitm";
-        final String ToEmail = XacNhanEmail.getEmail();
+//        final String ToEmail = XacNhanEmail.getEmail();
         Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
@@ -46,7 +45,7 @@ public class email {
             message.setFrom(new InternetAddress("thanhson9112@gmail.com"));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(ToEmail)
+                    InternetAddress.parse(toEmail)
             );
             message.setSubject("DOI MAT KHAU!");
             message.setText("Ðây là mã xác thuc: "+ RanDom() + "\n Vui lòng nhap de xac minh");

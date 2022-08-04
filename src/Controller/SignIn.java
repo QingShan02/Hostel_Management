@@ -65,11 +65,11 @@ public class SignIn extends javax.swing.JFrame implements userService {
             for (User s : list2) {
                 if (s.isIsLogin()) {
                     ChucNang.setUser(s.getUser());
-//                    nt = new QuanLyNhaTro();
-//                    nt.setVisible(false);
+                    nt = new QuanLyNhaTro();
+                    nt.setVisible(true);
                     a= false;
-                    cv = new ChiNhanh();
-                    cv.setVisible(true);
+//                    cv = new ChiNhanh();
+//                    cv.setVisible(true);
                     break;
                 }
             }
