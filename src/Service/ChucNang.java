@@ -184,6 +184,25 @@ static int Ma_PHG;
         }
         return list;
     }
+    public static String getMaChu() throws SQLException{
+        String maChu = "";
+        st = con.createStatement();
+        ResultSet rs = st.executeQuery("select Ma_ChuNT from QL_CHUNHATRO where username = '"+user+"'");
+        while (rs.next()) {            
+            maChu = rs.getString(1);
+        }
+        return maChu;
+    }
+    public static List<NhaTro> SelectCN() throws SQLException{
+        List<NhaTro> list = new ArrayList<>();
+        st = con.createStatement();
+        ResultSet rs = st.executeQuery("select * from  QL_NhaTro");
+        while (rs.next()) {            
+             list.add(new NhaTro(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+        }
+        return list;
+    }
+    
 
     public static void InsertPHG(String tenPhong, int gia, int dienTich, String moTa, String hinh, int soLuongTD, String ID_Tang, int Ma_NT) throws SQLException {
         pst = con.prepareStatement("insert into QL_Phong values (?,?,?,?,?,?,?,?)");
@@ -198,7 +217,26 @@ static int Ma_PHG;
         pst.executeUpdate();
         pst.close();
     }
-
+    public static void InsertNT(String ten , String diachi, String machu) throws SQLException{
+        pst = con.prepareStatement("insert into QL_NhaTro values(?,?,?)");
+        pst.setString(1, ten);
+        pst.setString(2, diachi);
+        pst.setString(3, machu);
+        pst.executeUpdate();
+    }
+    public static void deleteNT(int MaNT) throws SQLException{
+        pst = con.prepareStatement("delete from QL_NhaTro where Ma_NT =?");
+        pst.setInt(1, MaNT);
+        pst.executeUpdate();
+    }
+    public static void UpdateNT(int Ma_NT, String ten, String diadiem, String Ma_ChuNT) throws SQLException{
+        pst = con.prepareStatement("update QL_NhaTro set TenNT = ? , DiaDiem = ?, Ma_ChuNT = ? where Ma_NT=?");
+        pst.setString(1, ten);
+        pst.setString(2, diadiem);
+        pst.setString(3, Ma_ChuNT);
+        pst.setInt(4, Ma_NT);
+        pst.executeUpdate();
+    }
     public static void deletePHG(int Ma_PHG) {
         try (
                  PreparedStatement pt = con.prepareStatement("DELETE FROM QL_Phong WHERE Ma_PHG = ?");) {

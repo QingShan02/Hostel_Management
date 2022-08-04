@@ -20,6 +20,16 @@ public class NhaTro extends ChuNhaTro{
         this.diaDiemNT = diaDiemNT;
     }
 
+    public NhaTro(String Ten_NT, String diaDiemNT, String maChu) {
+        super(maChu);
+        this.Ten_NT = Ten_NT;
+        this.diaDiemNT = diaDiemNT;
+    }
+
+    public NhaTro() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getTen_NT() {
         return Ten_NT;
     }
