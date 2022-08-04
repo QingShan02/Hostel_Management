@@ -814,6 +814,7 @@ ChuNhaTro cnt;
         System.out.println(">> item:" +name);
         tblModel.setColumnIdentifiers(new Object[]{"STT","Ten Phòng","Giá Phòng","Số lượng","Khách hàng"});
                         for (Phong nt : list) {
+
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
                 i++;
                 tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng"});
@@ -829,7 +830,7 @@ ChuNhaTro cnt;
                 index = tblNT.getSelectedRow();
                 ChucNang.setMa_PHG(list.get(index).getMa_PHG());
                 ShowKH show = new ShowKH();
-                show.setTitle("Khách hàng - "+list.get(index).getTen_PHG());
+                show.setTitle("Khách hàng - " + list.get(index).getTen_PHG());
                 show.setVisible(true);
             }
         }
@@ -909,7 +910,7 @@ ChuNhaTro cnt;
                     if (!x.isRemember()) {
                         list2.remove(x);
                         break;
-                    } else{
+                    } else {
                         x.setIsLogin(false);
                     }
                 }
@@ -1115,8 +1116,23 @@ ChuNhaTro cnt;
     }//GEN-LAST:event_cboChonTangItemStateChanged
 
     private void btnDoiMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMKMouseClicked
-        XacNhanEmail xacNhanEmail = new XacNhanEmail();
-        xacNhanEmail.setVisible(true);
+
+        SendEmail.email.GuiEmail("khaiminh0401@gmail.com");
+
+        String maXacThuc = JOptionPane.showInputDialog(this, "Nhập mã xác thực email");
+
+        if (maXacThuc.equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã xác thực");
+        } else {
+            if (maXacThuc.equals(SendEmail.email.maxt)) {
+                JOptionPane.showMessageDialog(this, "Đã nhập chính xác!");
+                DOIMK doimk = new DOIMK();
+                doimk.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nhập không chính xác!");
+            }
+        }
+        
     }//GEN-LAST:event_btnDoiMKMouseClicked
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
@@ -1139,6 +1155,7 @@ ChuNhaTro cnt;
 
         private String label;
         private boolean click;
+
         public ButtonEditor(JCheckBox checkBox) {
             super(checkBox);
 //                    btn.addActionListener(
