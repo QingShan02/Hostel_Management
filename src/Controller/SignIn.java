@@ -60,22 +60,22 @@ public class SignIn extends javax.swing.JFrame implements userService {
         } catch (SQLException ex) {
             Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            list2 = (List<User>) ChucNang.readObj("x.txt");
-            for (User s : list2) {
-                if (s.isIsLogin()) {
-                    ChucNang.setUser(s.getUser());
-//                    nt = new QuanLyNhaTro();
-//                    nt.setVisible(false);
-                    a= false;
-                    cv = new ChiNhanh();
-                    cv.setVisible(true);
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            list2 = (List<User>) ChucNang.readObj("x.txt");
+//            for (User s : list2) {
+//                if (s.isIsLogin()) {
+//                    ChucNang.setUser(s.getUser());
+////                    nt = new QuanLyNhaTro();
+////                    nt.setVisible(false);
+//                    a= false;
+//                    cv = new ChiNhanh();
+//                    cv.setVisible(true);
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         initComponents();
         setIconForm();
         txtUsername.setBackground(new Color(0, 0, 0, 1));
@@ -409,8 +409,8 @@ public class SignIn extends javax.swing.JFrame implements userService {
                     }
                     ChucNang.writeObj("x.txt", list2);
                     ChucNang.setUser(s.getUser());
-                    cv = new ChiNhanh();
-                    cv.setVisible(true);
+                    LoadingForm lf = new LoadingForm();
+                    lf.setVisible(true);
                     this.setVisible(false);
                     return;
                 }

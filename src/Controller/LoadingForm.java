@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Daokh
  */
 public class LoadingForm extends javax.swing.JFrame implements Runnable {
-
+ChiNhanh cv ;
     /**
      * Creates new form LoadingForm
      */
@@ -20,7 +20,8 @@ public class LoadingForm extends javax.swing.JFrame implements Runnable {
         setLocationRelativeTo(null);
         setResizable(true);
         Thread t = new Thread(this);
-        t.run();
+        t.start();
+        setVisible(false);
     }
 
     /**
@@ -112,11 +113,12 @@ public class LoadingForm extends javax.swing.JFrame implements Runnable {
     public void run() {
         while (i < 100) {
             try {
-                i += ThreadLocalRandom.current().nextInt(1, 100);
+                i += ThreadLocalRandom.current().nextInt(1, 101-i);
                 jProgressBar1.setValue(i);
                 if (i >= 100) {
+                    cv = new ChiNhanh();
+                    cv.setVisible(true);
                     this.setVisible(false);
-
                     break;
                 }
                 Thread.sleep(1000);
