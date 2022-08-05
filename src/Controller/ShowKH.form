@@ -50,7 +50,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="btnThem" min="-2" max="-2" attributes="0"/>
+              <Component id="btnThem" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnXoa" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -75,11 +75,11 @@
                 <Column editable="true" title="T&#xea;n kh&#xe1;ch h&#xe0;ng" type="java.lang.Object"/>
                 <Column editable="true" title="&#x110;i&#x1ec7;n tho&#x1ea1;i" type="java.lang.Object"/>
                 <Column editable="true" title="Email" type="java.lang.Object"/>
-                <Column editable="false" title="Ng&#x1b0;&#x1edd;i &#x111;&#x1ea1;i di&#x1ec7;n" type="java.lang.Boolean"/>
+                <Column editable="true" title="Ng&#x1b0;&#x1edd;i &#x111;&#x1ea1;i di&#x1ec7;n" type="java.lang.Boolean"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
+              <TableColumnModel selectionModel="2">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

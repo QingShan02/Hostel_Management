@@ -164,7 +164,7 @@ public class ChucNang {
 
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
-            object.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
+            object.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5),rs.getInt(6)));
         }
         return object;
     }
@@ -250,22 +250,27 @@ public class ChucNang {
         pst.setInt(1, Makh);
         pst.executeUpdate();
     }
-    public static void UpdateKH(String TenKH,String sdt,String email,int nguoidd,int makh) throws SQLException{
-    pst=con.prepareStatement("update QL_KHACHHANG set TenKH =?,DienThoai=?,Email=?,NguoiDaiDien=?, Ma_PHG='"+Ma_PHG+"'"+"where Ma_KH=?");
+    public static void UpdateNguoiDD(int dd, int phg) throws SQLException{
+        pst= con.prepareStatement("update QL_KHACHHANG set NguoiDaiDien = ? where Ma_PHG =? ");
+        pst.setInt(1, dd);
+        pst.setInt(2, phg);
+        pst.executeUpdate();
+    }
+    public static void UpdateKH(String TenKH,String sdt,String email,int makh) throws SQLException{
+    pst=con.prepareStatement("update QL_KHACHHANG set TenKH =?,DienThoai=?,Email=? where Ma_KH=? and Ma_PHG="+Ma_PHG);
     pst.setString(1, TenKH);
     pst.setString(2, sdt);
     pst.setString(3, email);
-    pst.setInt(4, nguoidd);
-    pst.setInt(5, makh);
+    pst.setInt(4, makh);
     pst.executeUpdate();
     }
-    public static void InsertKH(String tenString,String sdt,String email,int ngdd,int maphg) throws SQLException{
-        pst=con.prepareStatement("insert into QL_KHACHHANG(TenKH,DienThoai,Email) values(?,?,?,?,?)");
-        pst.setString(1, tenString);
+    public static void InsertKH(String ten,String sdt,String email) throws SQLException{
+        pst=con.prepareStatement("insert into QL_KHACHHANG(TenKH,DienThoai,Email,Ma_PHG) values(?,?,?,?)");
+        System.out.println(ten+","+sdt+","+email+","+Ma_PHG);
+        pst.setString(1, ten);
         pst.setString(2, sdt);
         pst.setString(3, email);
-        pst.setInt(4, ngdd);
-        pst.setInt(5, maphg);
+        pst.setInt(4, Ma_PHG);
         pst.executeUpdate();
     }
 

@@ -12,45 +12,55 @@ import Models.NhaTro;
  */
 public class Customer {
 
-    private String Ma_KH;
+    private int Ma_KH;
     private String HoTen;
     private String SDT;
     private String mail;
-    private String nguoiDD;
+    private int nguoiDD;
+    private int Ma_PHG;
     public Customer() {
     }
 
-    public Customer(String Ma_KH, String HoTen, String SDT, String mail, String nguoiDD) {
-        this.Ma_KH = Ma_KH;
-        this.HoTen = HoTen;
-        this.SDT = SDT;
-        this.mail = mail;
-        this.nguoiDD = nguoiDD;
-    }
 
-    public String getNguoiDD() {
+    public int getNguoiDD() {
         return nguoiDD;
     }
 
-    public void setNguoiDD(String nguoiDD) {
+    public void setNguoiDD(int nguoiDD) {
         this.nguoiDD = nguoiDD;
     }
-    
 
-    public Customer(String Ma_KH, String HoTen, String SDT, String mail) {
+    public int getMa_KH() {
+        return Ma_KH;
+    }
+
+    public void setMa_KH(int Ma_KH) {
+        this.Ma_KH = Ma_KH;
+    }
+
+    public Customer(int Ma_KH, String HoTen, String SDT, String mail, int nguoiDD, int Ma_PHG) {
         this.Ma_KH = Ma_KH;
         this.HoTen = HoTen;
         this.SDT = SDT;
         this.mail = mail;
+        this.nguoiDD = nguoiDD;
+        this.Ma_PHG = Ma_PHG;
     }
 
-    public String getMa_KH() {
-        return Ma_KH;
+    public int getMa_PHG() {
+        return Ma_PHG;
     }
 
-    public void setMa_KH(String Ma_KH) {
-        this.Ma_KH = Ma_KH;
+    public void setMa_PHG(int Ma_PHG) {
+        this.Ma_PHG = Ma_PHG;
     }
+
+
+
+
+
+    
+
 
     public String getHoTen() {
         return HoTen;

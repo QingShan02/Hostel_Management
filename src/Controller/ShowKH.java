@@ -26,7 +26,7 @@ public class ShowKH extends javax.swing.JFrame {
      */
     public int index = -1;
     List<Customer> list = new ArrayList<>();
-        static int Ma_PHG;
+    static int Ma_PHG;
 
     public static int getMa_PHG() {
         return Ma_PHG;
@@ -57,10 +57,10 @@ public class ShowKH extends javax.swing.JFrame {
         model.setRowCount(0);
 
         for (Customer x : list) {
-            if (x.getMa_KH().equals(x.getNguoiDD())) {
+            if (x.getMa_KH()==x.getNguoiDD()) {
                 a = true;
             }
-            if (!x.getMa_KH().equals(x.getNguoiDD())) {
+            if (x.getMa_KH()!=x.getNguoiDD()) {
                 a = false;
             }
             model.addRow(new Object[]{x.getHoTen(), x.getSDT(), x.getMail(), a});
@@ -70,7 +70,7 @@ public class ShowKH extends javax.swing.JFrame {
 
     public void mouseClick(int index) {
     }
-Customer c;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,16 +113,9 @@ Customer c;
             Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
-            boolean[] canEdit = new boolean [] {
-                true, true, true, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         tblCus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,6 +124,7 @@ Customer c;
             }
         });
         jScrollPane1.setViewportView(tblCus);
+        tblCus.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +169,7 @@ Customer c;
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(btnThem)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnXoa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,9 +200,9 @@ Customer c;
         index = tblCus.getSelectedRow();
         mouseClick(index);
     }//GEN-LAST:event_tblCusMouseClicked
-
+    Customer c;
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-//        try {
+        try {
 
             // TODO add your handling code here:
 //            boolean ndd = false;
@@ -216,26 +210,27 @@ Customer c;
 //            String name = (String) model.getValueAt(index, 0);
 //            String sdt = (String) model.getValueAt(index, 1);
 //            String email = (String) model.getValueAt(index, 2);
-            String name = JOptionPane.showInputDialog("Nhập tên");
-            String sdt = JOptionPane.showInputDialog("Nhập SDT");
-            String email = JOptionPane.showInputDialog("Nhập Email");
+            String name = JOptionPane.showInputDialog(this, "Nhập tên");
+            String sdt = JOptionPane.showInputDialog(this, "Nhập SDT");
+            String email = JOptionPane.showInputDialog(this, "Nhập Email");
 //            if (list.size() == 0) {
 //                ndd = true;
 //            }
-//            ChucNang.InsertKH(name, sdt, email,Integer.parseInt(c.getNguoiDD()),Ma_PHG);
+//            System.out.println("," + name + "," + sdt+","+email+","+Ma_PHG);
+            ChucNang.InsertKH(name, sdt, email);
             JOptionPane.showMessageDialog(this, "thanhcong");
 
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ShowKH.class
-//                    .getName()).log(Level.SEVERE, null, ex);
-//        }
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowKH.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
 
         try {
             index = tblCus.getSelectedRow();
-            ChucNang.deleteKH(Integer.parseInt(list.get(index).getMa_KH()));
+            ChucNang.deleteKH(list.get(index).getMa_KH());
 //            list.remove(index);
             FilltoTable();
             JOptionPane.showMessageDialog(this, "Xóa thành công");
@@ -243,22 +238,30 @@ Customer c;
             Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnXoaActionPerformed
-
+    private int makh;
     private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapnhatActionPerformed
         try {
             boolean ndd = false;
             //            index = tblCus.getSelectedRow();
-            if(index>=0){
-                String name = (String) model.getValueAt(index, 0);
-                String sdt = (String) model.getValueAt(index, 1);
-                String email = (String) model.getValueAt(index, 2);
-                ChucNang.UpdateKH(name, sdt, email, Integer.parseInt(list.get(index).getNguoiDD()), Integer.parseInt(list.get(index).getMa_KH()));
-                JOptionPane.showMessageDialog(this, "thanhcong");
+            for (int i = 0; i < list.size(); i++) {
+                String name = (String) model.getValueAt(i, 0);
+                String sdt = (String) model.getValueAt(i, 1);
+                String email = (String) model.getValueAt(i, 2);
+                boolean checkndd = (boolean) model.getValueAt(i, 3);
+                System.out.println(name +","+sdt+","+email+","+checkndd);
+                if(checkndd){
+                   ChucNang.UpdateNguoiDD(list.get(i).getMa_KH(),list.get(i).getMa_PHG());
+                }
+                ChucNang.UpdateKH(name, sdt, email, list.get(i).getMa_KH());
+
+//                JOptionPane.showMessageDialog(this, "thanhcong");
             }
+            FilltoTable();
         } catch (SQLException ex) {
             Logger.getLogger(ShowKH.class
-                .getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btnCapnhatActionPerformed
 
     /**
