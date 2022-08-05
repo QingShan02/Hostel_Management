@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,28 +24,53 @@ public class ShowKH extends javax.swing.JFrame {
     /**
      * Creates new form ShowKH
      */
-   List<Customer> list = new ArrayList<>();
+    public int index = -1;
+    List<Customer> list = new ArrayList<>();
+        static int Ma_PHG;
+
+    public static int getMa_PHG() {
+        return Ma_PHG;
+    }
+
+    public static void setMa_PHG(int Ma_PHG) {
+        ShowKH.Ma_PHG = Ma_PHG;
+    }
+
     public ShowKH() {
-       try {
-           initComponents();
-           ChucNang.getDBConnection();
-           FilltoTable();
-       } catch (SQLException ex) {
-           Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
-       } catch (ClassNotFoundException ex) {
-           Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        try {
+            initComponents();
+            ChucNang.getDBConnection();
+            FilltoTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
-    public void FilltoTable() throws SQLException{
-                   list = ChucNang.SelectCus();
+    DefaultTableModel model;
 
-        DefaultTableModel model = (DefaultTableModel) tblCus.getModel();
+    public void FilltoTable() throws SQLException {
+        list = ChucNang.SelectCus();
+        boolean a = false;
+        model = (DefaultTableModel) tblCus.getModel();
         model.setRowCount(0);
-        for(Customer x : list){
-            model.addRow(new Object[]{x.getHoTen(),x.getSDT(),x.getMail()});
+
+        for (Customer x : list) {
+            if (x.getMa_KH().equals(x.getNguoiDD())) {
+                a = true;
+            }
+            if (!x.getMa_KH().equals(x.getNguoiDD())) {
+                a = false;
+            }
+            model.addRow(new Object[]{x.getHoTen(), x.getSDT(), x.getMail(), a});
         }
+
     }
+
+    public void mouseClick(int index) {
+    }
+Customer c;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,9 +82,9 @@ public class ShowKH extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCus = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnCapnhat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -75,22 +101,57 @@ public class ShowKH extends javax.swing.JFrame {
 
         tblCus.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Tên khách hàng", "Điện thoại", "Email"
+                "Tên khách hàng", "Điện thoại", "Email", "Người đại diện"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCusMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCus);
 
-        jButton1.setText("Thêm");
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Xóa");
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Cập nhật");
+        btnCapnhat.setText("Cập nhật");
+        btnCapnhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapnhatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,17 +160,12 @@ public class ShowKH extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addContainerGap(12, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(10, 10, 10))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,12 +175,12 @@ public class ShowKH extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jButton1)
+                .addComponent(btnThem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnXoa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addComponent(btnCapnhat)
+                .addGap(84, 183, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,6 +201,66 @@ public class ShowKH extends javax.swing.JFrame {
 //        this.setVisible(false);
     }//GEN-LAST:event_formWindowActivated
 
+    private void tblCusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCusMouseClicked
+        // TODO add your handling code here:
+        index = tblCus.getSelectedRow();
+        mouseClick(index);
+    }//GEN-LAST:event_tblCusMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+//        try {
+
+            // TODO add your handling code here:
+//            boolean ndd = false;
+//            index = tblCus.getSelectedRow();
+//            String name = (String) model.getValueAt(index, 0);
+//            String sdt = (String) model.getValueAt(index, 1);
+//            String email = (String) model.getValueAt(index, 2);
+            String name = JOptionPane.showInputDialog("Nhập tên");
+            String sdt = JOptionPane.showInputDialog("Nhập SDT");
+            String email = JOptionPane.showInputDialog("Nhập Email");
+//            if (list.size() == 0) {
+//                ndd = true;
+//            }
+//            ChucNang.InsertKH(name, sdt, email,Integer.parseInt(c.getNguoiDD()),Ma_PHG);
+            JOptionPane.showMessageDialog(this, "thanhcong");
+
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ShowKH.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+
+        try {
+            index = tblCus.getSelectedRow();
+            ChucNang.deleteKH(Integer.parseInt(list.get(index).getMa_KH()));
+//            list.remove(index);
+            FilltoTable();
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapnhatActionPerformed
+        try {
+            boolean ndd = false;
+            //            index = tblCus.getSelectedRow();
+            if(index>=0){
+                String name = (String) model.getValueAt(index, 0);
+                String sdt = (String) model.getValueAt(index, 1);
+                String email = (String) model.getValueAt(index, 2);
+                ChucNang.UpdateKH(name, sdt, email, Integer.parseInt(list.get(index).getNguoiDD()), Integer.parseInt(list.get(index).getMa_KH()));
+                JOptionPane.showMessageDialog(this, "thanhcong");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowKH.class
+                .getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCapnhatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -159,16 +275,24 @@ public class ShowKH extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ShowKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowKH.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ShowKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowKH.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ShowKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowKH.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ShowKH.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowKH.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -181,9 +305,9 @@ public class ShowKH extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCapnhat;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCus;
     // End of variables declaration//GEN-END:variables

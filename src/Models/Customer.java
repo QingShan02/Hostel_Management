@@ -16,8 +16,26 @@ public class Customer {
     private String HoTen;
     private String SDT;
     private String mail;
+    private String nguoiDD;
     public Customer() {
     }
+
+    public Customer(String Ma_KH, String HoTen, String SDT, String mail, String nguoiDD) {
+        this.Ma_KH = Ma_KH;
+        this.HoTen = HoTen;
+        this.SDT = SDT;
+        this.mail = mail;
+        this.nguoiDD = nguoiDD;
+    }
+
+    public String getNguoiDD() {
+        return nguoiDD;
+    }
+
+    public void setNguoiDD(String nguoiDD) {
+        this.nguoiDD = nguoiDD;
+    }
+    
 
     public Customer(String Ma_KH, String HoTen, String SDT, String mail) {
         this.Ma_KH = Ma_KH;

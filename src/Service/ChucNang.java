@@ -164,7 +164,7 @@ public class ChucNang {
 
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
-            object.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+            object.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5)));
         }
         return object;
     }
@@ -243,6 +243,29 @@ public class ChucNang {
         pst.setString(2, diadiem);
         pst.setString(3, Ma_ChuNT);
         pst.setInt(4, Ma_NT);
+        pst.executeUpdate();
+    }
+    public static void deleteKH(int Makh) throws SQLException{
+        pst=con.prepareStatement("delete from QL_KHACHHANG where Ma_KH=?");
+        pst.setInt(1, Makh);
+        pst.executeUpdate();
+    }
+    public static void UpdateKH(String TenKH,String sdt,String email,int nguoidd,int makh) throws SQLException{
+    pst=con.prepareStatement("update QL_KHACHHANG set TenKH =?,DienThoai=?,Email=?,NguoiDaiDien=?, Ma_PHG='"+Ma_PHG+"'"+"where Ma_KH=?");
+    pst.setString(1, TenKH);
+    pst.setString(2, sdt);
+    pst.setString(3, email);
+    pst.setInt(4, nguoidd);
+    pst.setInt(5, makh);
+    pst.executeUpdate();
+    }
+    public static void InsertKH(String tenString,String sdt,String email,int ngdd,int maphg) throws SQLException{
+        pst=con.prepareStatement("insert into QL_KHACHHANG(TenKH,DienThoai,Email) values(?,?,?,?,?)");
+        pst.setString(1, tenString);
+        pst.setString(2, sdt);
+        pst.setString(3, email);
+        pst.setInt(4, ngdd);
+        pst.setInt(5, maphg);
         pst.executeUpdate();
     }
 

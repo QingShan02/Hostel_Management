@@ -213,7 +213,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
         txtTenCNT = new javax.swing.JTextField();
         txtDienThoai = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnCapNhatEmail = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnEdit = new javax.swing.JToggleButton();
@@ -305,7 +305,12 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
 
         txtEmail.setEditable(false);
 
-        jButton1.setText("Cập nhật");
+        btnCapNhatEmail.setText("Cập nhật");
+        btnCapNhatEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatEmailActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -326,7 +331,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                         .addComponent(txtDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCapNhatEmail)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -348,7 +353,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnCapNhatEmail))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -816,12 +821,12 @@ ChuNhaTro cnt;
     public void fillToTable(String name) {
         tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
-        tblModel.setColumnIdentifiers(new Object[]{"STT","Tên Phòng","Giá Phòng","Số lượng ở tối đa","Người đại diện","Số lượng đang ở","Chi tiết khách hàng"});
+        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Người đại diện", "Số lượng đang ở", "Chi tiết khách hàng"});
         for (Phong nt : list) {
 
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
                 i++;
-                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng",nt.getTenNguoiDaiDien()/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/,nt.getSoLuongDangCo()});
+                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng", nt.getTenNguoiDaiDien()/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
             }
         }
         tblNT.setModel(tblModel);
@@ -1103,7 +1108,7 @@ ChuNhaTro cnt;
 
     private void cboChonTangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChonTangItemStateChanged
         // TODO add your handling code here:
-                FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
+        FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
 
         fillToTable((String) cboChonTang.getSelectedItem());
 
@@ -1126,32 +1131,55 @@ ChuNhaTro cnt;
                 JOptionPane.showMessageDialog(this, "Nhập không chính xác!");
             }
         }
-        
+
     }//GEN-LAST:event_btnDoiMKMouseClicked
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDoiMKActionPerformed
+
+    private void btnCapNhatEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatEmailActionPerformed
+//        try {
+//            if (!txtEmail.getText().equals(cnt.getEmail())) {
+//                String nhap = JOptionPane.showInputDialog("Nhập lại mật khẩu");
+//                System.out.println("" + nhap);
+//                for (User s : list2) {
+//                    System.out.println(""+s.getPass());
+//                    if (s.getPass().equals(nhap)) {
+//
+//                        ChucNang.UpdateChuNT(txtTenCNT.getText(), txtDienThoai.getText(), txtEmail.getText(), cnt.getMaChu());
+//                        JOptionPane.showMessageDialog(this, "aa");
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Sai mật khẩu");
+//                    }
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "khong co thay doi");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnCapNhatEmailActionPerformed
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
             setOpaque(true);
-                    btn.addActionListener(
-                new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                index = tblNT.getSelectedRow();
-                ChucNang.setMa_PHG(list.get(index).getMa_PHG());
-                ShowKH show = new ShowKH();
-                show.setTitle("Khách hàng - " + list.get(index).getTen_PHG());
-                show.setVisible(true);
+            btn.addActionListener(
+                    new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    index = tblNT.getSelectedRow();
+                    ChucNang.setMa_PHG(list.get(index).getMa_PHG());
+                    ShowKH show = new ShowKH();
+                    show.setTitle("Khách hàng - " + list.get(index).getTen_PHG());
+                    show.setVisible(true);
+                }
             }
-        }
-        );
+            );
         }
 
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            setText("Xem chi tiết" );
+            setText("Xem chi tiết");
             return this;
         }
     }
@@ -1174,7 +1202,7 @@ ChuNhaTro cnt;
 
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
-            label = "Xem chi tiết" ;
+            label = "Xem chi tiết";
             btn.setText(label);
             click = true;
             return btn;
@@ -1230,6 +1258,7 @@ ChuNhaTro cnt;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCapNhat;
+    private javax.swing.JButton btnCapNhatEmail;
     private javax.swing.JButton btnChonANh;
     private javax.swing.JButton btnDangxuat;
     private javax.swing.JButton btnDoiMK;
@@ -1240,7 +1269,6 @@ ChuNhaTro cnt;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboChonTang;
     private javax.swing.JComboBox<String> cboTang;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
