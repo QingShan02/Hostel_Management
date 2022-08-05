@@ -410,7 +410,7 @@ public class SignIn extends javax.swing.JFrame implements userService {
                     }
                     ChucNang.writeObj("x.txt", list2);
                     ChucNang.setUser(s.getUser());
-                    
+
                     cv = new ChiNhanh();
                     cv.setVisible(true);
 //                    QuanLyNhaTro ql = new QuanLyNhaTro();
