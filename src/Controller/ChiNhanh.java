@@ -31,6 +31,13 @@ public class ChiNhanh extends javax.swing.JFrame {
     public ChiNhanh() {
         initComponents();
         setLocationRelativeTo(null);
+        try {
+            ChucNang.getDBConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
+        }
         FillButton();
 
     }
@@ -61,8 +68,11 @@ public class ChiNhanh extends javax.swing.JFrame {
     }
 
     public void Xoa() {
+//        System.out.println(list.get(cboCN.getSelectedIndex()).getMa_NT());
+
         try {
             ChucNang.deleteNT(list.get(cboCN.getSelectedIndex()).getMa_NT());
+            list = ChucNang.SelectNT();
             cboCN.removeAllItems();
             FillButton();
         } catch (SQLException ex) {

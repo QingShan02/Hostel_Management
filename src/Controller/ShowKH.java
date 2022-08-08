@@ -9,64 +9,105 @@ import Service.ChucNang;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractButton;
+import javax.swing.AbstractCellEditor;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author Daokh
  */
-//class MyModel extends DefaultTableModel{
-//    public MyModel() {
-//      super(new String[]{"Tên khách hàng", "Số điện thoại","Email", "Người đại diện"}, 0);
-//    }
-//    @Override
-//    public Class<?> getColumnClass(int columnIndex) {
-//      Class clazz = String.class;
-//      switch (columnIndex) {
-//        case 0:
-//          clazz = String.class;
-//          break;
-//        case 2:
-//          clazz = Boolean.class;
-//          break;
-//      }
-//      return clazz;
-//    }
-//    @Override
-//    public boolean isCellEditable(int row, int column) {
-//      return column == 2;
-//    }
-//
-//    @Override
-//    public void setValueAt(Object aValue, int row, int column) {
-//      if (aValue instanceof Boolean && column == 2) {
-//        System.out.println(aValue);
-//        Vector rowData = (Vector)getDataVector().get(row);
-//        rowData.set(2, (boolean)aValue);
-//        fireTableCellUpdated(row, column);
-//      }
-//    }
-//}
-
-public class ShowKH extends javax.swing.JFrame {
+public class ShowKH extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form ShowKH
      */
-    
+    ButtonGroup buttonGroup = new ButtonGroup();
+    int ndd;
+
+    class RadioButtonRenderer implements TableCellRenderer {
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (value == null) {
+                return null;
+            }
+//            buttonGroup.add((JRadioButton) value);
+            return (Component) value;
+        }
+    }
+
+    class RadioButtonEditor extends DefaultCellEditor implements ItemListener {
+
+        private JRadioButton button;
+
+        public RadioButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            if (value == null) {
+                return null;
+            }
+            button = (JRadioButton) value;
+//            buttonGroup.add(button);
+
+            button.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    bg.clearSelection();
+                    rdo[tblCus.getSelectedRow()].setSelected(true);                }
+            });
+
+            return (Component) value;
+        }
+
+        public Object getCellEditorValue() {
+            button.removeItemListener(this);
+            return button;
+        }
+
+        public void itemStateChanged(ItemEvent e) {
+            super.fireEditingStopped();
+        }
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+
+                Thread.sleep(50);
+            } catch (Exception e) {
+            }
+        }
+    }
+
     public int index = -1;
     List<Customer> list = new ArrayList<>();
     static int Ma_PHG;
@@ -78,12 +119,27 @@ public class ShowKH extends javax.swing.JFrame {
     public static void setMa_PHG(int Ma_PHG) {
         ShowKH.Ma_PHG = Ma_PHG;
     }
+    DataInputStream ips;
+    DataOutputStream ops;
+
+    public void Connect() {
+        try {
+            Socket sk = new Socket("localhost", 8889);
+            ips = new DataInputStream(sk.getInputStream());
+            ops = new DataOutputStream(sk.getOutputStream());
+//            Thread t = new Thread(this);
+//            t.start();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public ShowKH() {
         try {
             initComponents();
             ChucNang.getDBConnection();
             FilltoTable();
+            Connect();
         } catch (SQLException ex) {
             Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -92,26 +148,55 @@ public class ShowKH extends javax.swing.JFrame {
 //        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
     DefaultTableModel model;
+    private ButtonGroup bg;
 
+    int k = 0;
+    JRadioButton[] rdo;
     public void FilltoTable() throws SQLException {
         list = ChucNang.SelectCus();
         boolean a = false;
-        model = (DefaultTableModel) tblCus.getModel();
+        model = new DefaultTableModel();
 //model = new DefaultTableModel();
-model.setRowCount(0);
-        model.setColumnIdentifiers(new String[]{"Tên khách hàng", "Số điện thoại","Email", "Người đại diện"});
-        for (Customer x : list) {
-            if (x.getMa_KH() == x.getNguoiDD()) {
-                a = true;
-            } else{
-                a= false;
-            }
-            System.out.println(x.toString());
-            model.addRow(new Object[]{x.getHoTen(), x.getSDT(), x.getMail(), a});
+        model.setRowCount(0);
+//        bg = new ButtonGroup();
+        Object[][] in4 = new Object[list.size()][4];
+        for (int i = 0; i < list.size(); i++) {
+            in4[i][0] = list.get(i).getHoTen();
+            in4[i][1] = list.get(i).getSDT();
+            in4[i][2] = list.get(i).getMail();
+            in4[i][3] = new JRadioButton();
         }
-//                tblCus.setModel(model);
-//        tblCus.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
-//        tblCus.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor());
+        model.setDataVector(in4, new String[]{"Tên khách hàng", "Số điện thoại", "Email", "Người đại diện"});
+        tblCus.setModel(model);
+//        JRadioButton rdo;
+        bg = new ButtonGroup();
+        int length = list.size();
+         rdo = new JRadioButton[length];
+        for (int i = 0; i < length; i++) {
+            rdo[i] = (JRadioButton) model.getValueAt(i, 3);
+
+            bg.add(rdo[i]);
+
+        }
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            Customer x = list.get(i);
+//            if (x.getMa_KH() == x.getNguoiDD()) {
+//                k = i;
+//            }
+//        }
+//        rdo[k].setSelected(true);
+//        Object[] h = bg.getSelection().getSelectedObjects();
+//        for(int i=0;i<h.length;i++){
+//            System.out.println(h[i]);
+//            }
+//        
+//        bg.setSelected(h.getModel(), true);
+        tblCus.getColumnModel().getColumn(3).setCellRenderer(new RadioButtonRenderer());
+        tblCus.getColumnModel().getColumn(3).setCellEditor(new RadioButtonEditor(new JCheckBox()));
+//        JRadioButton name = (JRadioButton) model.getValueAt(k, 3);
+//        name.setSelected(true);
+
     }
 
     public void mouseClick(int index) {
@@ -157,10 +242,10 @@ model.setRowCount(0);
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, false, false
+                true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -218,7 +303,7 @@ model.setRowCount(0);
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
@@ -240,7 +325,7 @@ model.setRowCount(0);
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-//        this.setVisible(false);
+        System.out.println("a");
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -250,12 +335,12 @@ model.setRowCount(0);
 
     private void tblCusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCusMouseClicked
         // TODO add your handling code here:
-        index = tblCus.getSelectedRow();
-        boolean a =(list.get(index).getNguoiDD() == list.get(index).getMa_KH()) ? true:false;
-        boolean b = (boolean) tblCus.getValueAt(index, 3);
-        if(a==b){
-//            tblCus;
-        }
+//        index = tblCus.getSelectedRow();
+//        boolean a = (list.get(index).getNguoiDD() == list.get(index).getMa_KH()) ? true : false;
+//        boolean b = (boolean) tblCus.getValueAt(index, 3);
+//        if (a == b) {
+////            tblCus;
+//        }
     }//GEN-LAST:event_tblCusMouseClicked
     Customer c;
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -276,32 +361,37 @@ model.setRowCount(0);
             if (sdt.equals("")) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa nhập sdt");
                 return;
-            } else if(!sdt.matches("\\d{9,10}")){
-                 JOptionPane.showMessageDialog(this, "Bạn vui lòng nhập đúng định dạng sdt");
-               return ;
+            } else if (!sdt.matches("\\d{9,10}")) {
+                JOptionPane.showMessageDialog(this, "Bạn vui lòng nhập đúng định dạng sdt");
+                return;
             }
             String reEmail = "^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$";
             String email = JOptionPane.showInputDialog(this, "Nhập Email");
             if (email.equals("")) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa nhập email");
                 return;
-            } else if (reEmail.matches(reEmail) == false) {
-                JOptionPane.showMessageDialog(this, "Email khong dung dinh dang", "Loi nhap email", JOptionPane.WARNING_MESSAGE);
-                // txtEmail.setBackground(Color.yellow);
-                // txtEmail.requestFocus();
-                return;
             }
+//            } else if (reEmail.matches(reEmail) == false) {
+//                JOptionPane.showMessageDialog(this, "Email khong dung dinh dang", "Loi nhap email", JOptionPane.WARNING_MESSAGE);
+//                // txtEmail.setBackground(Color.yellow);
+//                // txtEmail.requestFocus();
+//                return;
+//            }
 //            if (list.size() == 0) {
 //                ndd = true;
 //            }
 //            System.out.println("," + name + "," + sdt+","+email+","+Ma_PHG);
             ChucNang.InsertKH(name, sdt, email);
+            ops.writeInt(1);
             JOptionPane.showMessageDialog(this, "thanhcong");
-
+            FilltoTable();
         } catch (SQLException ex) {
             Logger.getLogger(ShowKH.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -310,34 +400,33 @@ model.setRowCount(0);
             index = tblCus.getSelectedRow();
             ChucNang.deleteKH(list.get(index).getMa_KH());
 //            list.remove(index);
+            ops.writeInt(1);
+
             FilltoTable();
             JOptionPane.showMessageDialog(this, "Xóa thành công");
         } catch (SQLException ex) {
             Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btnXoaActionPerformed
     private int makh;
     private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapnhatActionPerformed
         try {
-            boolean ndd = false;
-            //            index = tblCus.getSelectedRow();
-            for (int i = 0; i < list.size(); i++) {
-                String name = (String) model.getValueAt(i, 0);
-                String sdt = (String) model.getValueAt(i, 1);
-                String email = (String) model.getValueAt(i, 2);
-                boolean checkndd = (boolean) model.getValueAt(i, 3);
-                System.out.println(name + "," + sdt + "," + email + "," + checkndd);
-                if (checkndd) {
-                    ChucNang.UpdateNguoiDD(list.get(i).getMa_KH(), list.get(i).getMa_PHG());
-                }
-                ChucNang.UpdateKH(name, sdt, email, list.get(i).getMa_KH());
+            index = tblCus.getSelectedRow();
+            String name = (String) model.getValueAt(index, 0);
+            String sdt = (String) model.getValueAt(index, 1);
+            String email = (String) model.getValueAt(index, 2);
+            boolean checkndd = (boolean) model.getValueAt(index, 3);
+//                System.out.println(name + "," + sdt + "," + email + "," + checkndd);
+
+            ChucNang.UpdateKH(name, sdt, email, list.get(index).getMa_KH());
 
 //                JOptionPane.showMessageDialog(this, "thanhcong");
-            }
             FilltoTable();
         } catch (SQLException ex) {
-            Logger.getLogger(ShowKH.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnCapnhatActionPerformed

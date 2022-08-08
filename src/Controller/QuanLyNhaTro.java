@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import ResController.API_QLCNT;
+import ResController.API_QLNT;
 import com.sun.security.auth.NTSid;
 import java.awt.Color;
 import java.io.IOException;
@@ -25,15 +27,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
@@ -51,41 +59,22 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Daokh
  */
-public class QuanLyNhaTro extends javax.swing.JFrame implements Runnable{
+public class QuanLyNhaTro extends javax.swing.JFrame{
 
-    DefaultTableModel tblModel;
-    List<Phong> list = new ArrayList<>();
-    List<User> list2 = new ArrayList<>();
-    private int index = -1;
-
-    /**
-     * Creates new form QuanLyNhaTro
-     */
-    public void Clear() {
-        txtGiaPhong.setText("");
-        txtDienTich.setText("");
-        txtTenPhong.setText("");
-        txtMoTa.setText("");
-        txtSoNguoiO.setText("");
-        cboTang.setSelectedIndex(0);
-        lblImage.setIcon(new ImageIcon("src/image/NoImg.jpg"));
-    }
-    JButton btn = new JButton();
-public void LoadBang(){
-    FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
-    fillToTable((String) cboChonTang.getSelectedItem());
-}
-API_QLNT api ;
+    API_QLCNT api;
+    API_QLNT api_nt;
     public QuanLyNhaTro() {
         try {
             initComponents();
             setLocationRelativeTo(null);
             ChucNang.getDBConnection();
 //            FillToList();
-            api = new API_QLNT(btnCapNhat, btnDangxuat, btnDoiMK, btnDong, btnEdit, lblChuNT, lblDienThoai, lblEmail, lblTenCNT, txtChuNT, txtDienThoai, txtEmail, txtTenCNT);
-            API_QLNT.fillToCNT();
-            FillTang();
+            api = new API_QLCNT(btnCapNhat, btnDangxuat, btnDoiMK, btnDong, btnEdit, lblChuNT, lblDienThoai, lblEmail, lblTenCNT, txtChuNT, txtDienThoai, txtEmail, txtTenCNT);
+            api.fillToCNT();
+            api_nt = new API_QLNT(btnSua, btnThem, btnXoa, cboChonTang, cboTang, jLabel1, jLabel2, jPanel1, jPanel2, jPanel3, jPanel4, jPanel5, jPanel6, jScrollPane1, jScrollPane2, jTabbedPane1, lblAddress, lblAddress1, lblAnh, lblChuNT, lblDienThoai, lblDientich, lblEmail, lblGiaphong, lblImage, lblMota, lblName, lblSonguoio, lblTang, lblTenPhong, lblTotalPerson, lblTotalPerson2, tblNT, txtDienThoai, txtDienTich, txtEmail, txtGiaPhong, txtMoTa, txtSoNguoiO, txtTenPhong);
+            api_nt.FillTang();
             setIconForm();
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -94,54 +83,27 @@ API_QLNT api ;
 //        Thread t=new Thread(this);
 //         t.start();
     }
-    List<Tang> listT;
-    String maChu = "";
+    public boolean checkValidate() {
+        if (txtChuNT.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
+            txtChuNT.setBackground(Color.yellow);
+            return false;
+        } else if (txtTenCNT.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
+            txtTenCNT.setBackground(Color.yellow);
+            return false;
+        } else if (txtDienThoai.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
+            txtDienThoai.setBackground(Color.yellow);
+            return false;
+        } else if (txtEmail.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
+            txtEmail.setBackground(Color.yellow);
+            return false;
 
-    public void setIconForm() {
-        String path = "src/image/";
-        lblChuNT.setIcon(new ImageIcon(path + "MaCNT.png"));
-        lblTenCNT.setIcon(new ImageIcon("src/image/TenCNT.png"));
-        lblDienThoai.setIcon(new ImageIcon("src/image/DienThoai.png"));
-        lblEmail.setIcon(new ImageIcon("src/image/Email.png"));
-        btnEdit.setIcon(new ImageIcon("src/image/Edit.png"));
-        btnDong.setIcon(new ImageIcon("src/image/Cancel.png"));
-        btnCapNhat.setIcon(new ImageIcon("src/image/Update.png"));
-        btnDangxuat.setIcon(new ImageIcon(path + "LogOut.png"));
-        lblName.setIcon(new ImageIcon(path + "TenPhong.png"));
-        lblAddress.setIcon(new ImageIcon(path + "GiaPhong.png"));
-        lblTotalPerson.setIcon(new ImageIcon(path + "DienTich.png"));
-        lblTang.setIcon(new ImageIcon(""));
-        lblAddress1.setIcon(new ImageIcon(path + "SoNguoiO.png"));
-        lblTotalPerson2.setIcon(new ImageIcon(path + "MoTa.png"));
-        btnThem.setIcon(new ImageIcon(path + "ADD.png"));
-        btnXoa.setIcon(new ImageIcon(path + "Delete.png"));
-        btnSua.setIcon(new ImageIcon(path + "Update.png"));
-        lblImage.setIcon(new ImageIcon(path + "NoImg.jpg"));
-        lblTang.setIcon(new ImageIcon(path + "tang.jpg"));
-    }
-
-    public void FillTang() {
-        try {
-            listT = ChucNang.SelectTang();
-            for (Tang x : listT) {
-                cboTang.addItem(x.getName_tang());
-                cboChonTang.addItem(x.getName_tang());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return true;
     }
-
-    public void ThemNT() {
-        if (index == -1) {
-            try {
-                ChucNang.InsertPHG(txtTenPhong.getText(), Integer.parseInt(txtGiaPhong.getText().replace(",", "")), Integer.parseInt(txtDienTich.getText()), txtMoTa.getText(), name, Integer.parseInt(txtSoNguoiO.getText()), listT.get(cboTang.getSelectedIndex()).getID_tang(), ChucNang.getMa_NT());
-            } catch (SQLException ex) {
-                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
     public boolean checkValidateForm(String nhatro, int index) {
         if (index == 1) {
             if (txtTenPhong.getText().trim().equals("")) {
@@ -159,7 +121,7 @@ API_QLNT api ;
                 txtGiaPhong.setBackground(Color.yellow);
                 lblGiaphong.setText("Chưa nhập Giá Phòng");
                 return false;
-            
+
             } else {
                 lblGiaphong.setText("");
                 txtGiaPhong.setBackground(Color.white);
@@ -202,6 +164,31 @@ API_QLNT api ;
 
         return true;
     }
+
+    public void setIconForm() {
+        String path = "src/image/";
+        lblChuNT.setIcon(new ImageIcon(path + "MaCNT.png"));
+        lblTenCNT.setIcon(new ImageIcon("src/image/TenCNT.png"));
+        lblDienThoai.setIcon(new ImageIcon("src/image/DienThoai.png"));
+        lblEmail.setIcon(new ImageIcon("src/image/Email.png"));
+        btnEdit.setIcon(new ImageIcon("src/image/Edit.png"));
+        btnDong.setIcon(new ImageIcon("src/image/Cancel.png"));
+        btnCapNhat.setIcon(new ImageIcon("src/image/Update.png"));
+        btnDangxuat.setIcon(new ImageIcon(path + "LogOut.png"));
+        lblName.setIcon(new ImageIcon(path + "TenPhong.png"));
+        lblAddress.setIcon(new ImageIcon(path + "GiaPhong.png"));
+        lblTotalPerson.setIcon(new ImageIcon(path + "DienTich.png"));
+        lblTang.setIcon(new ImageIcon(""));
+        lblAddress1.setIcon(new ImageIcon(path + "SoNguoiO.png"));
+        lblTotalPerson2.setIcon(new ImageIcon(path + "MoTa.png"));
+        btnThem.setIcon(new ImageIcon(path + "ADD.png"));
+        btnXoa.setIcon(new ImageIcon(path + "Delete.png"));
+        btnSua.setIcon(new ImageIcon(path + "Update.png"));
+        lblImage.setIcon(new ImageIcon(path + "NoImg.jpg"));
+        lblTang.setIcon(new ImageIcon(path + "tang.jpg"));
+    }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -764,84 +751,7 @@ API_QLNT api ;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    public ImageIcon resizeImage(String path) {
-        ImageIcon ii = new ImageIcon(path);
-        ImageIcon imageIcon = new ImageIcon(ii.getImage().getScaledInstance(330, 200, java.awt.Image.SCALE_SMOOTH));
-        return imageIcon;
-    }
-
-    public void mouseClick(int index) {
-        txtTenPhong.setText(list.get(index).getTen_PHG());
-        txtGiaPhong.setText(String.valueOf(list.get(index).getGiaPhong()));
-        txtDienTich.setText(String.valueOf(list.get(index).getDientich()));
-        txtMoTa.setText(list.get(index).getMota());
-        lblImage.setText(list.get(index).getHinh());
-        txtSoNguoiO.setText(String.valueOf(list.get(index).getSoluong()));
-//        MaNT = list.get(index).getMa_PHG();
-        ImageIcon ii = new ImageIcon("src/image/NhaTro/" + list.get(index).getHinh());
-        name = list.get(index).getHinh();
-        ImageIcon imageIcon = new ImageIcon(ii.getImage().getScaledInstance(330, 200, java.awt.Image.SCALE_SMOOTH));
-        lblImage.setIcon(imageIcon);
-        lblImage.setText("");
-//        tblNT.getValueAt(ERROR, NORMAL)
-        System.out.println(list.get(index).getName_Tang());
-        cboTang.setSelectedItem(list.get(index).getName_Tang());
-    }
-
-    public void FillToList(String maTang) {
-        try {
-            list.clear();
-            list = (List<Phong>) ChucNang.SelectPHG(maTang);
-//            for(Phong x : list){
-//                System.out.println(x.getTen_PHG()+","+x.getName_Tang());
-//            }
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    int i = 0;
-
-    public void fillToTable(String name) {
-        tblModel = new DefaultTableModel();
-        tblModel.setRowCount(0);
-        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Người đại diện", "Số lượng đang ở", "Chi tiết khách hàng"});
-        for (Phong nt : list) {
-
-            if (nt.getName_Tang().equalsIgnoreCase(name)) {
-                i++;
-                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng", nt.getTenNguoiDaiDien()/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
-            }
-        }
-        tblNT.setModel(tblModel);
-
-        tblNT.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
-        tblNT.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox()));
-
-        i = 0;
-    }
-
-    public boolean checkValidate() {
-        if (txtChuNT.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
-            txtChuNT.setBackground(Color.yellow);
-            return false;
-        } else if (txtTenCNT.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
-            txtTenCNT.setBackground(Color.yellow);
-            return false;
-        } else if (txtDienThoai.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
-            txtDienThoai.setBackground(Color.yellow);
-            return false;
-        } else if (txtEmail.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng không bỏ trống ");
-            txtEmail.setBackground(Color.yellow);
-            return false;
-
-        }
-        return true;
-    }
+    
 
     private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
         // TODO add your handling code here:
@@ -854,19 +764,19 @@ API_QLNT api ;
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
 //        JOptionPane.showConfirmDialog(this,"Chỉnh sửa thành  công");
-        API_QLNT.Sua();
+        api.Sua();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongActionPerformed
         // TODO add your handling code here:
-        API_QLNT.Dong();
+        api.Dong();
         //     System.exit(0);
     }//GEN-LAST:event_btnDongActionPerformed
 
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         // TODO add your handling code here:
-        API_QLNT.CapNhat();
+        api.CapNhat();
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void btnDangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangxuatActionPerformed
@@ -888,7 +798,7 @@ API_QLNT api ;
 //        } catch (ClassNotFoundException ex) {
 //            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        API_QLNT.DX();
+        api.DX();
         this.setVisible(false);
         new SignIn().setVisible(true);
     }//GEN-LAST:event_btnDangxuatActionPerformed
@@ -896,57 +806,13 @@ API_QLNT api ;
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
     }//GEN-LAST:event_formWindowOpened
-    String name = "";
+    public static String name = "";
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        if (checkValidateForm(txtTenPhong.getText(), 1) == false) {
-            txtTenPhong.requestFocus();
-            return;
-        }
-        if (checkValidateForm(txtDienTich.getText(), 2) == false) {
-            txtDienTich.requestFocus();
-            return;
-        }
-        if (checkValidateForm(txtDienTich.getText(), 3) == false) {
-            txtDienTich.requestFocus();
-            return;
-        }
-        if (checkValidateForm(txtSoNguoiO.getText(), 4) == false) {
-            txtSoNguoiO.requestFocus();
-            return;
-        }
-        if (checkValidateForm(txtMoTa.getText(), 5) == false) {
-            txtMoTa.requestFocus();
-            return;
-        }
-        try {
-
-            int chon = JOptionPane.showConfirmDialog(this, "Bạn có muốn Update hay không ? ", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (chon == JOptionPane.YES_OPTION) {
-                ChucNang.UpdatePHG(txtTenPhong.getText(), Integer.parseInt(txtGiaPhong.getText().replace(",", "")), Integer.parseInt(txtDienTich.getText()), txtMoTa.getText(), name, Integer.parseInt(txtSoNguoiO.getText()), listT.get(cboTang.getSelectedIndex()).getID_tang(), ChucNang.getMa_NT(), list.get(index).getMa_PHG());
-                JOptionPane.showMessageDialog(this, "Update thành công");
-//                FillToList();
-
-        FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
-        fillToTable((String) cboChonTang.getSelectedItem());
-            }
-        } catch (Exception e) {
-            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, e);
-        }
+        api_nt.Sua();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:\
-        int[] a = tblNT.getSelectedRows();
-        List<Integer> temp = new ArrayList<>();
-        for (int i = 0; i < a.length; i++) {
-            temp.add(list.get(a[i]).getMa_PHG());
-        }
-        for (Integer i : temp) {
-            ChucNang.deletePHG(i);
-        }
-//        FillToList();}
-        FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
-        fillToTable((String) cboChonTang.getSelectedItem());
+        api_nt.Xoa();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -975,50 +841,23 @@ API_QLNT api ;
             return;
         }
 //        System.out.println(new ImageIcon(lblImage.getIcon()).toString());
-        ThemNT();
+        api_nt.Them();
 //        FillToList();
 
-        FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
-        fillToTable((String) cboChonTang.getSelectedItem());
+
 
     }//GEN-LAST:event_btnThemActionPerformed
-
+int index = -1;
     private void tblNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNTMouseClicked
 
         index = tblNT.getSelectedRow();
-        mouseClick(index);
+        api_nt.mouseClick(index);
 
     }//GEN-LAST:event_tblNTMouseClicked
 
     private void btnChonANhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonANhActionPerformed
         // TODO add your handling code here:
-        try {
-            JFileChooser fChooser = new JFileChooser();
-            fChooser.setFileFilter(new FileNameExtensionFilter("JPEG file", "jpg", "jpeg"));
-
-            fChooser.setDialogTitle("Chọn ảnh");
-            int a = fChooser.showOpenDialog(this);
-            if (a == JFileChooser.APPROVE_OPTION) {
-                File fTenAnh = fChooser.getSelectedFile();
-                InputStream ip = new BufferedInputStream(new FileInputStream(fTenAnh));
-                OutputStream out = new BufferedOutputStream(new FileOutputStream("src/image/NhaTro/" + fTenAnh.getName()));
-                byte[] b = new byte[1024];
-                int i;
-                while ((i = ip.read(b)) > 0) {
-                    out.write(b, 0, i);
-                    out.flush();
-                }
-                lblImage.setIcon(resizeImage("src/image/NhaTro/" + fTenAnh.getName()));
-                name = fTenAnh.getName();
-                lblAnh.setText("");
-            } else {
-                System.out.println("Chưa chọn ảnh");
-                name = "";
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        api_nt.ChonAnh();
     }//GEN-LAST:event_btnChonANhActionPerformed
 
     private void txtTenPhongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenPhongKeyReleased
@@ -1073,10 +912,11 @@ API_QLNT api ;
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
+        index = tblNT.getSelectedRow();
         if (index != -1) {
             index = -1;
             tblNT.clearSelection();
-            Clear();
+            api_nt.Clear();
         }
     }//GEN-LAST:event_jPanel4MouseClicked
 
@@ -1086,92 +926,20 @@ API_QLNT api ;
 
     private void cboChonTangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChonTangItemStateChanged
         // TODO add your handling code here:
-        FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
-
-        fillToTable((String) cboChonTang.getSelectedItem());
+        api_nt.ChonTang();
 
     }//GEN-LAST:event_cboChonTangItemStateChanged
 
     private void btnDoiMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMKMouseClicked
 
-        API_QLNT.DoiMK();
+        api.DoiMK();
 
     }//GEN-LAST:event_btnDoiMKMouseClicked
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDoiMKActionPerformed
-
-    @Override
-    public void run() {
-        while (true) {            
-            try {
-                LoadBang();
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-
-        public ButtonRenderer() {
-            setOpaque(true);
-            btn.addActionListener(
-                    new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    index = tblNT.getSelectedRow();
-                    ChucNang.setMa_PHG(list.get(index).getMa_PHG());
-                    ShowKH show = new ShowKH();
-                    show.setTitle("Khách hàng - " + list.get(index).getTen_PHG());
-                    show.setVisible(true);
-                }
-            }
-            );
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            setText("Xem chi tiết");
-            return this;
-        }
-    }
-
-    class ButtonEditor extends DefaultCellEditor {
-
-        private String label;
-        private boolean click;
-
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-//                    btn.addActionListener(
-//                new ActionListener() {
-//            public void actionPerformed(ActionEvent event) {
-//                fireEditingStoped();
-//            }
-//        }
-//        );
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                boolean isSelected, int row, int column) {
-            label = "Xem chi tiết";
-            btn.setText(label);
-            click = true;
-            return btn;
-        }
-
-//        public Object getCellEditorValue() {
-//            if(click){
-//                System.out.println("hello"+label);
-//            }
-//            click = false;
-//            return new String(label);
-//        }
-//        protected void fireEditingStoped(){
-//            super.fireEditingStopped();
-//        }
-    }
+    
 
     /**
      *

@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Service;
+package ResController;
 
 import Controller.DOIMK;
 import Controller.QuanLyNhaTro;
 import Controller.SignIn;
 import Models.ChuNhaTro;
 import Models.User;
+import Service.ChucNang;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import javax.swing.JToggleButton;
  *
  * @author Daokh
  */
-public class API_QLNT {
+public class API_QLCNT {
 
     static private JToggleButton btnCapNhat;
     static private JButton btnDangxuat;
@@ -41,10 +42,10 @@ public class API_QLNT {
     static private JTextField txtEmail;
     static private JTextField txtTenCNT;
 
-    public API_QLNT() {
+    public API_QLCNT() {
     }
 
-    public API_QLNT(JToggleButton btnCapNhat, JButton btnDangxuat, JButton btnDoiMK, JToggleButton btnDong, JToggleButton btnEdit, JLabel lblChuNT, JLabel lblDienThoai, JLabel lblEmail, JLabel lblTenCNT, JTextField txtChuNT, JTextField txtDienThoai, JTextField txtEmail, JTextField txtTenCNT) {
+    public API_QLCNT(JToggleButton btnCapNhat, JButton btnDangxuat, JButton btnDoiMK, JToggleButton btnDong, JToggleButton btnEdit, JLabel lblChuNT, JLabel lblDienThoai, JLabel lblEmail, JLabel lblTenCNT, JTextField txtChuNT, JTextField txtDienThoai, JTextField txtEmail, JTextField txtTenCNT) {
         this.btnCapNhat = btnCapNhat;
         this.btnDangxuat = btnDangxuat;
         this.btnDoiMK = btnDoiMK;

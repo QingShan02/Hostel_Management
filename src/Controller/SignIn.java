@@ -26,6 +26,7 @@ import Service.ChucNang;
 import Service.ChucNang;
 import Service.ChucNang;
 import Models.User;
+import ResController.API_SignIn;
 import Service.userService;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -41,50 +42,59 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author hohoa
  */
-public class SignIn extends javax.swing.JFrame implements userService {
-
-    List<User> list = new ArrayList<>();
-    List<User> list2 = new ArrayList<>();
+public class SignIn extends javax.swing.JFrame {
 
     /**
      * Creates new form SignIn
      */
     ChiNhanh cv;
     QuanLyNhaTro nt;
-    static boolean a = true;
+    API_SignIn api;
+    public static boolean a = true;
 
     public SignIn() {
-        try {
-            ChucNang.getDBConnection();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            list2 = (List<User>) ChucNang.readObj("x.txt");
-            for (User s : list2) {
-                if (s.isIsLogin()) {
-                    ChucNang.setUser(s.getUser());
-//                    nt = new QuanLyNhaTro();
-//                    nt.setVisible(false);
-                    a = false;
-                    cv = new ChiNhanh();
-                    cv.setVisible(true);
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         initComponents();
+
+        api = new API_SignIn(background, btnSignIn, chkRemember, closeEye, jLabel5, jSeparator1, jSeparator2, lblIconUser, lblPass, lblPassword, lblSignIn, lblUser, lblUsername, openEye, txtPassword, txtUsername);
+
+        api.CheckRemember();
         setIconForm();
         txtUsername.setBackground(new Color(0, 0, 0, 1));
         txtPassword.setBackground(new Color(0, 0, 0, 1));
         setLocationRelativeTo(null);
 
-        FillToList();
+        api.FillToList();
 
+    }
+
+    public boolean checkValidate(String user1, int a) {
+        if (a == 1) {
+            if (user1.trim().equals("")) {
+                lblUser.setText("Chưa nhập username");
+                txtUsername.setBackground(Color.yellow);
+                return false;
+            } else {
+                lblUser.setText("");
+                txtUsername.setBackground(Color.white);
+                return true;
+            }
+        }
+        if (a == 2) {
+            if (user1.trim().equals("")) {
+                lblPass.setText("Chưa nhập Password");
+                txtPassword.setBackground(Color.yellow);
+                return false;
+            } else if (user1.length() < 8) {
+                lblPass.setText("Password lớn hơn 7 kí tự");
+                txtPassword.setBackground(Color.yellow);
+                return false;
+            } else {
+                lblPass.setText("");
+                txtPassword.setBackground(Color.white);
+                return true;
+            }
+        }
+        return true;
     }
 
     public void setIconForm() {
@@ -243,7 +253,18 @@ public class SignIn extends javax.swing.JFrame implements userService {
 
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
         // TODO add your handling code here:
-        this.dangnhap();
+        if (checkValidate(txtUsername.getText(), 1) == false) {
+            txtUsername.requestFocus();
+            return;
+        }
+        if (checkValidate(new String(txtPassword.getPassword()), 2) == false) {
+            txtPassword.requestFocus();
+            return;
+        }
+
+        if (api.dangnhap()) {
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnSignInActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
@@ -264,31 +285,10 @@ public class SignIn extends javax.swing.JFrame implements userService {
         // TODO add your handling code here:
         checkValidate(txtUsername.getText(), 1);
     }//GEN-LAST:event_txtUsernameMousePressed
-    int DaTT = -1;
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
         // TODO add your handling code here:
-        try {
-            checkValidate(txtUsername.getText(), 1);
-            String name = txtUsername.getText();
-            boolean temp = chkRemember.isSelected();
-            for (int i = 0; i < list2.size(); i++) {
-                txtPassword.setText("");
-                if (list2.get(i).getUser().equalsIgnoreCase(name) && list2.get(i).isRemember()) {
-                    txtPassword.setText(list2.get(i).getPass());
-                    chkRemember.setSelected(list2.get(i).isRemember());
-                    DaTT = i;
-                    break;
-                }
-
-            }
-//            list = (List<User>) ChucNang.readObj("b.txt");
-//            for (User s : list) {
-//                if (txtUsername.getText().equals(s.getUser())) {
-//                    txtPassword.setText(s.getPass());
-//                }
-//            }
-        } catch (Exception e) {
-        }
+        checkValidate(txtUsername.getText(), 1);
+        api.FillPass();
     }//GEN-LAST:event_txtUsernameKeyReleased
 
     private void txtPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasswordMousePressed
@@ -389,96 +389,5 @@ public class SignIn extends javax.swing.JFrame implements userService {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-    @Override
-    public void dangnhap() {
-        try {
-            if (checkValidate(txtUsername.getText(), 1) == false) {
-                txtUsername.requestFocus();
-                return;
-            }
-            if (checkValidate(new String(txtPassword.getPassword()), 2) == false) {
-                txtPassword.requestFocus();
-                return;
-            }
-
-            for (User s : list) {
-                if (s.getUser().equalsIgnoreCase(txtUsername.getText()) && s.getPass().equalsIgnoreCase(new String(txtPassword.getPassword()))) {
-                    if (DaTT == -1) {
-                        list2.add(new User(txtUsername.getText(), String.valueOf(txtPassword.getPassword()), chkRemember.isSelected(), true));
-                    } else if (DaTT != -1) {
-                        list2.set(DaTT, new User(txtUsername.getText(), String.valueOf(txtPassword.getPassword()), chkRemember.isSelected(), true));
-                    }
-                    ChucNang.writeObj("x.txt", list2);
-                    ChucNang.setUser(s.getUser());
-
-                    cv = new ChiNhanh();
-                    cv.setVisible(true);
-//                    QuanLyNhaTro ql = new QuanLyNhaTro();
-//                    ql.setVisible(true);
-//                    LoadingForm lf = new LoadingForm();
-//                    lf.setVisible(true);
-                    this.setVisible(false);
-                    return;
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        String tb = "";
-        boolean chk = false;
-        for (User x : list) {
-            if (x.getUser().equalsIgnoreCase(txtUsername.getText())) {
-                tb = "Bạn đã nhập sai mật khẩu";
-                chk = true;
-            }
-        }
-        if (!chk) {
-            tb = "Username của bạn không tồn tại";
-        }
-        JOptionPane.showMessageDialog(this, tb, "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
-//                    return;
-
-    }
-
-    @Override
-    public boolean checkValidate(String user1, int a) {
-        if (a == 1) {
-            if (user1.trim().equals("")) {
-                lblUser.setText("Chưa nhập username");
-                txtUsername.setBackground(Color.yellow);
-                return false;
-            } else {
-                lblUser.setText("");
-                txtUsername.setBackground(Color.white);
-                return true;
-            }
-        }
-        if (a == 2) {
-            if (user1.trim().equals("")) {
-                lblPass.setText("Chưa nhập Password");
-                txtPassword.setBackground(Color.yellow);
-                return false;
-            } else if (user1.length() < 8) {
-                lblPass.setText("Password lớn hơn 7 kí tự");
-                txtPassword.setBackground(Color.yellow);
-                return false;
-            } else {
-                lblPass.setText("");
-                txtPassword.setBackground(Color.white);
-                return true;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void FillToList() {
-        try {
-            list = (List<User>) ChucNang.SelectUser();
-        } catch (SQLException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
 }

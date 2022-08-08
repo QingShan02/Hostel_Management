@@ -4,12 +4,17 @@
  */
 package Service;
 
+import Models.User;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
 /**
  *
  * @author Daokh
  */
 public interface userService {
-    void dangnhap();
-    boolean checkValidate(String user1, int a);
-    void FillToList();
+    List<User> SelectCus();
+    Object readObj(String path)throws FileNotFoundException, IOException, ClassNotFoundException ;
+    void writeObj(String path, Object data) throws FileNotFoundException, IOException ;
 }
