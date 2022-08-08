@@ -31,8 +31,8 @@ public class email {
 		prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true"); //TLS
-        
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");//TLS
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -42,12 +42,12 @@ public class email {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("thanhson9112@gmail.com"));
+            message.setFrom(new InternetAddress(toEmail));
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(toEmail)
             );
-            message.setSubject("DOI MAT KHAU!");
+            message.setSubject("QUẢN LÝ NHÀ TRỌ_ĐỔI MẬT KHẨU!");
             message.setText("Ðây là mã xác thuc: "+ RanDom() + "\n Vui lòng nhap de xac minh");
 
             Transport.send(message);

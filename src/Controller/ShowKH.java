@@ -5,6 +5,7 @@
 package Controller;
 
 import Models.Customer;
+import Models.Phong;
 import Service.ChucNang;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -51,50 +52,120 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
     ButtonGroup buttonGroup = new ButtonGroup();
     int ndd;
 
-    class RadioButtonRenderer implements TableCellRenderer {
+//    class RadioButtonRenderer implements TableCellRenderer {
+//
+//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//            if (value == null) {
+//                return null;
+//            }
+////            buttonGroup.add((JRadioButton) value);
+//            return (Component) value;
+//        }
+//    }
+//public class RadioButtonCellEditorRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
+//
+//        private JRadioButton radioButton;
+//
+//        public RadioButtonCellEditorRenderer() {
+//            this.radioButton = new JRadioButton();
+//            radioButton.addActionListener(this);
+//            radioButton.setOpaque(false);
+//        }
+//
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//            radioButton.setSelected(Boolean.TRUE.equals(value));
+//            return radioButton;
+//        }
+//
+//        @Override
+//        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+//            radioButton.setSelected(Boolean.TRUE.equals(value));
+//            return radioButton;
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            stopCellEditing();
+//        }
+//
+//        @Override
+//        public Object getCellEditorValue() {
+//            return radioButton.isSelected();
+//        }
+//
+//    }
+//    class RadioButtonEditor extends DefaultCellEditor implements ItemListener {
+//
+//        private JRadioButton button;
+//
+//        public RadioButtonEditor(JCheckBox checkBox) {
+//            super(checkBox);
+//        }
+//
+//        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+//            if (value == null) {
+//                return null;
+//            }
+//            button = (JRadioButton) value;
+////            buttonGroup.add(button);
+//
+//            button.addItemListener(new ItemListener() {
+//                @Override
+//                public void itemStateChanged(ItemEvent e) {
+//                    bg.clearSelection();
+//                    rdo[tblCus.getSelectedRow()].setSelected(true);                }
+//            });
+//
+//            return (Component) value;
+//        }
+//
+//        public Object getCellEditorValue() {
+//            button.removeItemListener(this);
+//            return button;
+//        }
+//
+//        public void itemStateChanged(ItemEvent e) {
+//            super.fireEditingStopped();
+//        }
+//    }
+    public class RadioButtonCellEditorRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
 
+        private JRadioButton radioButton;
+        ButtonGroup buttonGroup = new ButtonGroup();
+
+        public RadioButtonCellEditorRenderer(JRadioButton radioButton) {
+            this.radioButton = radioButton;
+        }
+
+        public RadioButtonCellEditorRenderer() {
+            this.radioButton = new JRadioButton();
+            radioButton.addActionListener(this);
+            radioButton.setOpaque(false);
+        }
+
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (value == null) {
-                return null;
-            }
-//            buttonGroup.add((JRadioButton) value);
-            return (Component) value;
-        }
-    }
-
-    class RadioButtonEditor extends DefaultCellEditor implements ItemListener {
-
-        private JRadioButton button;
-
-        public RadioButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
+            radioButton.setSelected(Boolean.TRUE.equals(value));
+            return radioButton;
         }
 
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            if (value == null) {
-                return null;
-            }
-            button = (JRadioButton) value;
-//            buttonGroup.add(button);
-
-            button.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    bg.clearSelection();
-                    rdo[tblCus.getSelectedRow()].setSelected(true);                }
-            });
-
-            return (Component) value;
+            radioButton.setSelected(Boolean.TRUE.equals(value));
+            return radioButton;
         }
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            stopCellEditing();
+        }
+
+        @Override
         public Object getCellEditorValue() {
-            button.removeItemListener(this);
-            return button;
+            return radioButton.isSelected();
         }
 
-        public void itemStateChanged(ItemEvent e) {
-            super.fireEditingStopped();
-        }
     }
 
     @Override
@@ -110,6 +181,7 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 
     public int index = -1;
     List<Customer> list = new ArrayList<>();
+    List<Phong> list1 = new ArrayList<>();
     static int Ma_PHG;
 
     public static int getMa_PHG() {
@@ -152,6 +224,7 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 
     int k = 0;
     JRadioButton[] rdo;
+
     public void FilltoTable() throws SQLException {
         list = ChucNang.SelectCus();
         boolean a = false;
@@ -159,43 +232,15 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 //model = new DefaultTableModel();
         model.setRowCount(0);
 //        bg = new ButtonGroup();
-        Object[][] in4 = new Object[list.size()][4];
+        Object[][] in4 = new Object[list.size()][3];
         for (int i = 0; i < list.size(); i++) {
             in4[i][0] = list.get(i).getHoTen();
             in4[i][1] = list.get(i).getSDT();
             in4[i][2] = list.get(i).getMail();
-            in4[i][3] = new JRadioButton();
+
         }
-        model.setDataVector(in4, new String[]{"Tên khách hàng", "Số điện thoại", "Email", "Người đại diện"});
+        model.setDataVector(in4, new String[]{"Tên khách hàng", "Số điện thoại", "Email"});
         tblCus.setModel(model);
-//        JRadioButton rdo;
-        bg = new ButtonGroup();
-        int length = list.size();
-         rdo = new JRadioButton[length];
-        for (int i = 0; i < length; i++) {
-            rdo[i] = (JRadioButton) model.getValueAt(i, 3);
-
-            bg.add(rdo[i]);
-
-        }
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            Customer x = list.get(i);
-//            if (x.getMa_KH() == x.getNguoiDD()) {
-//                k = i;
-//            }
-//        }
-//        rdo[k].setSelected(true);
-//        Object[] h = bg.getSelection().getSelectedObjects();
-//        for(int i=0;i<h.length;i++){
-//            System.out.println(h[i]);
-//            }
-//        
-//        bg.setSelected(h.getModel(), true);
-        tblCus.getColumnModel().getColumn(3).setCellRenderer(new RadioButtonRenderer());
-        tblCus.getColumnModel().getColumn(3).setCellEditor(new RadioButtonEditor(new JCheckBox()));
-//        JRadioButton name = (JRadioButton) model.getValueAt(k, 3);
-//        name.setSelected(true);
 
     }
 
@@ -232,28 +277,21 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 
         tblCus.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Tên khách hàng", "Điện thoại", "Email", "Người đại diện"
+                "Tên khách hàng", "Điện thoại", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, true, true, false
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         tblCus.getTableHeader().setReorderingAllowed(false);
@@ -293,11 +331,11 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,6 +409,15 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
                 JOptionPane.showMessageDialog(this, "Bạn chưa nhập email");
                 return;
             }
+            for(Phong p : list1){
+                if(p.getSoLuongDangCo()>p.getSoluong()){
+                    JOptionPane.showMessageDialog(this,"aaa");
+                    return;
+                }
+            }
+            
+            
+            
 //            } else if (reEmail.matches(reEmail) == false) {
 //                JOptionPane.showMessageDialog(this, "Email khong dung dinh dang", "Loi nhap email", JOptionPane.WARNING_MESSAGE);
 //                // txtEmail.setBackground(Color.yellow);
@@ -418,13 +465,9 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
             String name = (String) model.getValueAt(index, 0);
             String sdt = (String) model.getValueAt(index, 1);
             String email = (String) model.getValueAt(index, 2);
-            boolean checkndd = (boolean) model.getValueAt(index, 3);
-//                System.out.println(name + "," + sdt + "," + email + "," + checkndd);
-
             ChucNang.UpdateKH(name, sdt, email, list.get(index).getMa_KH());
-
-//                JOptionPane.showMessageDialog(this, "thanhcong");
             FilltoTable();
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
         } catch (SQLException ex) {
             Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
         }

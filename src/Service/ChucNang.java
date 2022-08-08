@@ -164,7 +164,7 @@ public class ChucNang {
 
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
-            object.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5),rs.getInt(6)));
+            object.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5)));
         }
         return object;
     }
@@ -172,9 +172,9 @@ public class ChucNang {
     public static List<Phong> SelectPHG(String ID_Tang) throws SQLException {
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,dd.TenKH,count(kh.Ma_KH) from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT left join QL_KHACHHANG kh on phg.Ma_PHG = kh.Ma_PHG left join QL_KHACHHANG dd on dd.Ma_KH = kh.NguoiDaiDien where nt.Ma_NT = "+ChucNang.getMa_NT()+" and phg.ID_Tang = '"+ID_Tang+"' group by phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,dd.TenKH order by phg.Ma_PHG");
+        ResultSet rs = st.executeQuery("select phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,count(kh.Ma_KH) from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT left join QL_KHACHHANG kh on phg.Ma_PHG = kh.Ma_PHG  where nt.Ma_NT = "+ChucNang.getMa_NT()+" and phg.ID_Tang = '"+ID_Tang+"' group by phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang order by phg.Ma_PHG");
         while (rs.next()) {
-            list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),rs.getString(11),rs.getInt(12)));
+            list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),rs.getInt(11)));
         }
         return list;
     }
@@ -250,12 +250,7 @@ public class ChucNang {
         pst.setInt(1, Makh);
         pst.executeUpdate();
     }
-    public static void UpdateNguoiDD(int dd, int phg) throws SQLException{
-        pst= con.prepareStatement("update QL_KHACHHANG set NguoiDaiDien = ? where Ma_PHG =? ");
-        pst.setInt(1, dd);
-        pst.setInt(2, phg);
-        pst.executeUpdate();
-    }
+
     public static void UpdateKH(String TenKH,String sdt,String email,int makh) throws SQLException{
     pst=con.prepareStatement("update QL_KHACHHANG set TenKH =?,DienThoai=?,Email=? where Ma_KH=? and Ma_PHG="+Ma_PHG);
     pst.setString(1, TenKH);

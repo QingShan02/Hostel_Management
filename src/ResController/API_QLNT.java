@@ -245,18 +245,18 @@ public class API_QLNT implements Runnable {
     public void fillToTable(String name) {
         tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
-        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Người đại diện", "Số lượng đang ở", "Chi tiết khách hàng"});
+        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Số lượng đang ở", "Chi tiết khách hàng"});
         for (Phong nt : list) {
 
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
                 i++;
-                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng", nt.getTenNguoiDaiDien()/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
+                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng"/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
             }
         }
         tblNT.setModel(tblModel);
 
-        tblNT.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
-        tblNT.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox()));
+        tblNT.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+        tblNT.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
 
         i = 0;
     }
