@@ -295,11 +295,12 @@ public class API_QLNT implements Runnable {
         while (true) {
             try {
                 z = ips.readInt();
-                System.out.println("123");
-                if (z != 0) {
+                if (z == -1) {
+                    break;
+                } else if (z > 0) {
                     FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
                     fillToTable((String) cboChonTang.getSelectedItem());
-                    break;
+                    z = 0;
                 }
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
@@ -315,7 +316,7 @@ public class API_QLNT implements Runnable {
     public void start() {
         try {
             ServerSocket sk = new ServerSocket(8889);
-            ExecutorService pool = Executors.newFixedThreadPool(4);
+//            ExecutorService pool = Executors.newFixedThreadPool(4);
             ShowKH show = new ShowKH();
 
             Socket socket = sk.accept();

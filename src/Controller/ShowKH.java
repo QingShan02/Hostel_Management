@@ -57,10 +57,10 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
             if (value == null) {
                 return null;
             }
-//            buttonGroup.add((JRadioButton) value);
             return (Component) value;
         }
     }
+    ButtonGroup bug = new ButtonGroup();
 
     class RadioButtonEditor extends DefaultCellEditor implements ItemListener {
 
@@ -75,15 +75,7 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
                 return null;
             }
             button = (JRadioButton) value;
-//            buttonGroup.add(button);
-
-            button.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    bg.clearSelection();
-                    rdo[tblCus.getSelectedRow()].setSelected(true);                }
-            });
-
+            button.addItemListener(this);
             return (Component) value;
         }
 
@@ -152,32 +144,38 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 
     int k = 0;
     JRadioButton[] rdo;
+
     public void FilltoTable() throws SQLException {
         list = ChucNang.SelectCus();
         boolean a = false;
         model = new DefaultTableModel();
 //model = new DefaultTableModel();
         model.setRowCount(0);
-//        bg = new ButtonGroup();
+        bg = new ButtonGroup();
+        int length = list.size();
+        rdo = new JRadioButton[length];
         Object[][] in4 = new Object[list.size()][4];
         for (int i = 0; i < list.size(); i++) {
             in4[i][0] = list.get(i).getHoTen();
             in4[i][1] = list.get(i).getSDT();
             in4[i][2] = list.get(i).getMail();
-            in4[i][3] = new JRadioButton();
+            rdo[i] = new JRadioButton();
+            in4[i][3] = rdo[i];
+//            if(i==1){
+//                rdo[i].setSelected(true);
+//            }
         }
         model.setDataVector(in4, new String[]{"Tên khách hàng", "Số điện thoại", "Email", "Người đại diện"});
         tblCus.setModel(model);
-//        JRadioButton rdo;
-        bg = new ButtonGroup();
-        int length = list.size();
-         rdo = new JRadioButton[length];
-        for (int i = 0; i < length; i++) {
-            rdo[i] = (JRadioButton) model.getValueAt(i, 3);
+//        rdo[1].setSelected(true);
+//        bg = new ButtonGroup();
 
-            bg.add(rdo[i]);
-
-        }
+//        for (int i = 0; i < length; i++) {
+//            rdo[i] =  model.getValueAt(i, 3);
+//
+//            bg.add(rdo[i]);
+//
+//        }
 //
 //        for (int i = 0; i < list.size(); i++) {
 //            Customer x = list.get(i);
@@ -191,7 +189,7 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 //            System.out.println(h[i]);
 //            }
 //        
-//        bg.setSelected(h.getModel(), true);
+//        bg.setSelected(rdo[k].getModel(), true);
         tblCus.getColumnModel().getColumn(3).setCellRenderer(new RadioButtonRenderer());
         tblCus.getColumnModel().getColumn(3).setCellEditor(new RadioButtonEditor(new JCheckBox()));
 //        JRadioButton name = (JRadioButton) model.getValueAt(k, 3);
@@ -324,8 +322,12 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        System.out.println("a");
+        try {
+            // TODO add your handling code here:
+            ops.writeInt(-1);
+        } catch (IOException ex) {
+            Logger.getLogger(ShowKH.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
