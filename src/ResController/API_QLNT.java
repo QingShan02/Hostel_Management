@@ -307,51 +307,63 @@ public class API_QLNT {
 
     int z = 0;
 
-    public void ButtonCT() {
-        while (true) {
-            try {
-                z = ips.readInt();
-                System.out.println(z);
-//                    System.out.println(Thread.currentThread().getName());
-                if (z == -1) {
-                    break;
-                } else if (z > 0) {
-//                    cboChonTang.setSelectedIndex(0);
-                    FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
-                    fillToTable((String) cboChonTang.getSelectedItem());
-//                    sk.close();
-                    z = 0;
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-//                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public synchronized void ButtonCT() {
+        System.out.println("c1");
+
     }
 
     DataInputStream ips;
-    DataOutputStream ops;
-   
+//    DataOutputStream ops;
+
     Thread t;
 
     public void start() {
         try {
-             ServerSocket sk= new ServerSocket(8889);
+            ServerSocket sk = new ServerSocket(8889);
 //            ExecutorService pool = Executors.newFixedThreadPool(4);
             System.out.println(">>c");
             ShowKH show = new ShowKH();
-//            a test = new a();
-            System.out.println(">>d");
+            show.setTitle("Khách hàng - " + list.get(index).getTen_PHG());
             Socket socket = sk.accept();
-            ops = new DataOutputStream(socket.getOutputStream());
             ips = new DataInputStream(socket.getInputStream());
 
-            show.setTitle("Khách hàng - " + list.get(index).getTen_PHG());
             show.setVisible(true);
+//            a test = new a();
+            System.out.println(">>d");
+//            ops = new DataOutputStream(socket.getOutputStream());
+
 //            btnStart.setEnabled(false);
 //            txtClient.setText("-- kết nối server thành công --\n");
-
             ButtonCT();
+            new Thread() {
+                public void run() {
+                    while (true) {
+                        try {
+                            z = ips.readInt();
+                            System.out.println(z);
+//                    System.out.println(Thread.currentThread().getName());
+                            if (z == -1) {
+                                break;
+                            } else if (z > 0) {
+//                    cboChonTang.setSelectedIndex(0);
+                                FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
+//                    fillToTable((String) cboChonTang.getSelectedItem());
+                                tblModel = (DefaultTableModel) tblNT.getModel();
+                                tblModel.setRowCount(0);
+                                for (int i = 0; i < list.size(); i++) {
+                                    Phong nt = list.get(i);
+                                    tblModel.addRow(new Object[]{i+1, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng"/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
+                                }
+//                    sk.close();
+                                z = 0;
+                            }
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+//                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }.start();
 //            System.out.println("a");
             sk.close();
         } catch (IOException ex) {
@@ -392,7 +404,7 @@ public class API_QLNT {
         FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
 
         fillToTable((String) cboChonTang.getSelectedItem());
-        
+
     }
 
     class ButtonEditor extends DefaultCellEditor {

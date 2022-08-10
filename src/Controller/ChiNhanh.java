@@ -135,6 +135,7 @@ public class ChiNhanh extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chức Vụ");
+        setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(25, 149, 242));
@@ -166,6 +167,8 @@ public class ChiNhanh extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Chọn chi nhánh");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         btnChon.setText("Chọn");
         btnChon.addActionListener(new java.awt.event.ActionListener() {
