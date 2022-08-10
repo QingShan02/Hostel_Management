@@ -74,7 +74,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
             api_nt = new API_QLNT(btnSua, btnThem, btnXoa, cboChonTang, cboTang, jLabel1, jLabel2, jPanel1, jPanel2, jPanel3, jPanel4, jPanel5, jPanel6, jScrollPane1, jScrollPane2, jTabbedPane1, lblAddress, lblAddress1, lblAnh, lblChuNT, lblDienThoai, lblDientich, lblEmail, lblGiaphong, lblImage, lblMota, lblName, lblSonguoio, lblTang, lblTenPhong, lblTotalPerson, lblTotalPerson2, tblNT, txtDienThoai, txtDienTich, txtEmail, txtGiaPhong, txtMoTa, txtSoNguoiO, txtTenPhong);
             api_nt.FillTang();
             setIconForm();
-            jTabbedPane1.setBackground(Color.red);
+//            jTabbedPane1.setBackground(Color.red);
             
 
         } catch (ClassNotFoundException ex) {
@@ -258,11 +258,14 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(null);
 
         jTabbedPane1.setBackground(new java.awt.Color(25, 149, 242));
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTabbedPane1.setOpaque(true);
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
@@ -270,6 +273,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setForeground(new java.awt.Color(25, 149, 242));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Information", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 3, 24), new java.awt.Color(255, 0, 51))); // NOI18N
@@ -277,18 +281,23 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         jPanel1.setToolTipText("");
 
         lblChuNT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblChuNT.setForeground(new java.awt.Color(25, 149, 242));
         lblChuNT.setText("Mã Chủ Nhà Trọ:");
 
         lblTenCNT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTenCNT.setForeground(new java.awt.Color(25, 149, 242));
         lblTenCNT.setText("Tên Chủ Nhà Trọ:");
 
         lblDienThoai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDienThoai.setForeground(new java.awt.Color(25, 149, 242));
         lblDienThoai.setText("Điện Thoại: ");
 
         lblEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(25, 149, 242));
         lblEmail.setText("Email:");
 
         txtChuNT.setEditable(false);
+        txtChuNT.setForeground(new java.awt.Color(25, 149, 242));
         txtChuNT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtChuNTActionPerformed(evt);
@@ -296,8 +305,10 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
 
         txtTenCNT.setEditable(false);
+        txtTenCNT.setForeground(new java.awt.Color(25, 149, 242));
 
         txtDienThoai.setEditable(false);
+        txtDienThoai.setForeground(new java.awt.Color(25, 149, 242));
         txtDienThoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDienThoaiActionPerformed(evt);
@@ -305,6 +316,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
 
         txtEmail.setEditable(false);
+        txtEmail.setForeground(new java.awt.Color(25, 149, 242));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -352,7 +364,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
+        btnEdit.setBackground(new java.awt.Color(25, 149, 242));
+        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Sửa");
+        btnEdit.setBorder(null);
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -360,7 +376,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
         jPanel6.add(btnEdit);
 
+        btnDong.setBackground(new java.awt.Color(25, 149, 242));
+        btnDong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDong.setForeground(new java.awt.Color(255, 255, 255));
         btnDong.setText("Đóng");
+        btnDong.setBorder(null);
         btnDong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDongActionPerformed(evt);
@@ -368,7 +388,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
         jPanel6.add(btnDong);
 
+        btnCapNhat.setBackground(new java.awt.Color(25, 149, 242));
+        btnCapNhat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCapNhat.setForeground(new java.awt.Color(255, 255, 255));
         btnCapNhat.setText("Cập nhật");
+        btnCapNhat.setBorder(null);
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCapNhatActionPerformed(evt);
@@ -376,7 +400,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
         jPanel6.add(btnCapNhat);
 
+        btnDoiMK.setBackground(new java.awt.Color(25, 149, 242));
+        btnDoiMK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDoiMK.setForeground(new java.awt.Color(255, 255, 255));
         btnDoiMK.setText("Đổi mật khẩu");
+        btnDoiMK.setBorder(null);
         btnDoiMK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDoiMKMouseClicked(evt);
@@ -389,7 +417,11 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
         jPanel6.add(btnDoiMK);
 
+        btnDangxuat.setBackground(new java.awt.Color(25, 149, 242));
+        btnDangxuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDangxuat.setForeground(new java.awt.Color(255, 255, 255));
         btnDangxuat.setText("Đăng xuất");
+        btnDangxuat.setBorder(null);
         btnDangxuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDangxuatActionPerformed(evt);
@@ -427,7 +459,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(632, Short.MAX_VALUE)))
+                    .addContainerGap(630, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("THÔNG TIN CÁ NHÂN CHỦ SỞ HỮU", jPanel3);
@@ -709,7 +741,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(lblSonguoio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtSoNguoiO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -741,19 +773,8 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
 
         jTabbedPane1.addTab("QUẢN LÍ NHÀ TRỌ", jPanel4);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
+        getContentPane().add(jTabbedPane1);
+        jTabbedPane1.setBounds(0, 0, 1163, 638);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -788,6 +809,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
     private void cboChonTangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChonTangItemStateChanged
         // TODO add your handling code here:
         api_nt.ChonTang();
+        
     }//GEN-LAST:event_cboChonTangItemStateChanged
 
     private void btnChonANhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonANhActionPerformed

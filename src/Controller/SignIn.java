@@ -235,7 +235,9 @@ getContentPane().setBackground(Color.white);
         });
         getContentPane().add(closeEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, 26));
 
-        btnSignIn.setBackground(new java.awt.Color(0, 204, 204));
+        btnSignIn.setBackground(new java.awt.Color(25, 149, 242));
+        btnSignIn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSignIn.setForeground(new java.awt.Color(255, 255, 255));
         btnSignIn.setText("Sign In");
         btnSignIn.setBorder(null);
         btnSignIn.addActionListener(new java.awt.event.ActionListener() {

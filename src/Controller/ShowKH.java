@@ -44,7 +44,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Daokh
  */
-public class ShowKH extends javax.swing.JFrame implements Runnable {
+public class ShowKH extends javax.swing.JFrame{
 
     /**
      * Creates new form ShowKH
@@ -186,16 +186,7 @@ public class ShowKH extends javax.swing.JFrame implements Runnable {
 //
 //    }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
 
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-    }
 
     public int index = -1;
     List<Customer> list = new ArrayList<>();

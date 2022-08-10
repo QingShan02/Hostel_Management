@@ -38,7 +38,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-public class API_QLNT implements Runnable {
+public class API_QLNT {
 
     private JButton btnSua;
     private JButton btnThem;
@@ -80,7 +80,7 @@ public class API_QLNT implements Runnable {
     private JTextArea txtMoTa;
     private JTextField txtSoNguoiO;
     private JTextField txtTenPhong;
-    DefaultTableModel tblModel;
+//    DefaultTableModel tblModel;
     List<Phong> list = new ArrayList<>();
     List<User> list2 = new ArrayList<>();
     private int index = -1;
@@ -241,12 +241,13 @@ public class API_QLNT implements Runnable {
     }
     int i = 0;
     String name = "";
+    DefaultTableModel tblModel;
 
     public void fillToTable(String name) {
         tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
         tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Số lượng đang ở", "Chi tiết khách hàng"});
-        JButton btn=null;
+        JButton btn = null;
         for (Phong nt : list) {
 
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
@@ -257,7 +258,9 @@ public class API_QLNT implements Runnable {
             }
         }
         tblNT.setModel(tblModel);
-                tblNT.getTableHeader().setBackground(new Color(25, 149, 242));
+        tblNT.getTableHeader().setBackground(new Color(25, 149, 242));
+        tblNT.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+        tblNT.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
 
 //        for (int i = 0; i < list.size(); i++) {
 //            btn = (JButton) tblNT.getValueAt(i, 5);
@@ -272,10 +275,6 @@ public class API_QLNT implements Runnable {
 //                }
 //            });
 //        }
-
-        tblNT.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-        tblNT.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
-
         i = 0;
     }
 
@@ -308,38 +307,41 @@ public class API_QLNT implements Runnable {
 
     int z = 0;
 
-    @Override
-    public void run() {
+    public void ButtonCT() {
         while (true) {
             try {
                 z = ips.readInt();
                 System.out.println(z);
+//                    System.out.println(Thread.currentThread().getName());
                 if (z == -1) {
                     break;
                 } else if (z > 0) {
+//                    cboChonTang.setSelectedIndex(0);
                     FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
                     fillToTable((String) cboChonTang.getSelectedItem());
 //                    sk.close();
                     z = 0;
-                } else{
-                                    Thread.sleep(50);
                 }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
             } catch (IOException ex) {
-                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+//                Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+
     DataInputStream ips;
     DataOutputStream ops;
-ServerSocket sk;
+   
+    Thread t;
+
     public void start() {
         try {
-             sk= new ServerSocket(8889);
+             ServerSocket sk= new ServerSocket(8889);
 //            ExecutorService pool = Executors.newFixedThreadPool(4);
+            System.out.println(">>c");
             ShowKH show = new ShowKH();
-
+//            a test = new a();
+            System.out.println(">>d");
             Socket socket = sk.accept();
             ops = new DataOutputStream(socket.getOutputStream());
             ips = new DataInputStream(socket.getInputStream());
@@ -348,8 +350,8 @@ ServerSocket sk;
             show.setVisible(true);
 //            btnStart.setEnabled(false);
 //            txtClient.setText("-- kết nối server thành công --\n");
-            Thread t = new Thread(this);
-            t.start();
+
+            ButtonCT();
 //            System.out.println("a");
             sk.close();
         } catch (IOException ex) {
@@ -361,6 +363,7 @@ ServerSocket sk;
 
         public ButtonRenderer() {
             setOpaque(true);
+//            btn.removeActionListener((ActionListener) this);
             btn.addActionListener(
                     new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -370,6 +373,7 @@ ServerSocket sk;
 //                    show.setVisible(true);
                     System.out.println(">>a");
                     start();
+                    System.out.println(">>b");
 //                    btn.removeActionListener(this);
                 }
             }
@@ -388,6 +392,7 @@ ServerSocket sk;
         FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
 
         fillToTable((String) cboChonTang.getSelectedItem());
+        
     }
 
     class ButtonEditor extends DefaultCellEditor {
