@@ -74,6 +74,8 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
             api_nt = new API_QLNT(btnSua, btnThem, btnXoa, cboChonTang, cboTang, jLabel1, jLabel2, jPanel1, jPanel2, jPanel3, jPanel4, jPanel5, jPanel6, jScrollPane1, jScrollPane2, jTabbedPane1, lblAddress, lblAddress1, lblAnh, lblChuNT, lblDienThoai, lblDientich, lblEmail, lblGiaphong, lblImage, lblMota, lblName, lblSonguoio, lblTang, lblTenPhong, lblTotalPerson, lblTotalPerson2, tblNT, txtDienThoai, txtDienTich, txtEmail, txtGiaPhong, txtMoTa, txtSoNguoiO, txtTenPhong);
             api_nt.FillTang();
             setIconForm();
+            jTabbedPane1.setBackground(Color.red);
+            
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
@@ -257,14 +259,17 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
             }
         });
 
-        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane1.setBackground(new java.awt.Color(25, 149, 242));
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
             }
         });
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Information", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 3, 24), new java.awt.Color(255, 0, 51))); // NOI18N
@@ -398,7 +403,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -413,7 +418,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
+                .addContainerGap(114, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,12 +427,12 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(599, Short.MAX_VALUE)))
+                    .addContainerGap(632, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("THÔNG TIN CÁ NHÂN CHỦ SỞ HỮU", jPanel3);
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
@@ -436,7 +441,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
 
         lblName.setText("Tên phòng");
 
-        txtTenPhong.setBorder(null);
+        txtTenPhong.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtTenPhong.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtTenPhongMousePressed(evt);
@@ -450,7 +455,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
 
         lblAddress.setText("Giá phòng");
 
-        txtDienTich.setBorder(null);
+        txtDienTich.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtDienTich.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtDienTichMousePressed(evt);
@@ -466,20 +471,20 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
 
         tblNT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Tên Phòng", "Giá phòng", "Số lượng ở tối đa", "Người Đại Diện", "Số lượng đang ở", "Chi tiết khách hàng"
+                "STT", "Tên Phòng", "Giá phòng", "Số lượng ở tối đa", "Số lượng đang ở", "Chi tiết khách hàng"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -490,7 +495,9 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                 return canEdit [columnIndex];
             }
         });
+        tblNT.setGridColor(new java.awt.Color(25, 149, 242));
         tblNT.setRowHeight(30);
+        tblNT.setShowGrid(true);
         tblNT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblNTMouseClicked(evt);
@@ -532,7 +539,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
         });
         jPanel5.add(btnSua);
 
-        txtSoNguoiO.setBorder(null);
+        txtSoNguoiO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtSoNguoiO.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtSoNguoiOMousePressed(evt);
@@ -630,7 +637,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(lblAddress1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                .addComponent(lblAddress1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(69, 69, 69))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -669,7 +676,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                                     .addComponent(txtSoNguoiO, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblSonguoio, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(18, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -702,7 +709,7 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(lblSonguoio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtSoNguoiO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -753,60 +760,69 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
 
     
 
-    private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtChuNTActionPerformed
-
-    private void txtDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDienThoaiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDienThoaiActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-//        JOptionPane.showConfirmDialog(this,"Chỉnh sửa thành  công");
-        api.Sua();
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongActionPerformed
-        // TODO add your handling code here:
-        api.Dong();
-        //     System.exit(0);
-    }//GEN-LAST:event_btnDongActionPerformed
-
-
-    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        // TODO add your handling code here:
-        api.CapNhat();
-    }//GEN-LAST:event_btnCapNhatActionPerformed
-
-    private void btnDangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangxuatActionPerformed
-//        try {
-//            list2 = (List<User>) ChucNang.readObj("x.txt");
-//            for (User x : list2) {
-//                if (x.getUser().equalsIgnoreCase(cnt.getUsernameChu())) {
-//                    if (!x.isRemember()) {
-//                        list2.remove(x);
-//                        break;
-//                    } else {
-//                        x.setIsLogin(false);
-//                    }
-//                }
-//            }
-//            ChucNang.writeObj("x.txt", list2);
-//        } catch (IOException ex) {
-//            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        api.DX();
-        this.setVisible(false);
-        new SignIn().setVisible(true);
-    }//GEN-LAST:event_btnDangxuatActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
     }//GEN-LAST:event_formWindowOpened
-    public static String name = "";
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        // TODO add your handling code here:
+        //        index =-1;
+        //        tblNT.setRowSelectionInterval(index, index);
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        // TODO add your handling code here:
+        index = tblNT.getSelectedRow();
+        if (index != -1) {
+            index = -1;
+            tblNT.clearSelection();
+            api_nt.Clear();
+        }
+    }//GEN-LAST:event_jPanel4MouseClicked
+
+    private void cboChonTangHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_cboChonTangHierarchyChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboChonTangHierarchyChanged
+
+    private void cboChonTangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChonTangItemStateChanged
+        // TODO add your handling code here:
+        api_nt.ChonTang();
+    }//GEN-LAST:event_cboChonTangItemStateChanged
+
+    private void btnChonANhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonANhActionPerformed
+        // TODO add your handling code here:
+        api_nt.ChonAnh();
+    }//GEN-LAST:event_btnChonANhActionPerformed
+
+    private void txtGiaPhongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiaPhongKeyReleased
+        checkValidateForm(txtGiaPhong.getText(), 2);
+    }//GEN-LAST:event_txtGiaPhongKeyReleased
+
+    private void txtGiaPhongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGiaPhongMousePressed
+        checkValidateForm(txtGiaPhong.getText(), 2);
+    }//GEN-LAST:event_txtGiaPhongMousePressed
+
+    private void txtMoTaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMoTaKeyReleased
+        checkValidateForm(txtMoTa.getText(), 5);
+    }//GEN-LAST:event_txtMoTaKeyReleased
+
+    private void txtMoTaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMoTaMousePressed
+        checkValidateForm(txtMoTa.getText(), 5);
+    }//GEN-LAST:event_txtMoTaMousePressed
+
+    private void txtSoNguoiOKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoNguoiOKeyReleased
+        checkValidateForm(txtSoNguoiO.getText(), 4);
+    }//GEN-LAST:event_txtSoNguoiOKeyReleased
+
+    private void txtSoNguoiOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoNguoiOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSoNguoiOActionPerformed
+
+    private void txtSoNguoiOMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSoNguoiOMousePressed
+        checkValidateForm(txtSoNguoiO.getText(), 4);
+    }//GEN-LAST:event_txtSoNguoiOMousePressed
+
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         api_nt.Sua();
     }//GEN-LAST:event_btnSuaActionPerformed
@@ -840,33 +856,17 @@ public class QuanLyNhaTro extends javax.swing.JFrame{
             lblAnh.setText("Chưa chọn ảnh");
             return;
         }
-//        System.out.println(new ImageIcon(lblImage.getIcon()).toString());
+        //        System.out.println(new ImageIcon(lblImage.getIcon()).toString());
         api_nt.Them();
-//        FillToList();
-
-
+        //        FillToList();
 
     }//GEN-LAST:event_btnThemActionPerformed
-int index = -1;
+
     private void tblNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNTMouseClicked
 
         index = tblNT.getSelectedRow();
         api_nt.mouseClick(index);
-
     }//GEN-LAST:event_tblNTMouseClicked
-
-    private void btnChonANhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonANhActionPerformed
-        // TODO add your handling code here:
-        api_nt.ChonAnh();
-    }//GEN-LAST:event_btnChonANhActionPerformed
-
-    private void txtTenPhongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenPhongKeyReleased
-        checkValidateForm(txtTenPhong.getText(), 1);
-    }//GEN-LAST:event_txtTenPhongKeyReleased
-
-    private void txtTenPhongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTenPhongMousePressed
-        checkValidateForm(txtTenPhong.getText(), 1);
-    }//GEN-LAST:event_txtTenPhongMousePressed
 
     private void txtDienTichKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDienTichKeyReleased
         checkValidateForm(txtDienTich.getText(), 3);
@@ -876,70 +876,72 @@ int index = -1;
         checkValidateForm(txtDienTich.getText(), 3);
     }//GEN-LAST:event_txtDienTichMousePressed
 
-    private void txtMoTaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMoTaKeyReleased
-        checkValidateForm(txtMoTa.getText(), 5);
-    }//GEN-LAST:event_txtMoTaKeyReleased
+    private void txtTenPhongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenPhongKeyReleased
+        checkValidateForm(txtTenPhong.getText(), 1);
+    }//GEN-LAST:event_txtTenPhongKeyReleased
 
-    private void txtMoTaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMoTaMousePressed
-        checkValidateForm(txtMoTa.getText(), 5);
-    }//GEN-LAST:event_txtMoTaMousePressed
+    private void txtTenPhongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTenPhongMousePressed
+        checkValidateForm(txtTenPhong.getText(), 1);
+    }//GEN-LAST:event_txtTenPhongMousePressed
 
-    private void txtGiaPhongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiaPhongKeyReleased
-        checkValidateForm(txtGiaPhong.getText(), 2);
-    }//GEN-LAST:event_txtGiaPhongKeyReleased
-
-    private void txtGiaPhongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGiaPhongMousePressed
-        checkValidateForm(txtGiaPhong.getText(), 2);
-    }//GEN-LAST:event_txtGiaPhongMousePressed
-
-    private void txtSoNguoiOKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoNguoiOKeyReleased
-        checkValidateForm(txtSoNguoiO.getText(), 4);
-    }//GEN-LAST:event_txtSoNguoiOKeyReleased
-
-    private void txtSoNguoiOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoNguoiOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSoNguoiOActionPerformed
-
-    private void txtSoNguoiOMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSoNguoiOMousePressed
-        checkValidateForm(txtSoNguoiO.getText(), 4);
-    }//GEN-LAST:event_txtSoNguoiOMousePressed
-
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        // TODO add your handling code here:
-//        index =-1;
-//        tblNT.setRowSelectionInterval(index, index);
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
-
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        // TODO add your handling code here:
-        index = tblNT.getSelectedRow();
-        if (index != -1) {
-            index = -1;
-            tblNT.clearSelection();
-            api_nt.Clear();
-        }
-    }//GEN-LAST:event_jPanel4MouseClicked
-
-    private void cboChonTangHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_cboChonTangHierarchyChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboChonTangHierarchyChanged
-
-    private void cboChonTangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChonTangItemStateChanged
-        // TODO add your handling code here:
-        api_nt.ChonTang();
-
-    }//GEN-LAST:event_cboChonTangItemStateChanged
-
-    private void btnDoiMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMKMouseClicked
-
-        api.DoiMK();
-
-    }//GEN-LAST:event_btnDoiMKMouseClicked
+    private void btnDangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangxuatActionPerformed
+        //        try {
+            //            list2 = (List<User>) ChucNang.readObj("x.txt");
+            //            for (User x : list2) {
+                //                if (x.getUser().equalsIgnoreCase(cnt.getUsernameChu())) {
+                    //                    if (!x.isRemember()) {
+                        //                        list2.remove(x);
+                        //                        break;
+                        //                    } else {
+                        //                        x.setIsLogin(false);
+                        //                    }
+                    //                }
+                //            }
+            //            ChucNang.writeObj("x.txt", list2);
+            //        } catch (IOException ex) {
+            //            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+            //        } catch (ClassNotFoundException ex) {
+            //            Logger.getLogger(QuanLyNhaTro.class.getName()).log(Level.SEVERE, null, ex);
+            //        }
+        api.DX();
+        this.setVisible(false);
+        new SignIn().setVisible(true);
+    }//GEN-LAST:event_btnDangxuatActionPerformed
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDoiMKActionPerformed
-    
+
+    private void btnDoiMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMKMouseClicked
+
+        api.DoiMK();
+    }//GEN-LAST:event_btnDoiMKMouseClicked
+
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        // TODO add your handling code here:
+        api.CapNhat();
+    }//GEN-LAST:event_btnCapNhatActionPerformed
+
+    private void btnDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongActionPerformed
+        // TODO add your handling code here:
+        api.Dong();
+        //     System.exit(0);
+    }//GEN-LAST:event_btnDongActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        //        JOptionPane.showConfirmDialog(this,"Chỉnh sửa thành  công");
+        api.Sua();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void txtDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDienThoaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDienThoaiActionPerformed
+
+    private void txtChuNTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuNTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtChuNTActionPerformed
+    public static String name = "";int index = -1;    
 
     /**
      *

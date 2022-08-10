@@ -24,13 +24,13 @@ public class DOIMK extends javax.swing.JFrame {
     public DOIMK() {
         initComponents();
         setLocationRelativeTo(null);
-        lblImgCEye1.setIcon(new ImageIcon("src/image/c.eye.png"));
-        lblImgOEye1.setIcon(new ImageIcon("src/image/o.eye.png"));
         lblImgCEye2.setIcon(new ImageIcon("src/image/c.eye.png"));
         lblImgOEye2.setIcon(new ImageIcon("src/image/o.eye.png"));
+        lblImgCEye1.setIcon(new ImageIcon("src/image/c.eye.png"));
+        lblImgOEye1.setIcon(new ImageIcon("src/image/o.eye.png"));
 
-        lblImgOEye1.setVisible(false);
         lblImgOEye2.setVisible(false);
+        lblImgOEye1.setVisible(false);
     }
 
     public boolean checkValidate(String mk, int index) {
@@ -72,20 +72,20 @@ public class DOIMK extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblMKM = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblImgCEye1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         lblImgOEye1 = new javax.swing.JLabel();
         lblImgCEye2 = new javax.swing.JLabel();
-        txtXTMKM = new javax.swing.JPasswordField();
         lblImgOEye2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtXTMKM = new javax.swing.JPasswordField();
         txtMKM = new javax.swing.JPasswordField();
         lblMkm = new javax.swing.JLabel();
         lblXtmkm = new javax.swing.JLabel();
+        lblMKM = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đổi mật khẩu");
@@ -114,9 +114,6 @@ public class DOIMK extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
-        jLabel3.setText("Xác nhận mật khẩu mới");
-
         lblImgOEye1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblImgOEye1MouseClicked(evt);
@@ -129,6 +126,15 @@ public class DOIMK extends javax.swing.JFrame {
             }
         });
 
+        lblImgOEye2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImgOEye2MouseClicked(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel3.setText("Xác nhận mật khẩu mới");
+
         txtXTMKM.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtXTMKMMousePressed(evt);
@@ -137,12 +143,6 @@ public class DOIMK extends javax.swing.JFrame {
         txtXTMKM.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtXTMKMKeyReleased(evt);
-            }
-        });
-
-        lblImgOEye2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImgOEye2MouseClicked(evt);
             }
         });
 
@@ -174,20 +174,25 @@ public class DOIMK extends javax.swing.JFrame {
                                 .addComponent(txtMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblImgOEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblImgCEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblImgOEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblImgCEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(lblXtmkm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtXTMKM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
                                 .addGap(13, 13, 13)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblImgCEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblImgOEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblImgCEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblImgOEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(lblMkm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)))))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(38, 38, 38)
+                    .addComponent(lblMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(39, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,8 +204,8 @@ public class DOIMK extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImgOEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImgCEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblImgOEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImgCEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMkm, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -211,13 +216,18 @@ public class DOIMK extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblImgCEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblImgOEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblImgCEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblImgOEye2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblXtmkm, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOK)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(170, 170, 170)
+                    .addComponent(lblMKM)
+                    .addContainerGap(170, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,13 +235,8 @@ public class DOIMK extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(lblMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
@@ -239,9 +244,7 @@ public class DOIMK extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblMKM)
-                .addGap(21, 21, 21))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,24 +264,6 @@ public class DOIMK extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnOKActionPerformed
 
-    private void lblImgCEye1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgCEye1MouseClicked
-        // TODO add your handling code here:
-        txtXTMKM.setEchoChar((char) 0);
-        lblImgCEye1.setVisible(false);
-        lblImgCEye1.setEnabled(false);
-        lblImgOEye1.setVisible(true);
-        lblImgOEye1.setEnabled(true);
-    }//GEN-LAST:event_lblImgCEye1MouseClicked
-
-    private void lblImgOEye1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgOEye1MouseClicked
-        // TODO add your handling code here:
-        txtXTMKM.setEchoChar((char) 8226);
-        lblImgCEye1.setVisible(true);
-        lblImgCEye1.setEnabled(true);
-        lblImgOEye1.setVisible(false);
-        lblImgOEye1.setEnabled(false);
-    }//GEN-LAST:event_lblImgOEye1MouseClicked
-
     private void lblImgCEye2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgCEye2MouseClicked
         // TODO add your handling code here:
         txtXTMKM.setEchoChar((char) 0);
@@ -296,6 +281,24 @@ public class DOIMK extends javax.swing.JFrame {
         lblImgOEye2.setVisible(false);
         lblImgOEye2.setEnabled(false);
     }//GEN-LAST:event_lblImgOEye2MouseClicked
+
+    private void lblImgCEye1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgCEye1MouseClicked
+        // TODO add your handling code here:
+        txtMKM.setEchoChar((char) 0);
+        lblImgCEye1.setVisible(false);
+        lblImgCEye1.setEnabled(false);
+        lblImgOEye1.setVisible(true);
+        lblImgOEye1.setEnabled(true);
+    }//GEN-LAST:event_lblImgCEye1MouseClicked
+
+    private void lblImgOEye1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgOEye1MouseClicked
+        // TODO add your handling code here:
+        txtMKM.setEchoChar((char) 8226);
+        lblImgCEye1.setVisible(true);
+        lblImgCEye1.setEnabled(true);
+        lblImgOEye1.setVisible(false);
+        lblImgOEye1.setEnabled(false);
+    }//GEN-LAST:event_lblImgOEye1MouseClicked
 
     private void txtMKMKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMKMKeyReleased
         // TODO add your handling code here:

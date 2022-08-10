@@ -16,19 +16,12 @@ public class Customer {
     private String HoTen;
     private String SDT;
     private String mail;
-    private int nguoiDD;
     private int Ma_PHG;
     public Customer() {
     }
 
 
-    public int getNguoiDD() {
-        return nguoiDD;
-    }
 
-    public void setNguoiDD(int nguoiDD) {
-        this.nguoiDD = nguoiDD;
-    }
 
     public int getMa_KH() {
         return Ma_KH;
@@ -38,14 +31,15 @@ public class Customer {
         this.Ma_KH = Ma_KH;
     }
 
-    public Customer(int Ma_KH, String HoTen, String SDT, String mail, int nguoiDD, int Ma_PHG) {
+    public Customer(int Ma_KH, String HoTen, String SDT, String mail, int Ma_PHG) {
         this.Ma_KH = Ma_KH;
         this.HoTen = HoTen;
         this.SDT = SDT;
         this.mail = mail;
-        this.nguoiDD = nguoiDD;
         this.Ma_PHG = Ma_PHG;
     }
+
+
 
     public int getMa_PHG() {
         return Ma_PHG;

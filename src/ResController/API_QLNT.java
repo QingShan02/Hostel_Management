@@ -245,18 +245,36 @@ public class API_QLNT implements Runnable {
     public void fillToTable(String name) {
         tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
-        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Người đại diện", "Số lượng đang ở", "Chi tiết khách hàng"});
+        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Số lượng đang ở", "Chi tiết khách hàng"});
+        JButton btn=null;
         for (Phong nt : list) {
 
             if (nt.getName_Tang().equalsIgnoreCase(name)) {
                 i++;
-                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng", nt.getTenNguoiDaiDien()/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
+//                btn = new JButton();
+                tblModel.addRow(new Object[]{i, nt.getTen_PHG(), nt.getGiaPhong() + " VND", nt.getSoluong() + " người/phòng"/*(nt.getTenNguoiDaiDien().equalsIgnoreCase("null") ? "":nt.getTenNguoiDaiDien())*/, nt.getSoLuongDangCo()});
+
             }
         }
         tblNT.setModel(tblModel);
+                tblNT.getTableHeader().setBackground(new Color(25, 149, 242));
 
-        tblNT.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
-        tblNT.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox()));
+//        for (int i = 0; i < list.size(); i++) {
+//            btn = (JButton) tblNT.getValueAt(i, 5);
+//            btn.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    index = tblNT.getSelectedRow();
+//                    ChucNang.setMa_PHG(list.get(index).getMa_PHG());
+////                    ShowKH show = new ShowKH();
+////                    show.setVisible(true);
+//                    start();
+//                }
+//            });
+//        }
+
+        tblNT.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+        tblNT.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
 
         i = 0;
     }
@@ -295,14 +313,17 @@ public class API_QLNT implements Runnable {
         while (true) {
             try {
                 z = ips.readInt();
+                System.out.println(z);
                 if (z == -1) {
                     break;
                 } else if (z > 0) {
                     FillToList(listT.get(cboChonTang.getSelectedIndex()).getID_tang());
                     fillToTable((String) cboChonTang.getSelectedItem());
+//                    sk.close();
                     z = 0;
+                } else{
+                                    Thread.sleep(50);
                 }
-                Thread.sleep(50);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             } catch (IOException ex) {
@@ -312,10 +333,10 @@ public class API_QLNT implements Runnable {
     }
     DataInputStream ips;
     DataOutputStream ops;
-
+ServerSocket sk;
     public void start() {
         try {
-            ServerSocket sk = new ServerSocket(8889);
+             sk= new ServerSocket(8889);
 //            ExecutorService pool = Executors.newFixedThreadPool(4);
             ShowKH show = new ShowKH();
 
@@ -329,6 +350,7 @@ public class API_QLNT implements Runnable {
 //            txtClient.setText("-- kết nối server thành công --\n");
             Thread t = new Thread(this);
             t.start();
+//            System.out.println("a");
             sk.close();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -346,10 +368,13 @@ public class API_QLNT implements Runnable {
                     ChucNang.setMa_PHG(list.get(index).getMa_PHG());
 //                    ShowKH show = new ShowKH();
 //                    show.setVisible(true);
+                    System.out.println(">>a");
                     start();
+//                    btn.removeActionListener(this);
                 }
             }
             );
+
         }
 
         public Component getTableCellRendererComponent(JTable table, Object value,

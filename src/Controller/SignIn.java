@@ -56,7 +56,7 @@ public class SignIn extends javax.swing.JFrame {
         initComponents();
 
         api = new API_SignIn(background, btnSignIn, chkRemember, closeEye, jLabel5, jSeparator1, jSeparator2, lblIconUser, lblPass, lblPassword, lblSignIn, lblUser, lblUsername, openEye, txtPassword, txtUsername);
-
+getContentPane().setBackground(Color.white);
         api.CheckRemember();
         setIconForm();
         txtUsername.setBackground(new Color(0, 0, 0, 1));
@@ -98,7 +98,7 @@ public class SignIn extends javax.swing.JFrame {
     }
 
     public void setIconForm() {
-        background.setIcon(new ImageIcon("src/image/bg.jpg"));
+//        background.setIcon(new ImageIcon("src/image/bg.jpg"));
         lblIconUser.setIcon(new ImageIcon("src/image/user.png"));
         closeEye.setIcon(new ImageIcon("src/image/c.eye.png"));
         openEye.setIcon(new ImageIcon("src/image/o.eye.png"));
@@ -113,6 +113,8 @@ public class SignIn extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         lblPass = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
         lblSignIn = new javax.swing.JLabel();
@@ -132,7 +134,8 @@ public class SignIn extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign In");
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 0, 0));
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -142,6 +145,34 @@ public class SignIn extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("X");
+        jLabel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel1MouseDragged(evt);
+            }
+        });
+        jLabel1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jLabel1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jLabel1FocusLost(evt);
+            }
+        });
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 50, -1));
+
+        jPanel1.setBackground(new java.awt.Color(25, 149, 241));
+        jPanel1.setForeground(new java.awt.Color(53, 165, 179));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 40));
 
         lblPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPass.setForeground(new java.awt.Color(255, 0, 0));
@@ -246,6 +277,9 @@ public class SignIn extends javax.swing.JFrame {
             }
         });
         getContentPane().add(openEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, 26));
+
+        background.setBackground(new java.awt.Color(255, 0, 51));
+        background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 470));
 
         pack();
@@ -336,6 +370,23 @@ public class SignIn extends javax.swing.JFrame {
 //        this.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
+    private void jLabel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1FocusGained
+
+    private void jLabel1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1FocusLost
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -376,7 +427,9 @@ public class SignIn extends javax.swing.JFrame {
     private javax.swing.JButton btnSignIn;
     private javax.swing.JCheckBox chkRemember;
     private javax.swing.JLabel closeEye;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblIconUser;
