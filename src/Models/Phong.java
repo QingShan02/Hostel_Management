@@ -37,6 +37,10 @@ public class Phong {
 
 
 
+
+
+
+
     public int getSoLuongDangCo() {
         return SoLuongDangCo;
     }

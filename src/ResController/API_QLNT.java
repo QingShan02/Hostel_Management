@@ -246,7 +246,7 @@ public class API_QLNT {
     public void fillToTable(String name) {
         tblModel = new DefaultTableModel();
         tblModel.setRowCount(0);
-        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa", "Số lượng đang ở", "Chi tiết khách hàng"});
+        tblModel.setColumnIdentifiers(new Object[]{"STT", "Tên Phòng", "Giá Phòng", "Số lượng ở tối đa","Số lượng đang ở", "Chi tiết khách hàng"});
         JButton btn = null;
         for (Phong nt : list) {
 

@@ -91,7 +91,7 @@ public class ChucNang {
         String DB_URL = "jdbc:sqlserver://localhost:1433;"
                 + "databaseName=QLNT;";
         String USER_NAME = "sa";
-        String PASSWORD = "";
+        String PASSWORD = "04012003";
         con = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
     }
     static Statement st = null;
@@ -172,7 +172,7 @@ public class ChucNang {
     public static List<Phong> SelectPHG(String ID_Tang) throws SQLException {
         List<Phong> list = new ArrayList<>();
         st = con.createStatement();
-        ResultSet rs = st.executeQuery("select phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,count(kh.Ma_KH) from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT left join QL_KHACHHANG kh on phg.Ma_PHG = kh.Ma_PHG  where nt.Ma_NT = "+ChucNang.getMa_NT()+" and phg.ID_Tang = '"+ID_Tang+"' group by phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang order by phg.Ma_PHG");
+        ResultSet rs = st.executeQuery("select phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang,count(kh.Ma_KH) from QL_Phong phg join QL_Tang tang on tang.ID_Tang = phg.ID_Tang join QL_NhaTro nt on phg.Ma_NT = nt.Ma_NT left join QL_KHACHHANG kh on phg.Ma_PHG = kh.Ma_PHG  where nt.Ma_NT = "+Ma_NT+" and phg.ID_Tang = '"+ID_Tang+"' group by phg.Ma_PHG,phg.TenPhong,phg.GiaPhong,phg.DienTich,phg.MoTa,phg.Hinh,phg.SL_ToiDa,phg.ID_Tang,phg.Ma_NT,tang.TenTang order by phg.Ma_PHG");
         while (rs.next()) {
             list.add(new Phong(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),rs.getInt(11)));
         }
@@ -287,7 +287,12 @@ public class ChucNang {
         pt.executeUpdate();
         System.out.println(user);
     }
-
+    public static void UpdateNDD(int ndd) throws SQLException {
+        PreparedStatement pt = con.prepareStatement("update QL_KHACHHANG set NguoiDD = ? where Ma_PHG = ?");
+        pt.setInt(1,  ndd );
+        pt.setInt(2, Ma_PHG);
+        pt.executeUpdate();
+    }
     public ChucNang() {
     }
 }

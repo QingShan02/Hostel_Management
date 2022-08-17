@@ -56,7 +56,7 @@ public class SignIn extends javax.swing.JFrame {
         initComponents();
 
         api = new API_SignIn(background, btnSignIn, chkRemember, closeEye, jLabel5, jSeparator1, jSeparator2, lblIconUser, lblPass, lblPassword, lblSignIn, lblUser, lblUsername, openEye, txtPassword, txtUsername);
-getContentPane().setBackground(Color.white);
+        getContentPane().setBackground(Color.white);
         api.CheckRemember();
         setIconForm();
         txtUsername.setBackground(new Color(0, 0, 0, 1));

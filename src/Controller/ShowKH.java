@@ -44,7 +44,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Daokh
  */
-public class ShowKH extends javax.swing.JFrame{
+public class ShowKH extends javax.swing.JFrame {
 
     /**
      * Creates new form ShowKH
@@ -185,9 +185,6 @@ public class ShowKH extends javax.swing.JFrame{
 //        }
 //
 //    }
-
-
-
     public int index = -1;
     List<Customer> list = new ArrayList<>();
     List<Phong> list1 = new ArrayList<>();
@@ -342,12 +339,12 @@ public class ShowKH extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCapnhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,15 +424,13 @@ public class ShowKH extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(this, "Bạn chưa nhập email");
                 return;
             }
-            for(Phong p : list1){
-                if(p.getSoLuongDangCo()>p.getSoluong()){
-                    JOptionPane.showMessageDialog(this,"aaa");
+            for (Phong p : list1) {
+                if (p.getSoLuongDangCo() > p.getSoluong()) {
+                    JOptionPane.showMessageDialog(this, "aaa");
                     return;
                 }
             }
-            
-            
-            
+
 //            } else if (reEmail.matches(reEmail) == false) {
 //                JOptionPane.showMessageDialog(this, "Email khong dung dinh dang", "Loi nhap email", JOptionPane.WARNING_MESSAGE);
 //                // txtEmail.setBackground(Color.yellow);
@@ -447,6 +442,11 @@ public class ShowKH extends javax.swing.JFrame{
 //            }
 //            System.out.println("," + name + "," + sdt+","+email+","+Ma_PHG);
             ChucNang.InsertKH(name, sdt, email);
+//            list.clear();
+//            list = ChucNang.SelectCus();
+//            if(list.size()==1){
+//                ChucNang.UpdateNDD(list.get(0).getMa_KH());
+//            }
             ops.writeInt(1);
             JOptionPane.showMessageDialog(this, "thanhcong");
             FilltoTable();
@@ -463,6 +463,10 @@ public class ShowKH extends javax.swing.JFrame{
 
         try {
             index = tblCus.getSelectedRow();
+            if(index<0){
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng");
+                return;
+            }
             ChucNang.deleteKH(list.get(index).getMa_KH());
 //            list.remove(index);
             ops.writeInt(1);
@@ -480,6 +484,10 @@ public class ShowKH extends javax.swing.JFrame{
     private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapnhatActionPerformed
         try {
             index = tblCus.getSelectedRow();
+                        if(index<0){
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng");
+                return;
+            }
             String name = (String) model.getValueAt(index, 0);
             String sdt = (String) model.getValueAt(index, 1);
             String email = (String) model.getValueAt(index, 2);
